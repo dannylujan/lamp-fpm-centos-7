@@ -20,6 +20,10 @@
 
 # setup stock firewall rules
 package "ansible"
+case node[:platform]
+  when "debian", "ubuntu"
+    package "python-apt"
+end
 
 execute "sshkey" do
   command "`which ssh-keygen` -t rsa -f /root/.ssh/id_rsa -P '' -C ''"
