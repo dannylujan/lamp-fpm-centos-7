@@ -19,9 +19,7 @@
 #
 
 # setup stock firewall rules
-package "ansible" do
-    options('--assumeyes')
-end
+package "ansible"
 
 execute "sshkey" do
   command "`which ssh-keygen` -t rsa -f /root/.ssh/id_rsa -P '' -C ''"

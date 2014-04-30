@@ -24,7 +24,7 @@ parameters:
     label: Server Image
     description: Operating system to use for the Linux Server
     type: string
-    default: CentOS 6.5
+    default: Ubuntu 14.04 LTS (Trusty Tahr)
 
   flavor:
     label: Cloud Server flavor
