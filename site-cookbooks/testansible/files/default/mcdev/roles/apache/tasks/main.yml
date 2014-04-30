@@ -1,0 +1,4 @@
+---
+- name: Installing Apache [Debian/Ubuntu]
+  yum: name=httpd state=latest
+  notify: restart httpd
