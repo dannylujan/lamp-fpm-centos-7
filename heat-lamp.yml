@@ -1,8 +1,7 @@
 heat_template_version: 2013-05-23
 
 description: |
-  This is a Heat template to deploy a single Linux server with an Ansible
-  deployment
+  This is a Heat template to deploy a server with LAMP
 
 
 parameters:
@@ -24,39 +23,85 @@ parameters:
     label: Server Image
     description: Operating system to use for the Linux Server
     type: string
-    default: Ubuntu 14.04 LTS (Trusty Tahr)
+    default: CentOS 6.5 (PVHVM)
+    constraints:
+    - allowed_values:
+      - CentOS 6.5 (PVHVM)
+      - Red Hat Enterprise Linux 6.5 (PVHVM)
+      - Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)
+      - Ubuntu 12.04 LTS (Precise Pangolin) (PVHVM)
+      - Debian 7 (Wheezy) (PVHVM)
+      description: Must be a supported operating system.
 
   flavor:
     label: Cloud Server flavor
     description: Flavor of Cloud server to use
     type: string
     default: 1 GB Performance
-
-  ssh_keypair_name:
-    label: SSH Keypair Name
-    description: New nova keypair name for ssh access to the server
-    type: string
     constraints:
-    - allowed_pattern: "^(.){1,64}$"
-      description: "Must be shorter than 64 characters or fewer."
+    - allowed_values:
+      - 1 GB Performance
+      - 2 GB Performance
+      - 4 GB Performance
+      - 8 GB Performance
+      - 15 GB Performance
+      - 30 GB Performance
+      description: |
+        Must be a valid Rackspace Cloud Server flavor for the region you have
+        selected to deploy into.
+
+  phpmyadmin_user:
+    label: Username
+    description: "Username for phpMyAdmin logins."
+    type: string
+    default: serverinfo
+    constraints:
+    - allowed_pattern: "^(.){1,16}$"
+      description: |
+        Must be shorter than 16 characters, this is due to MySQL's maximum
+        username length.
 
   kitchen:
     description: URL for the kitchen to use
     type: string
-    default: https://github.com/cmecca/ChefAnsibleWrapper
+    default: https://github.com/rillip3/ChefAnsibleWrapper/
 
   chef_version:
     description: Version of chef client to use
     type: string
-    default: 11.12.2
+    default: 11.12.4
 
 resources:
 
   ssh_key:
     type: "OS::Nova::KeyPair"
     properties:
-      name: { get_param: ssh_keypair_name }
+      name: { get_param: "OS::stack_id" }
       save_private_key: true
+
+  mysql_root_password:
+    type: "OS::Heat::RandomString"
+    properties:
+      length: 16
+      sequence: lettersdigits
+
+  mysql_repl_password:
+    type: "OS::Heat::RandomString"
+    properties:
+      length: 16
+      sequence: lettersdigits
+
+  mysql_debian_password:
+    type: "OS::Heat::RandomString"
+    properties:
+      length: 16
+      sequence: lettersdigits
+
+  phpmyadmin_pass:
+    type: "OS::Heat::RandomString"
+    properties:
+      length: 16
+      sequence: lettersdigits
 
   linux_server:
     type: "Rackspace::Cloud::Server"
@@ -65,6 +110,7 @@ resources:
       flavor: { get_param: flavor }
       image: { get_param: image }
       key_name: { get_resource: ssh_key }
+      config_drive: "true"
 
   linux_setup:
     type: "OS::Heat::ChefSolo"
@@ -76,8 +122,14 @@ resources:
       kitchen: { get_param: kitchen }
       chef_version: { get_param: chef_version }
       node:
-        run_list: ["recipe[testansible]"]
-
+        mysql:
+          server_root_password: { get_attr: [mysql_root_password, value] }
+          server_repl_password: { get_attr: [mysql_repl_password, value] }
+          server_debian_password: { get_attr: [mysql_debian_password, value] }
+        phpmyadmin:
+            pass: { get_attr: [phpmyadmin_pass, value] }
+            user: { get_param: phpmyadmin_user }
+        run_list: ["recipe[lamp]"]
 
 outputs:
   private_key:
@@ -85,3 +137,10 @@ outputs:
 
   server_ip:
     value: { get_attr: [linux_server, accessIPv4] }
+
+  phpmyadmin_password:
+    value: { get_attr: [phpmyadmin_pass, value] }
+  
+  mysql_root_password:
+    value: { get_attr: [mysql_root_password, value] }
+

@@ -1,7 +1,0 @@
----
-- name: RSMC Apache Playbook
-  hosts: all
-  user: root
-
-  roles:
-    - apache
