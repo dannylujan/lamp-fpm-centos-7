@@ -1,7 +1,0 @@
-{
-  "sources": {
-    "testansible": {
-      "path": "./site-cookbooks/testansible"
-    }
-  }
-}

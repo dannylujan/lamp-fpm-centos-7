@@ -129,7 +129,7 @@ resources:
         phpmyadmin:
             pass: { get_attr: [phpmyadmin_pass, value] }
             user: { get_param: phpmyadmin_user }
-        run_list: ["recipe[lamp]"]
+        run_list: ["recipe[LAMP]"]
 
 outputs:
   private_key:
