@@ -1,0 +1,23 @@
+---
+- name: Enable apache modules for Debian based
+  command: /usr/sbin/a2enmod {{ item }}
+  with_items: playbook.apache.modules.v2_2
+  when: ansible_os_family == 'Debian' and ansible_lsb.release == '12.04'
+
+- name: unlink modules
+  command:  /usr/sbin/a2dismod {{ item }}
+  with_items:
+    - "mpm_*"
+  when: ansible_os_family == 'Debian' and ansible_lsb.release == '14.04'
+
+- name: copy module configuration templates
+  template: src=Debian/v24/mods/{{ item }}.conf.j2 dest=/etc/apache2/mods-available/{{ item }}.conf owner=root group=root
+  with_items: playbook.apache.modules.module_configs.v2_4_7
+  when: ansible_os_family == 'Debian' and ansible_lsb.release == '14.04'
+  ignore_errors: yes
+
+- name: Enable apache modules for Debian based
+  command: /usr/sbin/a2enmod {{ item }}
+  with_items: playbook.apache.modules.v2_4_7
+  when: ansible_os_family == 'Debian' and ansible_lsb.release == '14.04'
+  notify: restart apache

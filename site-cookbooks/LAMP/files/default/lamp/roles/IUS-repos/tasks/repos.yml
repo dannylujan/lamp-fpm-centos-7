@@ -1,0 +1,40 @@
+---
+
+- name: install LSB_release req for RHEL systems
+  yum: pkg=redhat-lsb state=installed
+  when: ansible_os_family == 'RedHat'
+
+- name: regather facts
+  setup:
+  when: ansible_os_family == 'RedHat'
+
+- name: Checking for existing IUS package
+  command: rpm -q ius-release
+  ignore_errors: yes
+  register: rpm_found
+  when: ansible_os_family == 'RedHat'
+
+- name: Download rpm if not installed
+  copy: src=ius-release-1.0-8.ius.el6.noarch.rpm dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm
+  when: ansible_os_family == 'RedHat' and rpm_found.rc != 0
+
+- name: Install RPM if not installed
+  yum: name=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm state=present
+  when: ansible_os_family == 'RedHat' and rpm_found.rc != 0
+
+- name: Clean up RPM fil
+  file: dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm state=absent
+  when: ansible_os_family == 'RedHat' and rpm_found.rc != 0
+
+- name: Add ius-dev.repo
+  template: src={{ansible_distribution}}_ius-dev.repo.j2 dest=/etc/yum.repos.d/ius.repo
+  when: ansible_os_family == 'RedHat'
+
+- name: Add ius.repo
+  template: src={{ansible_distribution}}_ius.repo.j2 dest=/etc/yum.repos.d/ius.repo
+  when: ansible_os_family == 'RedHat'
+
+- name: Add ius-testing.repo
+  template: src={{ansible_distribution}}_ius-testing.repo.j2 dest=/etc/yum.repos.d/ius-testing.repo
+  when: ansible_os_family == 'RedHat' 
+

@@ -1,0 +1,10 @@
+---
+- include_vars: "{{ ansible_os_family }}.yml"
+
+- name: seed mysql
+  command: /usr/bin/debconf-set-selections /var/cache/local/preseeding/mysql-server.seed
+
+- name: restart mysql
+  service: name={{mysql}} state=restarted
+
+  

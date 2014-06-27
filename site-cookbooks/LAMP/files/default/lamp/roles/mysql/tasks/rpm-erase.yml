@@ -1,0 +1,10 @@
+---
+- name: Erase mysql-libs with no deps
+  command: rpm -e --nodeps mysql-libs
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int >= 6
+
+- name: Remove mysql from Redhat base 5
+  yum: name=mysql state=absent
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int < 6
+
+

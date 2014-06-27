@@ -1,0 +1,46 @@
+---
+
+- name: Include common.yml
+  include: common.yml
+
+- name: Install holland-mysqldump packages for Redhat
+  yum: name=holland-mysqldump state=present
+  when: ansible_os_family == 'RedHat'
+
+
+- name: Download holland-mysqldump .deb file
+  copy: src=holland-mysqldump_{{holland_version}}_all.deb dest=/tmp/holland-mysqldump_{{holland_version}}_all.deb
+  when: ansible_os_family == 'Debian'
+  register: deb_mysqldump_dl
+
+- name: Install holland-mysqldump .deb file
+  apt: deb=/tmp/holland-mysqldump_{{holland_version}}_all.deb state=installed
+  when: ansible_os_family == 'Debian' and deb_mysqldump_dl|changed
+  register: deb_mysqldump_installed
+
+- name: Cleanup holland-mysqldump .deb file
+  file: dest=/tmp/holland-mysqldump_{{holland_version}}_all.deb state=absent
+  when: ansible_os_family == 'Debian' and deb_mysqldump_installed|changed
+
+- name: Add holland.conf template
+  template: src=holland.conf.j2 dest=/etc/holland/holland.conf
+
+- name: Add backupset template
+  template: src=backupsets/default.conf.j2 dest=/etc/holland/backupsets/default.conf
+
+- name: Add holland.sql file
+  template: src=holland.sql.j2 dest=/etc/holland/holland.sql
+
+- name: Add holland MySQL user
+  shell: /usr/bin/mysql -u root < /etc/holland/holland.sql
+
+- name: Flush privileges
+  shell: mysqladmin -u root flush-privileges
+
+- name: Add cron job
+  template: src=holland.cron.j2 dest=/etc/cron.d/holland
+
+- name: Run one time holland backup
+  shell: holland bk
+
+

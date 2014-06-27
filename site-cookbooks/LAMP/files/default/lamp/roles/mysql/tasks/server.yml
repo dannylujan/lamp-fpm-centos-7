@@ -1,0 +1,62 @@
+---
+- include_vars: "{{ ansible_os_family }}.yml" 
+
+- name: Add include directory 
+  file: path={{ includedir }} owner=root group=root state=directory
+
+- name: Install MySQL packages on Redhat base
+  yum: name={{item}} state=latest
+  with_items:
+    - mysql55-server
+    - MySQL-python
+  when: ansible_os_family == 'RedHat'
+
+- name: Install MySQL packages on Ubuntu base
+  apt: name={{item}} state=present
+  with_items:
+    - mysql-server
+    - python-mysqldb
+  when: ansible_os_family == 'Debian'
+
+- name: Add tmp directory
+  file: path=/var/lib/mysqltmp owner=mysql group=mysql state=directory
+
+- name: Add my.cnf template
+  template: src=my.cnf.j2 dest={{mysqlpath}}/my.cnf
+  notify: restart mysql
+
+- name: Remove existing InnoDB log files
+  file: path=/var/lib/mysql/{{item}} state=absent
+  with_items:
+  - ib_logfile0
+  - ib_logfile1
+
+- name: Manually start service for Redhat base
+  service: name=mysqld state=started
+  when: ansible_os_family == 'RedHat'
+
+- name: Update mysql root password
+  mysql_user: name=root host={{item}} password={{mysql_password}}
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+
+- name: Set ~/.my.cnf file
+  template: src=dotmy.cnf.j2 dest=/root/.my.cnf mode=0600
+
+- name: Delete anonymous MySQL user
+  mysql_user: name="" host={{item}} state=absent
+  with_items:
+    - localhost
+    - "{{ansible_hostname}}"
+
+- name: Delete Hostname based MySQL user
+  mysql_user: name=root host="{{ansible_hostname}}" state=absent
+
+- name: Remove MySQL test database
+  mysql_db: name=test state=absent
+
+- name: Set mysqllogs logrotate
+  template: src=mysql-logrotate.j2 dest=/etc/logrotate.d/mysqllogs
+

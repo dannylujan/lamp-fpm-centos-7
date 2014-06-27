@@ -1,0 +1,31 @@
+---
+# Generic Playbook to install and configure apache as an example
+
+- name: Install PHP and packages - Debian
+  apt: pkg={{ item }} state=installed update_cache=true
+  with_items: playbook.php5.Debian.packages
+  when: ansible_os_family == 'Debian'
+
+- name: create session path - Debian
+  file: path={{ playbook.php5.Debian.session.save_path }} owner=root group=www-data mode=0770 state=directory
+  when: ansible_os_family == 'Debian'
+
+- name: copy php.ini template - Debian
+  template: src=php.ini.j2 dest={{ playbook.php5.Debian.php_ini }}
+  when: ansible_os_family == 'Debian'
+  notify: restart Debian apache
+
+- name: Install PHP and packages - RHEL
+  yum: pkg={{ item }} state=installed
+  with_items: playbook.php5.RedHat.packages
+  when: ansible_os_family == 'RedHat'
+
+- name: create session path - RHEL
+  file: path={{ playbook.php5.RedHat.session.save_path }} owner=root group=apache mode=0770 state=directory
+  when: ansible_os_family == 'RedHat'
+
+- name: copy php.ini template - RHEL
+  template: src=php.ini.j2 dest={{ playbook.php5.RedHat.php_ini }}
+  when: ansible_os_family == 'RedHat'
+  notify: restart RedHat apache
+

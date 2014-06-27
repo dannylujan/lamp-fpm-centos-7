@@ -1,0 +1,60 @@
+<VirtualHost *:80>
+        ServerName {{ playbook.apache.common.domain }}
+        ServerAlias www.{{ playbook.apache.common.domain }}
+        DocumentRoot /var/www/vhosts/{{ playbook.apache.common.domain }}
+
+        # Force HTTPS when loading the page
+        #RewriteEngine On
+        #RewriteCond %{HTTPS} off
+        #RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+        <Directory /var/www/vhosts/{{ playbook.apache.common.domain }}>
+                Options -Indexes +FollowSymLinks -MultiViews
+                AllowOverride All
+        </Directory>
+
+{% if ansible_os_family == 'Debian' %}
+        CustomLog /var/log/{{ playbook.apache.Debian.apache }}/{{ playbook.apache.common.domain }}-access.log combined
+        ErrorLog /var/log/{{ playbook.apache.Debian.apache }}/{{ playbook.apache.common.domain }}-error.log
+{% else %}
+        CustomLog /var/log/{{ playbook.apache.RedHat.apache }}/{{ playbook.apache.common.domain }}-access.log combined
+        ErrorLog /var/log/{{ playbook.apache.RedHat.apache }}/{{ playbook.apache.common.domain }}-error.log
+{% endif %}
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+</VirtualHost>
+
+#<VirtualHost *:443>
+#        ServerName {{ playbook.apache.common.domain }}
+#        DocumentRoot /var/www/vhosts/{{ playbook.apache.common.domain }}
+#        <Directory /var/www/vhosts/{{ playbook.apache.common.domain }}>
+#                Options -Indexes +FollowSymLinks -MultiViews
+#                AllowOverride All
+#        </Directory>
+#
+{% if ansible_os_family == 'Debian' %}
+        CustomLog /var/log/{{ playbook.apache.Debian.apache }}/{{ playbook.apache.common.domain }}-ssl-access.log combined
+        ErrorLog /var/log/{{ playbook.apache.Debian.apache }}/{{ playbook.apache.common.domain }}-ssl-error.log
+{% else %}
+        CustomLog /var/log/{{ playbook.apache.RedHat.apache }}/{{ playbook.apache.common.domain }}-ssl-access.log combined
+        ErrorLog /var/log/{{ playbook.apache.RedHat.apache }}/{{ playbook.apache.common.domain }}-ssl-error.log
+{% endif %}
+#
+#        # Possible values include: debug, info, notice, warn, error, crit,
+#        # alert, emerg.
+#        LogLevel warn
+#
+#        SSLEngine on
+#        SSLCertificateFile    /etc/pki/tls/certs/2014-{{ playbook.apache.common.domain }}.crt
+#        SSLCertificateKeyFile /etc/pki/tls/private/2014-{{ playbook.apache.common.domain }}.key
+#        SSLCertificateChainFile /etc/pki/tls/private/2014-{{ playbook.apache.common.domain }}.ca.crt
+#
+#        <FilesMatch "\.(cgi|shtml|phtml|php)$">
+#                SSLOptions +StdEnvVars
+#        </FilesMatch>
+#
+#        BrowserMatch "MSIE [2-6]"                 nokeepalive ssl-unclean-shutdown                 downgrade-1.0 force-response-1.0
+#        BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+#</VirtualHost>

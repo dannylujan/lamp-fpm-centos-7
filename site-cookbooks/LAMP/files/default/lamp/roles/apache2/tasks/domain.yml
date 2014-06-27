@@ -1,0 +1,24 @@
+---
+# Generic Playbook to install and configure apache as an example
+#
+- name: Create domains document root
+  file: path=/var/www/vhosts/{{ playbook.apache.common.domain }} owner={{ playbook.apache.Debian.owner }} group={{ playbook.apache.Debian.group }} mode=0775 state=directory
+  when: ansible_os_family == 'Debian'
+
+- name: Add domains hostname file
+  template: src=vhost.j2 dest={{ playbook.apache.Debian.vhost_directory }}/{{ playbook.apache.common.domain }}.conf
+  when: ansible_os_family == 'Debian'
+
+- name: Enable domain
+  command: /usr/sbin/a2ensite {{ playbook.apache.common.domain }}.conf
+  when: ansible_os_family == 'Debian'
+  notify: Restart apache
+
+- name: Create domains document root
+  file: path=/var/www/vhosts/{{ playbook.apache.common.domain }} owner={{ playbook.apache.RedHat.owner }} group={{ playbook.apache.RedHat.group }} mode=0775 state=directory
+  when: ansible_os_family == 'RedHat'
+
+- name: Add domains hostname file
+  template: src=vhost.j2 dest={{ playbook.apache.RedHat.vhost_directory }}/{{ playbook.apache.common.domain }}.conf
+  when: ansible_os_family == 'RedHat'
+  notify: Restart apache

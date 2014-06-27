@@ -1,0 +1,32 @@
+---
+
+- name: Install holland-common pkgs on Redhat base
+  yum: name={{item}} state=present
+  with_items:
+  - MySQL-python
+  - holland-common
+  when: ansible_os_family == 'RedHat'
+
+- name: Include default.yml on Debian
+  include: default.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Install holland-common pkgs on Debian base
+  apt: name=python-mysqldb state=present
+  when: ansible_os_family == 'Debian'
+
+- name: Download holland-common .deb files for local install
+  copy: src=holland-common_{{holland_version}}_all.deb dest=/tmp/holland-common_{{holland_version}}_all.deb
+  when: ansible_os_family == 'Debian'
+  register: deb_common_dl
+
+- name: Install holland-common .deb file
+  apt: deb=/tmp/holland-common_{{holland_version}}_all.deb state=installed
+  when: ansible_os_family == 'Debian' and deb_common_dl|changed
+  register: deb_common_installed
+
+- name: Cleanup holland-common .deb file
+  file: dest=/tmp/holland-common_{{holland_version}}_all.deb state=absent
+  when: ansible_os_family == 'Debian' and deb_common_installed|changed
+
+

@@ -1,0 +1,4 @@
+[localhost]
+localhost ansible_connection=local
+[webbed]
+23.253.230.83

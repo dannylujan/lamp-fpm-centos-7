@@ -1,0 +1,151 @@
+# LAMP Deployment Vars
+
+playbook: {
+    'php5': {
+        'RedHat': {
+            'php_ini': "/etc/php.ini",
+            'apache': "httpd",
+            'packages': [
+                "php54",
+                "php54-gd",
+                "php54-mysql",
+                "php54-pecl-apc",
+                "php54-xml",
+                "php54-devel"
+                ],
+            'session': {
+                'save_path': "/var/lib/php/session"
+                },
+            },
+        'Debian': {
+            'php_ini': "/etc/php5/apache2/php.ini",
+            'apache': "apache2",
+            'packages': [
+                "libapache2-mod-php5",
+                "php5-cli",
+                "php-pear",
+                "php5-mysql",
+                "php-apc",
+                "php5-gd",
+                "php5-dev",
+                "php5-curl"
+                ],
+            'session': {
+                'save_path': "/var/lib/php5/session"
+                },
+            },
+        'common': {
+            'max_execution_time': 30,
+            'memory_limit': "{{ansible_memtotal_mb}}",
+            'error_reporting': "E_ALL & ~E_NOTICE | E_DEPRECATED",
+            'register_globals': "Off",
+            'post_max_size': "8M",
+            'upload_max_filesize': "2M",
+            'short_open_tag': "On",
+            'include_path': ".:/usr/share/pear:/usr/share/php",
+            'expose_php': "Off"
+            }
+        },
+    'apache': {
+        'common': {
+            'domain': "domain.com",
+            'timeout': 30,
+            'keep_alive': "On",
+            'keep_alive_timeout': 20,
+            'keep_alive_requests': 120,
+            'max_clients': "{{ (ansible_memtotal_mb / 2 / 15)|int }}",
+            'active_ports': [
+                80,
+                443
+                ],
+            'open_firewall_ports': [
+                22,
+                80,
+                443
+                ],
+            },
+        "RedHat": {
+            'apache': "httpd",
+            'vhost_directory': "/etc/httpd/vhost.d",
+            'owner': "apache",
+            'group': "apache",
+            },
+        "Debian": {
+            'apache': "apache2",
+            'vhost_directory': "/etc/apache2/sites-available",
+            'owner': "www-data",
+            'group': "www-data",
+            },
+        'modules': {
+            'v2_2': [
+                "cgi",
+                "dir",
+                "env",
+                "ssl",
+                "mime",
+                "alias",
+                "status",
+                "deflate",
+                "rewrite",
+                "setenvif",
+                "autoindex",
+                "reqtimeout",
+                "auth_basic",
+                "authn_file",
+                "authz_host",
+                "authz_user",
+                "negotiation",
+                "authz_default",
+                "authz_groupfile"
+                ],
+            'v2_4_7': [
+                "access_compat",
+                "alias",
+                "auth_basic",
+                "authn_core",
+                "authn_file",
+                "authz_core",
+                "authz_groupfile",
+                "authz_host",
+                "authz_user",
+                "autoindex",
+                "deflate",
+                "dir",
+                "env",
+                "filter",
+                "mime",
+                "mpm_prefork",
+                "negotiation",
+                "rewrite",
+                "setenvif",
+                "socache_shmcb",
+                "ssl",
+                "status",
+                ],
+            "module_configs": {
+                "v2_4_7": [
+                    "alias",
+                    "autoindex",
+                    "deflate",
+                    "dir",
+                    "mime",
+                    "mpm_prefork",
+                    "negotiation",
+                    "php5",
+                    "setenvif",
+                    "ssl",
+                    "status"
+                    ]
+                }
+            },
+    },
+    'phpmyadmin': {
+        'whitelistips_support': [
+            "72.3.128.84/32", #DFW Bastion
+            "69.20.0.1/32", #IAD Bastion
+            "120.136.34.22/32", #HKG Bastion
+            "212.100.225.49/32", #LON1 Bastion
+            "212.100.225.42/32" #LON3 Bastion
+        ]
+    }
+}

@@ -1,0 +1,3 @@
+---
+phpmyadmin_name: phpMyAdmin
+apache_path: /etc/httpd/conf.d
