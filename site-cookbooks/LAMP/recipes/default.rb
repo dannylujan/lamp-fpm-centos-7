@@ -23,6 +23,13 @@ package "ansible"
 case node[:platform]
   when "debian", "ubuntu"
     package "python-apt"
+    package "python-pip"
+    package "build-essential"
+    package "python-dev"
+    execute "Install Ansible" do
+      command "sudo pip install paramiko PyYAML jinja2 httplib2 ansible"
+      action :run
+    end
 end
 
 execute "sshkey" do
