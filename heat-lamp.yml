@@ -28,7 +28,7 @@ parameters:
     - allowed_values:
       - CentOS 6.5 (PVHVM)
       - Red Hat Enterprise Linux 6.5 (PVHVM)
-      - Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)
+      - Ubuntu 14.04 LTS (Trusty Tahr)
       - Ubuntu 12.04 LTS (Precise Pangolin) (PVHVM)
       - Debian 7 (Wheezy) (PVHVM)
       description: Must be a supported operating system.
