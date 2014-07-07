@@ -1,7 +1,5 @@
 ---
 
-debian_password: "{{ lookup('password', '/tmp/deb_' + ansible_hostname + '-' + ansible_date_time.time) }}"
-
 mysql: mysql
 mysqlpath: /etc/mysql
 socket: /var/run/mysqld/mysqld.sock

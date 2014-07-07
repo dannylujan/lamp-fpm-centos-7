@@ -2,7 +2,6 @@
 client_only: no
 
 mysql_password: "{{ lookup('password', '/tmp/mysql_' + ansible_hostname + '-' + ansible_date_time.time) }}"
-repl_password: "{{ lookup('password', '/tmp/repl_' + ansible_hostname + '-' + ansible_date_time.time) }}"
 
 
 datadir: /var/lib/mysql

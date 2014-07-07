@@ -26,10 +26,13 @@ case node[:platform]
     package "python-pip"
     package "build-essential"
     package "python-dev"
-    execute "Install Ansible" do
-      command "sudo pip install paramiko PyYAML jinja2 httplib2 ansible"
-      action :run
-    end
+  when "redhat", "centos"
+    package "python-pip"
+end
+
+execute "Install Ansible" do
+  command "sudo pip install paramiko PyYAML jinja2 httplib2 ansible"
+  action :run
 end
 
 execute "sshkey" do
@@ -53,6 +56,6 @@ remote_directory "/root/lamp" do
 end
 
 execute "ansible" do
-  command "`which ansible-playbook` -vvv -i /root/lamp/hosts /root/lamp/site.yml"
+  command "`which ansible-playbook` -i /root/lamp/hosts /root/lamp/site.yml -e 'mysql_password=#{node[:mysql][:server_root_password]} htuser=#{node[:phpmyadmin][:user]} htpass=#{node[:phpmyadmin][:pass]}'"
   action :run
 end

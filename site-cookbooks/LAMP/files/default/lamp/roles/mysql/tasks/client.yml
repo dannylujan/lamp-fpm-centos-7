@@ -19,6 +19,7 @@
   with_items: 
   - mysql55
   - mysql55-devel
+  ignore_errors: yes
   when: ansible_os_family == 'RedHat'
 
 - name: Install MySQL packages on Ubuntu base
