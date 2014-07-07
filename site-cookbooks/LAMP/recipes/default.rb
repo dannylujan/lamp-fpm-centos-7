@@ -31,7 +31,7 @@ case node[:platform]
 end
 
 execute "Install Ansible" do
-  command "sudo pip install paramiko PyYAML jinja2 httplib2 ansible"
+  command "pip install paramiko PyYAML jinja2 httplib2 ansible"
   action :run
 end
 
