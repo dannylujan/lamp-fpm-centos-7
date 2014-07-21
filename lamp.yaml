@@ -3,9 +3,23 @@ heat_template_version: 2013-05-23
 description: |
   This is a Heat template to deploy a server with LAMP
 
+parameter_groups:
+- label: Server Settings
+  parameters:
+  - server_hostname
+  - image
+  - flavor
+
+- label: phpMyAdmin Settings
+  parameters:
+  - phpmyadmin_user
+
+- label: rax-dev-params
+  parameters:
+  - kitchen
+  - chef_version
 
 parameters:
-
   server_hostname:
     label: Server Name
     description: Hostname to use for setting the server name.
@@ -20,8 +34,10 @@ parameters:
         Must begin with a letter and contain only alphanumeric characters.
 
   image:
-    label: Server Image
-    description: Operating system to use for the Linux Server
+    label: Operating System
+    description: |
+      Required: Server image used for all servers that are created as a part of
+      this deployment.
     type: string
     default: CentOS 6.5 (PVHVM)
     constraints:
@@ -29,13 +45,15 @@ parameters:
       - CentOS 6.5 (PVHVM)
       - Red Hat Enterprise Linux 6.5 (PVHVM)
       - Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)
-      - Ubuntu 12.04 LTS (Precise Pangolin) 
+      - Ubuntu 12.04 LTS (Precise Pangolin)
       - Debian 7 (Wheezy) (PVHVM)
       description: Must be a supported operating system.
 
   flavor:
-    label: Cloud Server flavor
-    description: Flavor of Cloud server to use
+    label: Server Size
+    description: |
+      Required: Rackspace Cloud Server flavor to use. The size is based on the
+      amount of RAM for the provisioned server.
     type: string
     default: 1 GB Performance
     constraints:
@@ -69,7 +87,7 @@ parameters:
   chef_version:
     description: Version of chef client to use
     type: string
-    default: 11.12.4
+    default: 11.12.8
 
 resources:
 
@@ -127,20 +145,35 @@ resources:
           server_repl_password: { get_attr: [mysql_repl_password, value] }
           server_debian_password: { get_attr: [mysql_debian_password, value] }
         phpmyadmin:
-            pass: { get_attr: [phpmyadmin_pass, value] }
-            user: { get_param: phpmyadmin_user }
+          pass: { get_attr: [phpmyadmin_pass, value] }
+          user: { get_param: phpmyadmin_user }
         run_list: ["recipe[LAMP]"]
 
 outputs:
   private_key:
+    description: SSH Private Key
     value: { get_attr: [ssh_key, private_key] }
 
   server_ip:
+    description: Server IP
     value: { get_attr: [linux_server, accessIPv4] }
 
-  phpmyadmin_password:
-    value: { get_attr: [phpmyadmin_pass, value] }
-  
-  mysql_root_password:
-    value: { get_attr: [mysql_root_password, value] }
+  phpmyadmin_url:
+    description: phpMyAdmin URL
+    value:
+      str_replace:
+        template: "http://%server_ip%/phpmyadmin"
+        params:
+          "%server_ip%": { get_attr: [linux_server, accessIPv4] }
 
+  phpmyadmin_user:
+    description: phpMyAdmin User
+    value: { get_param: phpmyadmin_user }
+
+  phpmyadmin_password:
+    description: phpMyAdmin Password
+    value: { get_attr: [phpmyadmin_pass, value] }
+
+  mysql_root_password:
+    description: MySQL Root Password
+    value: { get_attr: [mysql_root_password, value] }
