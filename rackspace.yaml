@@ -1,0 +1,54 @@
+schema-version: 1.0.0
+application-family: Application Frameworks
+application-name: LAMP
+flavor: |
+  Single Linux server running a traditional LAMP stack for development use
+flavor-weight: 1
+reach-info:
+  icon-20x20: https://0b5294b243620310a700-e388a7f3aba385a925111b1fc6f680d4.ssl.cf2.rackcdn.com/lamp-icon-20x20.png
+  tattoo: https://0b5294b243620310a700-e388a7f3aba385a925111b1fc6f680d4.ssl.cf2.rackcdn.com/lamp-tattoo.png
+hidden_outputs:
+  - private_key
+  - phpmyadmin_password
+  - mysql_root_password
+abstract: A standard LAMP stack running on a single Linux Cloud Server.
+instructions: |
+  #### Getting Started
+  This deployment is intended for small workloads, such as a site in
+  development. For a larger work load, consider using the PHP Application
+  Deployment instead, as it will provide a much better setup for scaling
+  production workloads.
+
+  #### What is provided
+  This deployment configures a Cloud Server running Apache, MySQL, PHP, and
+  phpMyAdmin. A simple firewall rule set is configured allowing access to
+  Apache and SSH.
+
+  #### Logging in via SSH
+  The private key provided in the passwords section can be used to login as
+  root via SSH.  We have an article on how to use these keys with [Mac OS X and
+  Linux](http://www.rackspace.com/knowledge_center/article/logging-in-with-a-ssh-private-key-on-linuxmac)
+  as well as [Windows using
+  PuTTY](http://www.rackspace.com/knowledge_center/article/logging-in-with-a-ssh-private-key-on-windows).
+
+  #### Details of Your Setup
+  [Apache](http://www.apache.org/) v2.2 is installed on all Red Hat Enterprise
+  Linux and CentOS distributions. Ubuntu 14.04 comes with Apache 2.4. Other
+  Ubuntu versions come with 2.2.
+
+  [MySQL](http://www.mysql.com/) v5.5 is installed on Ubuntu 12.04, 14.04, Red
+  Hat Enterprise Linux 6.5 and CentOS v6.5. MySQL v5.1 is installed on Ubuntu
+  10.04. The MySQL root password is recorded in root's home directory in the
+  file .my.cnf and in the View Generated Passwords dialog. Daily database
+  backups are taken using [Holland](http://hollandbackup.org/). A rotating
+  seven days of database dumps are stored in /var/lib/mysqlbackup.
+
+  [PHP](http://www.php.net/) is installed at v5.3 on Ubuntu 12.04, v5.5 on
+  Ubuntu 14.04 and v5.4 on Red Hat Enterprise Linux and CentOS.
+
+  [phpMyAdmin](http://www.phpmyadmin.net/) is available via HTTP at
+  /phpmyadmin. Apache is configured to require HTTP basic authentication. Log
+  in as the user specified when deploying (the default is `admin`) with the
+  password displayed in the View Generated Passwords dialog. You may then login
+  using MySQL login credentials which are also available in the View Generated
+  Passwords dialog.
