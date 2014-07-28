@@ -1,10 +1,7 @@
 ---
 
 - name: Install holland pkgs on Redhat base
-  yum: name={{item}} state=present
-  with_items:
-  - python-setuptools
-  - holland
+  yum: name=holland state=present
   when: ansible_os_family == 'RedHat'
 
 - name: Install holland pkgs on Debian base
@@ -12,17 +9,17 @@
   when: ansible_os_family == 'Debian'
 
 - name: Download holland .deb files for local install
-  copy: src=holland_{{holland_version}}_all.deb dest=/tmp/holland_{{holland_version}}_all.deb
+  copy: src=holland_{{playbook.holland.holland_version}}_all.deb dest=/tmp/holland_{{playbook.holland.holland_version}}_all.deb
   when: ansible_os_family == 'Debian'
   register: deb_dl
 
 - name: Install holland .deb file
-  apt: deb=/tmp/holland_{{holland_version}}_all.deb state=installed
+  apt: deb=/tmp/holland_{{playbook.holland.holland_version}}_all.deb state=installed
   when: ansible_os_family == 'Debian' and deb_dl|changed
   register: deb_installed
 
 - name: Cleanup holland .deb file
-  file: dest=/tmp/holland_{{holland_version}}_all.deb state=absent
+  file: dest=/tmp/holland_{{playbook.holland.holland_version}}_all.deb state=absent
   when: ansible_os_family == 'Debian' and deb_installed|changed
 
 - name: Create RS monitoring plugin folder

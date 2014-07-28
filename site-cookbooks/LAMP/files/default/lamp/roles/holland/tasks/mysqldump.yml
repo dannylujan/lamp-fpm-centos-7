@@ -9,17 +9,17 @@
 
 
 - name: Download holland-mysqldump .deb file
-  copy: src=holland-mysqldump_{{holland_version}}_all.deb dest=/tmp/holland-mysqldump_{{holland_version}}_all.deb
+  copy: src=holland-mysqldump_{{playbook.holland.holland_version}}_all.deb dest=/tmp/holland-mysqldump_{{playbook.holland.holland_version}}_all.deb
   when: ansible_os_family == 'Debian'
   register: deb_mysqldump_dl
 
 - name: Install holland-mysqldump .deb file
-  apt: deb=/tmp/holland-mysqldump_{{holland_version}}_all.deb state=installed
+  apt: deb=/tmp/holland-mysqldump_{{playbook.holland.holland_version}}_all.deb state=installed
   when: ansible_os_family == 'Debian' and deb_mysqldump_dl|changed
   register: deb_mysqldump_installed
 
 - name: Cleanup holland-mysqldump .deb file
-  file: dest=/tmp/holland-mysqldump_{{holland_version}}_all.deb state=absent
+  file: dest=/tmp/holland-mysqldump_{{playbook.holland.holland_version}}_all.deb state=absent
   when: ansible_os_family == 'Debian' and deb_mysqldump_installed|changed
 
 - name: Add holland.conf template

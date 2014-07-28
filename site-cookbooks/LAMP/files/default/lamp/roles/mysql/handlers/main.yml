@@ -1,7 +1,6 @@
 ---
-- include_vars: "{{ ansible_os_family }}.yml"
 
 - name: restart mysql
-  service: name={{mysql}} state=restarted
+  service: name={{ playbook.mysql[ansible_os_family].mysql }} state=restarted
 
   

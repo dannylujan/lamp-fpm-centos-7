@@ -1,7 +1,7 @@
 ---
 # Generic Playbook to install and configure apache as an example
 
-- include_vars: "{{ansible_os_family}}.yml" 
+#- include_vars: "{{ansible_os_family}}.yml" 
 
 - include: install.yml
 - include: domain.yml

@@ -53,7 +53,13 @@ playbook: {
             'keep_alive': "On",
             'keep_alive_timeout': 20,
             'keep_alive_requests': 120,
+            'start_servers': 4,
             'max_clients': "{{ (ansible_memtotal_mb / 2 / 15)|int }}",
+            'min_spare_servers': "{{ (((ansible_memtotal_mb / 2 / 15)|int ** 0.5)|int + 2 / 2)|int }}",
+            'max_spare_servers': "{{ ((ansible_memtotal_mb / 2 / 15)|int ** 0.5)|int + 2|int }}",
+            'server_limit': "{{ (ansible_memtotal_mb / 2 / 15)|int }}",
+            'max_requests_per_child': 1000,
+            'listen_backlog': "{{ (ansible_memtotal_mb / 2 / 15)|int * 2 }}",
             'active_ports': [
                 80,
                 443
@@ -140,6 +146,17 @@ playbook: {
             },
     },
     'phpmyadmin': {
+        'Debian': {
+            'phpmyadmin_name': 'phpmyadmin',
+            'apache_path': '/etc/apache2/conf.d',
+        },
+        'RedHat': {
+            'phpmyadmin_name': 'phpMyAdmin',
+            'apache_path': '/etc/httpd/conf.d',
+        },
+        'htuser': 'serverinfo',
+        'htpass': "{{ lookup('password', '/tmp/htpass_' + ansible_hostname + '-' + ansible_date_time.time) }}",
+        'blowfish_pass': "{{ lookup('password', '/tmp/blowfish_' + ansible_hostname + '-' + ansible_date_time.time) }}",
         'whitelistips_support': [
             "72.3.128.84/32", #DFW Bastion
             "69.20.0.1/32", #IAD Bastion
@@ -147,5 +164,44 @@ playbook: {
             "212.100.225.49/32", #LON1 Bastion
             "212.100.225.42/32" #LON3 Bastion
         ]
+    },
+    'holland': {
+        'holland_version': '1.0.10-2',
+        'holland_dir': '/var/lib/mysqlbackup',
+        'holland_password': "{{ lookup('password', '/tmp/holland_' + ansible_hostname + '-' + ansible_date_time.time) }}"
+    },
+    'mysql': {
+        'Debian': {
+            'mysql': 'mysql',
+            'mysqlpath': '/etc/mysql',
+            'socket': '/var/run/mysqld/mysqld.sock',
+            'includedir': '/etc/mysql/conf.d',
+            'log_error': '/var/log/mysql/error.log'
+        },
+        'RedHat': {
+            'mysql': 'mysqld',
+            'mysqlpath': '/etc',
+            'socket': '/var/lib/mysql/mysql.sock',
+            'includedir': '/etc/sysconfig/mysqld-config',
+            'log_error': '/var/log/mysqld.log'
+        },
+        'mysql_password': "{{ lookup('password', '/tmp/mysql_' + ansible_hostname + '-' + ansible_date_time.time) }}",
+
+        'datadir': '/var/lib/mysql',
+        'log_slow': '/var/lib/mysql/slow-log',
+        'log_bin': '/var/lib/mysql/bin-log',
+        'log_relay': '/var/lib/mysql/relay-log',
+
+        'wait_timeout': 180,
+        'net_read_timeout': 30,
+        'net_write_timeout': 30,
+        'back_log': 128,
+        'table_open_cache': 2048,
+        'max_heap_table_size': 64M,
+        'query_cache_size': 32M,
+
+        'key_buffer_size': 64M,
+        'innodb_log_buffer_size': 4M,
+        'innodb_buffer_pool_size': 64M
     }
 }
