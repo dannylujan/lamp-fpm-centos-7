@@ -1,5 +1,0 @@
----
-
-holland_version: 1.0.10-2
-holland_dir: /var/lib/mysqlbackup
-holland_password: "{{ lookup('password', '/tmp/holland_' + ansible_hostname + '-' + ansible_date_time.time) }}"

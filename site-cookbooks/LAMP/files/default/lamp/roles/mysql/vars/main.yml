@@ -1,23 +1,4 @@
 ---
-client_only: no
 
 mysql_password: "{{ lookup('password', '/tmp/mysql_' + ansible_hostname + '-' + ansible_date_time.time) }}"
-
-
-datadir: /var/lib/mysql
-log_slow: /var/lib/mysql/slow-log
-log_bin: /var/lib/mysql/bin-log
-log_relay: /var/lib/mysql/relay-log
-
-wait_timeout: 180
-net_read_timeout: 30
-net_write_timeout: 30
-back_log: 128
-table_open_cache: 2048
-max_heap_table_size: 64M
-query_cache_size: 32M
-
-key_buffer_size: 64M
-innodb_log_buffer_size: 4M
-innodb_buffer_pool_size: 64M
 

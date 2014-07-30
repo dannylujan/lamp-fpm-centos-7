@@ -2,4 +2,4 @@
 
 htuser: serverinfo
 htpass: "{{ lookup('password', '/tmp/htpass_' + ansible_hostname + '-' + ansible_date_time.time) }}"
-blowfish_pass: "{{ lookup('password', '/tmp/blowfish_' + ansible_hostname + '-' + ansible_date_time.time) }}"
+

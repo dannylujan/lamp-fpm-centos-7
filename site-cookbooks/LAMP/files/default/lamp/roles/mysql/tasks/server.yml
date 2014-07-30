@@ -36,7 +36,7 @@
   when: ansible_os_family == 'RedHat'
 
 - name: Update mysql root password
-  mysql_user: name=root host={{item}} password={{playbook.mysql.mysql_password}}
+  mysql_user: name=root host={{item}} password={{mysql_password}}
   with_items:
     - 127.0.0.1
     - ::1

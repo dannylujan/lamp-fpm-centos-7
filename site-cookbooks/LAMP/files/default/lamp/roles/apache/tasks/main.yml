@@ -1,4 +1,0 @@
----
-- name: Installing Apache [Debian/Ubuntu]
-  apt: name=httpd state=latest
-  notify: restart httpd
