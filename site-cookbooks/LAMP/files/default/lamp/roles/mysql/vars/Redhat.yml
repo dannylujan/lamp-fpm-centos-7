@@ -1,8 +1,0 @@
----
-
-mysql: mysqld
-mysqlpath: /etc
-socket: /var/lib/mysql/mysql.sock
-includedir: /etc/sysconfig/mysqld-config
-log_error: /var/log/mysqld.log
-

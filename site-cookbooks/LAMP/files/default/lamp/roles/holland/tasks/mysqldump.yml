@@ -28,11 +28,8 @@
 - name: Add backupset template
   template: src=backupsets/default.conf.j2 dest=/etc/holland/backupsets/default.conf
 
-- name: Add holland.sql file
-  template: src=holland.sql.j2 dest=/etc/holland/holland.sql
-
 - name: Add holland MySQL user
-  shell: /usr/bin/mysql -u root < /etc/holland/holland.sql
+  mysql_user: name=holland host=localhost password={{playbook.holland.holland_password}} priv=*.*:ALL
 
 - name: Flush privileges
   shell: mysqladmin -u root flush-privileges

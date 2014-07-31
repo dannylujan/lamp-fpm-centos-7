@@ -15,7 +15,7 @@
   when: ansible_os_family == 'RedHat'
 
 - name: Run htpasswd command
-  shell: htpasswd -b -c /etc/{{playbook.phpmyadmin[ansible_os_family].phpmyadmin_name}}/phpmyadmin-htpasswd {{playbook.phpmyadmin.htuser}} {{playbook.phpmyadmin.htpass}}
+  shell: htpasswd -b -c /etc/{{playbook.phpmyadmin[ansible_os_family].phpmyadmin_name}}/phpmyadmin-htpasswd {{htuser}} {{htpass}}
 
 - name: Adding ~/.phpmyadmin
   template: src=dotphpmyadminpass.j2 dest=/root/.phpmyadminpass
