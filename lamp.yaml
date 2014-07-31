@@ -29,9 +29,9 @@ parameters:
     - length:
         min: 1
         max: 64
-    - allowed_pattern: "^[a-zA-Z][a-zA-Z0-9-]*$"
+    - allowed_pattern: "^[a-zA-Z0-9]([a-zA-Z0-9.-])*$"
       description: |
-        Must begin with a letter and contain only alphanumeric characters.
+        Must begin with a letter or number and be alphanumeric or '-' and '.'
 
   image:
     label: Operating System
