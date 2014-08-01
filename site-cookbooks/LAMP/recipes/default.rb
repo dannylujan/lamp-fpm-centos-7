@@ -19,7 +19,6 @@
 #
 
 # setup stock firewall rules
-package "ansible"
 case node[:platform]
   when "debian", "ubuntu"
     package "python-apt"
