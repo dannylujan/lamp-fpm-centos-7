@@ -12,8 +12,9 @@ hidden_outputs:
   - mysql_root_password
 abstract: |
   Single Linux server running a [LAMP
-  stack](http://en.wikipedia.org/wiki/LAMP_(software_bundle)) for development
+  stack] for development
   use.
+  [LAMP stack]: http://en.wikipedia.org/wiki/LAMP_(software_bundle)
 instructions: |
   #### Getting Started
   This deployment is intended for small workloads, such as a site in
