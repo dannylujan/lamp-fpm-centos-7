@@ -31,7 +31,7 @@
   - ib_logfile0
   - ib_logfile1
 
-- name: Manually start service for Redhat base
+- name: Start mysql and enable at boot
   service: name={{playbook.mysql[ansible_os_family].mysql}} state=started enabled=yes
 
 - name: Update mysql root password
