@@ -32,8 +32,7 @@
   - ib_logfile1
 
 - name: Manually start service for Redhat base
-  service: name=mysqld state=started
-  when: ansible_os_family == 'RedHat'
+  service: name={{mysql}} state=started enabled=yes
 
 - name: Update mysql root password
   mysql_user: name=root host={{item}} password={{mysql_password}}
