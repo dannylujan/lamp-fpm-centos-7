@@ -1,0 +1,7 @@
+---
+
+'mysql': 'mariadb'
+'mysqlpkg': 'mariadb'
+'mysqlpkg_devel': 'mariadb-devel'
+
+'log_error': '/var/log/mariadb/mariadb.log'

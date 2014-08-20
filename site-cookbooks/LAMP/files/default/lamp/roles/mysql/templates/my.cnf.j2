@@ -25,11 +25,11 @@
 ### General
 user = mysql
 port = 3306
-datadir = {{ playbook.mysql.datadir }}
+datadir = {{ datadir }}
 tmpdir = /tmp
-socket = {{ playbook.mysql[ansible_os_family].socket }}
+socket = {{ socket }}
 skip-external-locking = 1
-log_error = {{ playbook.mysql[ansible_os_family].log_error }}
+log_error = {{ log_error }}
 
 ## This prevents using host-based authentication. That means users must be
 ## created using an ip-address (ie 'myuser'@'192.168.100.1') or must make
@@ -44,7 +44,7 @@ open-files-limit = 20000
 
 ### Cache
 thread-cache-size = 16
-table-open-cache = {{ playbook.mysql.table_open_cache }}
+table-open-cache = {{ table_open_cache }}
 table-definition-cache = 512
 
 ## Generally, it is unwise to set the query cache to be larger than 64-128M
@@ -55,7 +55,7 @@ query-cache-type = 1
 {% if ansible_memtotal_mb <= 256 %}
 query-cache-size = 4M
 {% else %}
-query-cache-size = {{ playbook.mysql.query_cache_size }}
+query-cache-size = {{ query_cache_size }}
 {% endif %}
 query-cache-limit = 1M
 
@@ -70,7 +70,7 @@ tmp-table-size = 64M
 {% if ansible_memtotal_mb <= 256 %}
 max-heap-table-size = 16M
 {% else %}
-max-heap-table-size = {{ playbook.mysql.max_heap_table_size }}
+max-heap-table-size = {{ max_heap_table_size }}
 {% endif %}
 
 ### Networking
@@ -99,11 +99,11 @@ max-connections = 25
 max-connect-errors = 10000
 max-allowed-packet = 16M
 interactive-timeout = 600
-wait-timeout = {{ playbook.mysql.wait_timeout }}
-net_read_timeout = {{ playbook.mysql.net_read_timeout }}
-net_write_timeout = {{ playbook.mysql.net_write_timeout }}
+wait-timeout = {{ wait_timeout }}
+net_read_timeout = {{ net_read_timeout }}
+net_write_timeout = {{ net_write_timeout }}
 # This value is the size of the listen queue for incoming TCP/IP connections.
-back_log = {{ playbook.mysql.back_log }}
+back_log = {{ back_log }}
 
 #### Storage Engines
 ## Set this to force MySQL to use a particular engine / table-type
@@ -123,7 +123,7 @@ innodb = FORCE
 {% if ansible_nodename|search('(^|-)db(-|[\d]{1,2})?') %}
 key-buffer-size = {{ (ansible_memtotal_mb * 0.25)|int }}M
 {% else %}
-key-buffer-size = {{ playbook.mysql.key_buffer_size }}
+key-buffer-size = {{ key_buffer_size }}
 {% endif %}
 
 ## This setting controls the size of the buffer that is allocated when
@@ -148,7 +148,7 @@ innodb-buffer-pool-size = {{ (ansible_memtotal_mb * 0.0825)|int }}M
 {% if ansible_nodename|search('(^|-)db(-|[\d]{1,2})?') %}
 innodb-log-buffer-size = 8M
 {% else %}
-innodb-log-buffer-size = {{ playbook.mysql.innodb_log_buffer_size }}
+innodb-log-buffer-size = {{ innodb_log_buffer_size }}
 {% endif %}
 
 ## Be careful when changing these as they require re-generating the
@@ -168,8 +168,8 @@ innodb-file-per-table = 1
 ## Set this to the Server's instance ID in replication environments
 server-id = 1
 
-#log-bin = {{ playbook.mysql.log_bin }}
-#relay-log = {{ playbook.mysql.log_relay }}
+#log-bin = {{ log_bin }}
+#relay-log = {{ log_relay }}
 #relay-log-space-limit = 4G
 #expire-logs-days = 5
 
@@ -191,12 +191,12 @@ server-id = 1
 ## (mysqldump skips these tables by default since they cannot be locked)
 #log-output = FILE
 slow-query-log = 1
-slow-query-log-file = {{ playbook.mysql.log_slow }}
+slow-query-log-file = {{ log_slow }}
 long-query-time = 2
 #log-queries-not-using-indexes = 0
 
 [mysqld-safe]
-log-error = {{playbook.mysql[ansible_os_family].log_error}}
+log-error = {{log_error}}
 
 [mysqldump]
 max-allowed-packet = 16M
@@ -204,4 +204,4 @@ max-allowed-packet = 16M
 # * IMPORTANT: Additional settings that can override those from this file!
 # The files must end with '.cnf', otherwise they'll be ignored.
 #
-!includedir {{ playbook.mysql[ansible_os_family].includedir }}
+!includedir {{ includedir }}
