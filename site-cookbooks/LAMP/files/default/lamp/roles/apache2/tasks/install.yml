@@ -44,3 +44,6 @@
 - name: create conf.d directory
   file: path=/etc/apache2/conf.d owner=root group=root mode=0755 state=directory
   when: ansible_os_family == 'Debian'
+
+- name: Enable service to start at boot
+  service: name={{playbook.apache[ansible_os_family].apache}} enabled=yes
