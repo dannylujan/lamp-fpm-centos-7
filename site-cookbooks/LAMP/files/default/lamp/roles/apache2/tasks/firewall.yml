@@ -4,6 +4,10 @@
   with_items: playbook.apache.common.open_firewall_ports
   when: ansible_os_family == 'RedHat'
 
+- name: Save default apache firewall rules - RedHat
+  command: "/sbin/service iptables save"
+  when: ansible_os_family == 'RedHat'
+
 - name: Setup default apache firewall rules - Debian
   command: ufw allow {{ item }}
   with_items: playbook.apache.common.open_firewall_ports
