@@ -8,7 +8,7 @@
 # README.Debian.gz
 
 {% for port in playbook.apache.common.active_ports %}
-    {% if ansible_lsb.release == '12.04' %}
+    {% if ansible_lsb.release == '12.04' or ansible_os_family == 'RedHat' %}
 NameVirtualHost *:{{ port }}
     {% endif %}
 Listen {{ port }}
