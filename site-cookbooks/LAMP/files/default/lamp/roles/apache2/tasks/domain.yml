@@ -4,32 +4,32 @@
 - name: Create vhosts directory
   file: path=/var/www/vhosts/ mode=0775 state=directory 
 
-- name: Add domains hostname file
-  template: src=vhost.j2 dest={{ playbook.apache.Debian.vhost_directory }}/default.template
-  when: ansible_os_family == 'Debian' and playbook.apache.common.domain == 'example.com'
+- name: Add default.template file - Debian
+  template: src=template.j2 dest={{ playbook.apache.Debian.vhost_directory }}/default.template
+  when: ansible_os_family == 'Debian'
 
-- name: Add domains hostname file
-  template: src=vhost.j2 dest={{ playbook.apache.RedHat.vhost_directory }}/default.template
-  when: ansible_os_family == 'RedHat' and playbook.apache.common.domain == 'example.com'
+- name: Add default.template file - RedHat
+  template: src=template.j2 dest={{ playbook.apache.RedHat.vhost_directory }}/default.template
+  when: ansible_os_family == 'RedHat'
 
-- name: Create domains document root
+- name: Create domains document root - Debian
   file: path=/var/www/vhosts/{{ playbook.apache.common.domain }} owner={{ playbook.apache.Debian.owner }} group={{ playbook.apache.Debian.group }} mode=0775 state=directory
   when: ansible_os_family == 'Debian' and playbook.apache.common.domain != 'example.com'
 
-- name: Add domains vhost file
+- name: Add domains vhost file - Debian
   template: src=vhost.j2 dest={{ playbook.apache.Debian.vhost_directory }}/{{ playbook.apache.common.domain }}.conf
   when: ansible_os_family == 'Debian' and playbook.apache.common.domain != 'example.com'
 
-- name: Enable domain
+- name: Enable domain - Debian
   command: /usr/sbin/a2ensite {{ playbook.apache.common.domain }}.conf
   when: ansible_os_family == 'Debian' and playbook.apache.common.domain != 'example.com'
   notify: Restart apache
 
-- name: Create domains document root
+- name: Create domains document root - RedHat
   file: path=/var/www/vhosts/{{ playbook.apache.common.domain }} owner={{ playbook.apache.RedHat.owner }} group={{ playbook.apache.RedHat.group }} mode=0775 state=directory
   when: ansible_os_family == 'RedHat' and playbook.apache.common.domain != 'example.com'
 
-- name: Add domains hostname file
+- name: Add domains vhost file - RedHat
   template: src=vhost.j2 dest={{ playbook.apache.RedHat.vhost_directory }}/{{ playbook.apache.common.domain }}.conf
   when: ansible_os_family == 'RedHat' and playbook.apache.common.domain != 'example.com'
   notify: Restart apache
