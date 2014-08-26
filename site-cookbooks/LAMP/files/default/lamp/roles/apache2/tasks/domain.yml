@@ -2,12 +2,34 @@
 # Generic Playbook to install and configure apache as an example
 #
 - name: Create vhosts directory
-  file: path=/var/www/vhosts/ mode=0775 state=directory
+  file: path=/var/www/vhosts/ mode=0775 state=directory 
 
 - name: Add domains hostname file
   template: src=vhost.j2 dest={{ playbook.apache.Debian.vhost_directory }}/default.template
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian' and playbook.apache.common.domain == 'example.com'
 
 - name: Add domains hostname file
   template: src=vhost.j2 dest={{ playbook.apache.RedHat.vhost_directory }}/default.template
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' and playbook.apache.common.domain == 'example.com'
+
+- name: Create domains document root
+  file: path=/var/www/vhosts/{{ playbook.apache.common.domain }} owner={{ playbook.apache.Debian.owner }} group={{ playbook.apache.Debian.group }} mode=0775 state=directory
+  when: ansible_os_family == 'Debian' and playbook.apache.common.domain != 'example.com'
+
+- name: Add domains vhost file
+  template: src=vhost.j2 dest={{ playbook.apache.Debian.vhost_directory }}/{{ playbook.apache.common.domain }}.conf
+  when: ansible_os_family == 'Debian' and playbook.apache.common.domain != 'example.com'
+
+- name: Enable domain
+  command: /usr/sbin/a2ensite {{ playbook.apache.common.domain }}.conf
+  when: ansible_os_family == 'Debian' and playbook.apache.common.domain != 'example.com'
+  notify: Restart apache
+
+- name: Create domains document root
+  file: path=/var/www/vhosts/{{ playbook.apache.common.domain }} owner={{ playbook.apache.RedHat.owner }} group={{ playbook.apache.RedHat.group }} mode=0775 state=directory
+  when: ansible_os_family == 'RedHat' and playbook.apache.common.domain != 'example.com'
+
+- name: Add domains hostname file
+  template: src=vhost.j2 dest={{ playbook.apache.RedHat.vhost_directory }}/{{ playbook.apache.common.domain }}.conf
+  when: ansible_os_family == 'RedHat' and playbook.apache.common.domain != 'example.com'
+  notify: Restart apache
