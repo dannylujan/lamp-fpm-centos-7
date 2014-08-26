@@ -28,6 +28,7 @@
 
 #<VirtualHost *:443>
 #        ServerName {{ playbook.apache.common.domain }}
+#        ServerAlias www.{{ playbook.apache.common.domain }}
 #        DocumentRoot /var/www/vhosts/{{ playbook.apache.common.domain }}
 #        <Directory /var/www/vhosts/{{ playbook.apache.common.domain }}>
 #                Options -Indexes +FollowSymLinks -MultiViews
