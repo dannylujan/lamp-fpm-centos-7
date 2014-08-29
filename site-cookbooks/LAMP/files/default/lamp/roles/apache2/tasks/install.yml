@@ -34,6 +34,10 @@
   apt: pkg=apache2 state=installed update_cache=true
   when: ansible_os_family == 'Debian'
 
+- name: Install UFW for Debian based
+  apt: pkg=ufw state=installed update_cache=true
+  when: ansible_os_family == 'Debian'
+
 - name: copy apache2.conf template - 12.04
   template: src=Debian/v22/apache2.conf.j2 dest=/etc/apache2/apache2.conf
   when: ansible_os_family == 'Debian' and ansible_lsb.release == '12.04' or ansible_lsb.major_release == '7'
