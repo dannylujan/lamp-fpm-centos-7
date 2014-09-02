@@ -1,4 +1,7 @@
 ---
+- name: Include RHEL\CentOS 7 vars
+  include_vars: RedHat-7.yml
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 7
 
 - name: Determine if general mysql packages exist on Redhat system base
   command: /bin/rpm -q mysql-libs
@@ -6,19 +9,19 @@
   register: if_found
   ignore_errors: yes
 
-- name: If found, run rpm erase
-  include: rpm-erase.yml
-  when: ansible_os_family == 'RedHat' and if_found.rc == 0
+- name: Erase mysql-libs with no deps
+  command: rpm -e --nodeps mysql-libs
+  when: if_found.rc|default(1) == 0 and ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 6
 
-- name: Remove MySQL from CentOS 5 base
+- name: Remove mysql from Redhat base 5
   yum: name=mysql state=absent
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int < 6
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int < 6
 
 - name: Install MySQL packages on Redhat base
   yum: name={{item}} state=latest
   with_items: 
-  - mysql55
-  - mysql55-devel
+  - "{{mysqlpkg}}"
+  - "{{mysqlpkg_devel}}"
   ignore_errors: yes
   when: ansible_os_family == 'RedHat'
 
