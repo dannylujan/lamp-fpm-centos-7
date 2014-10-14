@@ -48,7 +48,7 @@ playbook: {
         },
     'apache': {
         'common': {
-            'domain': "domain.com",
+            'domain': "example.com",
             'timeout': 30,
             'keep_alive': "On",
             'keep_alive_timeout': 20,

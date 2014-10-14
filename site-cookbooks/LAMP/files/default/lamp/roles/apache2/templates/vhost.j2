@@ -28,6 +28,7 @@
 
 #<VirtualHost *:443>
 #        ServerName {{ playbook.apache.common.domain }}
+#        ServerAlias www.{{ playbook.apache.common.domain }}
 #        DocumentRoot /var/www/vhosts/{{ playbook.apache.common.domain }}
 #        <Directory /var/www/vhosts/{{ playbook.apache.common.domain }}>
 #                Options -Indexes +FollowSymLinks -MultiViews
@@ -35,11 +36,11 @@
 #        </Directory>
 #
 {% if ansible_os_family == 'Debian' %}
-        CustomLog /var/log/{{ playbook.apache.Debian.apache }}/{{ playbook.apache.common.domain }}-ssl-access.log combined
-        ErrorLog /var/log/{{ playbook.apache.Debian.apache }}/{{ playbook.apache.common.domain }}-ssl-error.log
+#        CustomLog /var/log/{{ playbook.apache.Debian.apache }}/{{ playbook.apache.common.domain }}-ssl-access.log combined
+#        ErrorLog /var/log/{{ playbook.apache.Debian.apache }}/{{ playbook.apache.common.domain }}-ssl-error.log
 {% else %}
-        CustomLog /var/log/{{ playbook.apache.RedHat.apache }}/{{ playbook.apache.common.domain }}-ssl-access.log combined
-        ErrorLog /var/log/{{ playbook.apache.RedHat.apache }}/{{ playbook.apache.common.domain }}-ssl-error.log
+#        CustomLog /var/log/{{ playbook.apache.RedHat.apache }}/{{ playbook.apache.common.domain }}-ssl-access.log combined
+#        ErrorLog /var/log/{{ playbook.apache.RedHat.apache }}/{{ playbook.apache.common.domain }}-ssl-error.log
 {% endif %}
 #
 #        # Possible values include: debug, info, notice, warn, error, crit,
