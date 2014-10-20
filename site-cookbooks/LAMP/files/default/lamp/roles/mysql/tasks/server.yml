@@ -1,5 +1,5 @@
 ---
-- include_vars: "{{ ansible_os_family }}.yml" 
+#- include_vars: "{{ ansible_os_family }}.yml" 
 
 - name: Include RHEL\CentOS 7 vars
   include_vars: RedHat-7.yml

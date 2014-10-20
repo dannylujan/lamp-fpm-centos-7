@@ -1,13 +1,5 @@
 ---
 
-- name: install LSB_release req for RHEL systems
-  yum: pkg=redhat-lsb state=installed
-  when: ansible_os_family == 'RedHat'
-
-- name: regather facts
-  setup:
-  when: ansible_os_family == 'RedHat'
-
 - name: Checking for existing IUS package
   command: rpm -q ius-release
   ignore_errors: yes

@@ -6,12 +6,7 @@
   yum: pkg={{ item }} state=installed
   with_items:
   - httpd
-  - redhat-lsb
   - mod_ssl
-  when: ansible_os_family == 'RedHat'
-
-- name: regather facts
-  setup:
   when: ansible_os_family == 'RedHat'
 
 - name: copy httpd template - 6.x
@@ -22,7 +17,7 @@
   template: src=RedHat/v22/ssl.conf.j2 dest=/etc/httpd/conf.d/ssl.conf
   when: ansible_os_family == 'RedHat'
 
-- name: create conf.d directory
+- name: create vhost.d directory
   file: path=/etc/httpd/vhost.d owner=root group=root mode=0755 state=directory
   when: ansible_os_family == 'RedHat'
 
@@ -40,7 +35,7 @@
 
 - name: copy apache2.conf template - 12.04
   template: src=Debian/v22/apache2.conf.j2 dest=/etc/apache2/apache2.conf
-  when: ansible_os_family == 'Debian' and ansible_lsb.release == '12.04' or ansible_lsb.major_release == '7'
+  when: ansible_os_family == 'Debian' and ansible_lsb.release == '12.04' or ansible_os_family == 'Debian' and ansible_lsb.major_release == '7'
 
 - name: copy apache2.conf template - 14.04
   template: src=Debian/v24/apache2.conf.j2 dest=/etc/apache2/apache2.conf

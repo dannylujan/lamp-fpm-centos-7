@@ -13,6 +13,13 @@ playbook: {
                 "php54-xml",
                 "php54-devel"
                 ],
+            'packages_for_ver7': [
+                "php56u",
+                "php56u-gd",
+                "php56u-mysql",
+                "php56u-xml",
+                "php56u-devel"
+                ],
             'session': {
                 'save_path': "/var/lib/php/session"
                 },
