@@ -83,8 +83,7 @@ parameters:
     label: Kitchen URL
     description: URL for the kitchen to use
     type: string
-#    default: https://github.com/rackspace-orchestration-templates/lamp
-    default: https://github.com/CaptBeardie/lamp/tree/cent7_support
+    default: https://github.com/rackspace-orchestration-templates/lamp
 
   chef_version:
     label: Chef Version
