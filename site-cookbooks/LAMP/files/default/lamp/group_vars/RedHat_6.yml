@@ -1,5 +1,6 @@
 ---
 
+# MYSQL VARS
 'mysql': 'mysqld'
 'mysqlpath': '/etc'
 'socket': '/var/lib/mysql/mysql.sock'
@@ -9,3 +10,7 @@
 'mysqlpkg': 'mysql55'
 'mysqlpkg_devel': 'mysql55-devel'
 
+
+# PHPMYADMIN VARS
+'phpmyadmin_name': 'phpMyAdmin'
+'apache_path': '/etc/httpd/conf.d'

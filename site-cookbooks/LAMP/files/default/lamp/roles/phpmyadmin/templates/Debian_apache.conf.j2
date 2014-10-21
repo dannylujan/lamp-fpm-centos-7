@@ -17,7 +17,7 @@ Alias /phpmyadmin /usr/share/phpmyadmin
 
         Order deny,allow
         Deny from all
-        Allow from localhost 127.0.0.0/8 ::1 {{ playbook.phpmyadmin.whitelistips_support|join(' ') }}
+        Allow from localhost 127.0.0.0/8 ::1 {{ whitelistips_support|join(' ') }}
 
         AuthUserFile /etc/phpmyadmin/phpmyadmin-htpasswd
         AuthName "Password protected"
