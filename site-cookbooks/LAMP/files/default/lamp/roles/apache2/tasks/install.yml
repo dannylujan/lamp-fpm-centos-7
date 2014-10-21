@@ -9,13 +9,15 @@
   - mod_ssl
   when: ansible_os_family == 'RedHat'
 
-- name: copy httpd template - 6.x
-  template: src=RedHat/v22/httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
+- name: copy httpd template for RedHat
+  template: src=RedHat/{{apache_ver}}/httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
   when: ansible_os_family == 'RedHat'
 
-- name: copy ssl template - 6.x
-  template: src=RedHat/v22/ssl.conf.j2 dest=/etc/httpd/conf.d/ssl.conf
+- name: copy ssl template for RedHat
+  template: src=RedHat/{{apache_ver}}/ssl.conf.j2 dest=/etc/httpd/conf.d/ssl.conf
   when: ansible_os_family == 'RedHat'
+
+
 
 - name: create vhost.d directory
   file: path=/etc/httpd/vhost.d owner=root group=root mode=0755 state=directory
