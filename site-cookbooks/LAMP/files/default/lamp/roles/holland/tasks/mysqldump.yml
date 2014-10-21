@@ -3,7 +3,7 @@
 - name: Include common.yml
   include: common.yml
 
-- name: Install holland-mysqldump packages for Redhat
+- name: Install holland-mysqldump packages for Redhat 6
   yum: name=holland-mysqldump state=present
   when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int < 7
 

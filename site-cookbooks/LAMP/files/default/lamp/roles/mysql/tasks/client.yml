@@ -1,7 +1,4 @@
 ---
-- name: Include RHEL\CentOS 7 vars
-  include_vars: RedHat-7.yml
-  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 7
 
 - name: Determine if general mysql packages exist on Redhat system base
   command: /bin/rpm -q mysql-libs
