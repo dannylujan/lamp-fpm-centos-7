@@ -29,7 +29,7 @@
   notify: restart apache
 
 - name: Remove static apache.conf file.
-  file: dest={{ansible_os_family].apache_path}}/{{phpmyadmin_name}}.conf state=absent
+  file: dest={{apache_path}}/{{phpmyadmin_name}}.conf state=absent
 
 - name: Symlink for apache.conf
   file: src=/etc/{{phpmyadmin_name}}/apache.conf dest={{apache_path}}/{{phpmyadmin_name}}.conf state=link
