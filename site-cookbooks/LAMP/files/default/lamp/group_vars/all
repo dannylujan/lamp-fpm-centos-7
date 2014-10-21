@@ -1,7 +1,7 @@
 # LAMP Deployment Vars
 
 # APACHE2 VARS
-apache_ver = 'v22'
+'apache_ver': 'v22'
 
 playbook: {
     'php5': {

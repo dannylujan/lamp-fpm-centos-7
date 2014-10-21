@@ -1,6 +1,6 @@
 ---
 # APACHE2 VARS
-apache_ver = 'v24'
+'apache_ver': 'v24'
 
 # MYSQL VARS
 'mysql': 'mariadb'
