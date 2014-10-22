@@ -18,7 +18,7 @@
   register: deb_mysqldump_dl
 
 - name: Install holland-mysqldump .deb file
-  apt: deb=/tmp/holland-mysqldump_{{holland_version}}_all.deb state=installed update_cache=yes
+  apt: deb=/tmp/holland-mysqldump_{{holland_version}}_all.deb state=installed
   when: ansible_os_family == 'Debian' and deb_mysqldump_dl|changed
   register: deb_mysqldump_installed
 

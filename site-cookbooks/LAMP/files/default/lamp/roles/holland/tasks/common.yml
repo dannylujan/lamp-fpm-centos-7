@@ -21,7 +21,7 @@
   register: deb_common_dl
 
 - name: Install holland-common .deb file
-  apt: deb=/tmp/holland-common_{{holland_version}}_all.deb state=installed update_cache=yes
+  apt: deb=/tmp/holland-common_{{holland_version}}_all.deb state=installed
   when: ansible_os_family == 'Debian' and deb_common_dl|changed
   register: deb_common_installed
 

@@ -17,7 +17,9 @@
     - group_by: key={{ ansible_os_family }}
       tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
 
-    - include_vars: host_vars/RedHat_7.yml
+#    - include_vars: host_vars/RedHat_7.yml
+#      when: ansible_os_family == 'RedHat' and ansible_lsb.major_release == '7'
+    - add_host: name=RedHat_7
       when: ansible_os_family == 'RedHat' and ansible_lsb.major_release == '7'
       tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
 
