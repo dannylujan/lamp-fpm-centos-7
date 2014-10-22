@@ -17,11 +17,12 @@
     - group_by: key={{ ansible_os_family }}
       tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
 
-    - add_host: name={{ansible_nodename}} groups=RedHat_7
+    - include_vars: host_vars/RedHat_7.yml
       when: ansible_os_family == 'RedHat' and ansible_lsb.major_release == '7'
+      tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
 
   roles:
-    - { role: IUS-repos, tags: ius-repos when: ansible_os_family == 'RedHat'}
+    - { role: IUS-repos, tags: ius-repos, when: ansible_os_family == 'RedHat'}
     - { role: apache2, tags: apache2 }
     - { role: php5, tags: php5 }
     - { role: mysql, tags: mysql }
