@@ -18,7 +18,7 @@
   register: deb_dl
 
 - name: Install holland .deb file
-  apt: deb=/tmp/holland_{{holland_version}}_all.deb state=installed
+  apt: deb=/tmp/holland_{{holland_version}}_all.deb state=installed update_cache=yes
   when: ansible_os_family == 'Debian' and deb_dl|changed
   register: deb_installed
 
