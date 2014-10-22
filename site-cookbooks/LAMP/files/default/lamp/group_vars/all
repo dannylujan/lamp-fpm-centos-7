@@ -178,6 +178,8 @@ mysql_password: "{{ lookup('password', '/tmp/mysql_' + ansible_hostname + '-' + 
 'innodb_buffer_pool_size': 64M
 
 # PHPMYADMIN VARS
+'htuser': 'serverinfo'
+'htpass': "{{ lookup('password', '/tmp/htpass_' + ansible_hostname + '-' + ansible_date_time.time) }}"
 'blowfish_pass': "{{ lookup('password', '/tmp/blowfish_' + ansible_hostname + '-' + ansible_date_time.time) }}"
 'whitelistips_support': [
             "72.3.128.84/32", #DFW Bastion
