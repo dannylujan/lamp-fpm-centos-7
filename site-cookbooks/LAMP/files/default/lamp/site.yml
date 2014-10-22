@@ -7,7 +7,6 @@
       yum: pkg=redhat-lsb state=installed
       when: ansible_os_family == 'RedHat'
       tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
-#      tags: all
     
     - name: regather facts
       setup:
