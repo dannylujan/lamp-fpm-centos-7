@@ -3,34 +3,34 @@
 - name: Install PMA for Debian systems
   apt: name={{item}} state=latest update_cache=true
   with_items:
-  - "{{playbook.phpmyadmin[ansible_os_family].phpmyadmin_name}}"
+  - "{{phpmyadmin_name}}"
   - apache2-utils
   when: ansible_os_family == 'Debian'
 
 - name: Install PMA for Redhat systems
   yum: name={{item}} state=latest
   with_items:
-  - "{{playbook.phpmyadmin[ansible_os_family].phpmyadmin_name}}"
+  - "{{phpmyadmin_name}}"
   - httpd-tools
   when: ansible_os_family == 'RedHat'
 
 - name: Run htpasswd command
-  shell: htpasswd -b -c /etc/{{playbook.phpmyadmin[ansible_os_family].phpmyadmin_name}}/phpmyadmin-htpasswd {{htuser}} {{htpass}}
+  shell: htpasswd -b -c /etc/{{phpmyadmin_name}}/phpmyadmin-htpasswd {{htuser}} {{htpass}}
 
 - name: Adding ~/.phpmyadmin
   template: src=dotphpmyadminpass.j2 dest=/root/.phpmyadminpass
 
 - name: Adding apache.conf
-  template: src={{ansible_distribution}}_apache.conf.j2 dest=/etc/{{playbook.phpmyadmin[ansible_os_family].phpmyadmin_name}}/apache.conf
+  template: src={{ansible_distribution}}_apache.conf.j2 dest=/etc/{{phpmyadmin_name}}/apache.conf
   notify: restart apache
 
 - name: Adding config.inc.php 
-  template: src={{ansible_distribution}}_config.inc.php.j2 dest=/etc/{{playbook.phpmyadmin[ansible_os_family].phpmyadmin_name}}/config.inc.php
+  template: src={{ansible_distribution}}_config.inc.php.j2 dest=/etc/{{phpmyadmin_name}}/config.inc.php
   notify: restart apache
 
 - name: Remove static apache.conf file.
-  file: dest={{playbook.phpmyadmin[ansible_os_family].apache_path}}/{{playbook.phpmyadmin[ansible_os_family].phpmyadmin_name}}.conf state=absent
+  file: dest={{apache_path}}/{{phpmyadmin_name}}.conf state=absent
 
 - name: Symlink for apache.conf
-  file: src=/etc/{{playbook.phpmyadmin[ansible_os_family].phpmyadmin_name}}/apache.conf dest={{playbook.phpmyadmin[ansible_os_family].apache_path}}/{{playbook.phpmyadmin[ansible_os_family].phpmyadmin_name}}.conf state=link
+  file: src=/etc/{{phpmyadmin_name}}/apache.conf dest={{apache_path}}/{{phpmyadmin_name}}.conf state=link
 

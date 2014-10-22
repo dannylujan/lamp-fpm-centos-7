@@ -1,0 +1,18 @@
+---
+# APACHE2 VARS
+'apache_ver': 'v24'
+
+# MYSQL VARS
+'mysql': 'mariadb'
+'mysqlpath': '/etc'
+'socket': '/var/lib/mysql/mysql.sock'
+'includedir': '/etc/sysconfig/mysqld-config'
+'log_error': '/var/log/mariadb/mariadb.log'
+
+'mysqlpkg': 'mariadb'
+'mysqlpkg_devel': 'mariadb-devel'
+
+
+# PHPMYADMIN VARS
+'phpmyadmin_name': 'phpMyAdmin'
+'apache_path': '/etc/httpd/conf.d'
