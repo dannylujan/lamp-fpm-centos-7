@@ -1,5 +1,20 @@
 ---
 
+# PHP5 VARS
+'php_ini': "/etc/php5/apache2/php.ini"
+'apache': "apache2"
+'packages': [
+                "libapache2-mod-php5",
+                "php5-cli",
+                "php-pear",
+                "php5-mysql",
+                "php-apc",
+                "php5-gd",
+                "php5-dev",
+                "php5-curl"
+                ]
+'session_save_path': "/var/lib/php5/session"
+
 # MYSQL VARS
 'mysql': 'mysql'
 'mysqlpath': '/etc/mysql'

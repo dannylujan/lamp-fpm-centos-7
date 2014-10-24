@@ -1,5 +1,18 @@
 ---
 
+# PHP5 VARS
+'php_ini': "/etc/php.ini"
+'apache': "httpd"
+'packages': [
+                "php54",
+                "php54-gd",
+                "php54-mysql",
+                "php54-pecl-apc",
+                "php54-xml",
+                "php54-devel"
+                ]
+'session_save_path': "/var/lib/php/session"
+
 # MYSQL VARS
 'mysql': 'mysqld'
 'mysqlpath': '/etc'

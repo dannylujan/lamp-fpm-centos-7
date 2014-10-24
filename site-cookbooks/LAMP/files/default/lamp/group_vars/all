@@ -3,60 +3,19 @@
 # APACHE2 VARS
 'apache_ver': 'v22'
 
+
+# PHP5 VARS
+'max_execution_time': 30
+'memory_limit': "{{ansible_memtotal_mb}}"
+'error_reporting': "E_ALL & ~E_NOTICE | E_DEPRECATED"
+'register_globals': "Off"
+'post_max_size': "8M"
+'upload_max_filesize': "2M"
+'short_open_tag': "On"
+'include_path': ".:/usr/share/pear:/usr/share/php"
+'expose_php': "Off"
+
 playbook: {
-    'php5': {
-        'RedHat': {
-            'php_ini': "/etc/php.ini",
-            'apache': "httpd",
-            'packages': [
-                "php54",
-                "php54-gd",
-                "php54-mysql",
-                "php54-pecl-apc",
-                "php54-xml",
-                "php54-devel"
-                ],
-            'packages_for_ver7': [
-                "php56u",
-                "php56u-opcache",
-                "php56u-gd",
-                "php56u-mysql",
-                "php56u-xml",
-                "php56u-devel"
-                ],
-            'session': {
-                'save_path': "/var/lib/php/session"
-                },
-            },
-        'Debian': {
-            'php_ini': "/etc/php5/apache2/php.ini",
-            'apache': "apache2",
-            'packages': [
-                "libapache2-mod-php5",
-                "php5-cli",
-                "php-pear",
-                "php5-mysql",
-                "php-apc",
-                "php5-gd",
-                "php5-dev",
-                "php5-curl"
-                ],
-            'session': {
-                'save_path': "/var/lib/php5/session"
-                },
-            },
-        'common': {
-            'max_execution_time': 30,
-            'memory_limit': "{{ansible_memtotal_mb}}",
-            'error_reporting': "E_ALL & ~E_NOTICE | E_DEPRECATED",
-            'register_globals': "Off",
-            'post_max_size': "8M",
-            'upload_max_filesize': "2M",
-            'short_open_tag': "On",
-            'include_path': ".:/usr/share/pear:/usr/share/php",
-            'expose_php': "Off"
-            }
-        },
     'apache': {
         'common': {
             'domain': "example.com",
@@ -154,12 +113,12 @@ playbook: {
                     "status"
                     ]
                 }
-            },
+            }
     }
 }
 
 # MYSQL VARS
-mysql_password: "{{ lookup('password', '/tmp/mysql_' + ansible_hostname + '-' + ansible_date_time.time) }}"
+'mysql_password': "{{ lookup('password', '/tmp/mysql_' + ansible_hostname + '-' + ansible_date_time.time) }}"
 
 'datadir': '/var/lib/mysql'
 'log_slow': '/var/lib/mysql/slow-log'
