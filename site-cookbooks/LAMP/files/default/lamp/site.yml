@@ -4,8 +4,10 @@
 
   tasks:
     - group_by: key={{ ansible_os_family }}
-#      tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
+      tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
 
+
+# Applies only to RedHat systems
 
 - hosts: RedHat
   user: root
@@ -24,13 +26,16 @@
       tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
 
   roles:
-    - { role: IUS-repos, tags: ius-repos, when: ansible_os_family == 'RedHat'}
+    - { role: IUS-repos, tags: ius-repos }
     - { role: apache2, tags: apache2 }
     - { role: php5, tags: php5 }
     - { role: mysql, tags: mysql }
     - { role: phpmyadmin, tags: phpmyadmin }
     - { role: holland, tags: holland }
 
+
+
+# Applies only to Debian systems
 
 - hosts: Debian
   user: root
