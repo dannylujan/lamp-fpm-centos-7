@@ -18,7 +18,7 @@
 - name: Install PHP and packages - RHEL
   yum: pkg={{ item }} state=installed
   with_items: packages
-  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release == '6'
+  when: ansible_os_family == 'RedHat' 
 
 - name: create session path - RHEL
   file: path={{ session_save_path }} owner=root group=apache mode=0770 state=directory

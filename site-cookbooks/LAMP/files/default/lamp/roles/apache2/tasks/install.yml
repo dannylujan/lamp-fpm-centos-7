@@ -52,4 +52,4 @@
   when: ansible_os_family == 'Debian'
 
 - name: Enable service to start at boot
-  service: name={{playbook.apache[ansible_os_family].apache}} enabled=yes
+  service: name={{apache}} enabled=yes

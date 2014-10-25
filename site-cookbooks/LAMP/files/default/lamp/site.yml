@@ -11,14 +11,17 @@
 
 - hosts: RedHat
   user: root
+  gather_facts: false
 
   pre_tasks:
     - name: install LSB_release req for RHEL systems
       yum: pkg=redhat-lsb state=installed
+      register: installed
       tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
     
     - name: regather facts
-      setup:
+      setup: 
+      when: installed|changed
       tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
 
     - include_vars: group_vars/RHEL_7.yml
@@ -39,6 +42,8 @@
 
 - hosts: Debian
   user: root
+  gather_facts: false
+
 
 #  pre_tasks:
 #    - include_vars: group_vars/Ubuntu_14.yml

@@ -1,6 +1,6 @@
 ---
 # Setting apache server settings
-max_clients: "{{ playbook.apache.common.max_clients }}"
+max_clients: "{{ max_clients }}"
 max_spare_servers: "{{ (max_clients|int ** 0.5)|int + 2}}"
 min_spare_servers: "{{ (max_spare_servers|int / 2)|int }}"
 
