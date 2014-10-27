@@ -48,7 +48,6 @@ parameters:
       - Ubuntu 12.04 LTS (Precise Pangolin)
       - Debian 7 (Wheezy) (PVHVM)
       - CentOS 7 (PVHVM)
-      - Red Hat Enterprise Linux 7 (PVHVM)
       description: Must be a supported operating system.
 
   flavor:
