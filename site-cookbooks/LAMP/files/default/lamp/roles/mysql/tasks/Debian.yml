@@ -1,0 +1,4 @@
+---
+
+- include: Debian_client.yml
+- include: server.yml

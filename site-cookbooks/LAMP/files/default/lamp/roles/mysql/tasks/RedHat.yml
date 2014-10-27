@@ -1,0 +1,4 @@
+---
+
+  - include: RedHat_client.yml
+  - include: server.yml

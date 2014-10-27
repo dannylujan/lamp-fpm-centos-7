@@ -36,7 +36,9 @@
     - { role: phpmyadmin, tags: phpmyadmin }
     - { role: holland, tags: holland }
 
-
+  tasks:
+    - include: roles/mysql/tasks/RedHat.yml
+      tags: mysql
 
 # Applies only to Debian systems
 
@@ -56,4 +58,8 @@
     - { role: mysql, tags: mysql }
     - { role: phpmyadmin, tags: phpmyadmin }
     - { role: holland, tags: holland }
+
+  tasks:
+    - include: roles/mysql/tasks/Debian.yml
+      tags: mysql
 
