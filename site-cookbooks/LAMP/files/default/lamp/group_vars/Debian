@@ -30,7 +30,7 @@
         "authz_groupfile" ]
 
 'module_configs': [
-                'ssl.conf' ]
+                'ssl' ]
 
         # Setting apache server settings
 #'max_clients': "{{ max_clients }}"

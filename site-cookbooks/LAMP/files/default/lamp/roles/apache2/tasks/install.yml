@@ -22,10 +22,6 @@
   when: ansible_os_family == 'RedHat'
 
 
-- name: copy ports.conf template
-  template: src=ports.conf.j2 dest=/etc/{{apache}}/ports.conf
-
-
 - name: Install apache2 for Debian based
   apt: pkg=apache2 state=installed
   when: ansible_os_family == 'Debian'
@@ -33,6 +29,11 @@
 - name: Install UFW for Debian based
   apt: pkg=ufw state=installed
   when: ansible_os_family == 'Debian'
+
+
+- name: copy ports.conf template
+  template: src=ports.conf.j2 dest=/etc/{{apache}}/ports.conf
+
 
 - name: copy apache2.conf template - 12.04
   template: src=Debian/{{apache_ver}}/apache2.conf.j2 dest=/etc/apache2/apache2.conf
