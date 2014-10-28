@@ -33,6 +33,5 @@
 
 - name: Symlink for apache.conf
   file: src=/etc/{{phpmyadmin_name}}/apache.conf dest={{apache_conf_path}}/{{phpmyadmin_name}}.conf state=link
+  notify: test_htaccess
 
-- name: Testing .htaccess page
-  command: curl -IL http://localhost/phpmyadmin -u '{{htuser}}:{{htpass}}'
