@@ -21,7 +21,7 @@
                 80,
                 443 ]
 
-# Setting Prefork MPM
+        # Setting Prefork MPM
 'prefork_start_servers': "{{ start_servers }}"
 'prefork_min_spare_servers': "{{ min_spare_servers }}"
 'prefork_max_spare_servers': "{{ max_spare_servers }}"
@@ -30,73 +30,13 @@
 'prefork_max_requests_per_child': "{{ max_requests_per_child }}"
 'prefork_listen_backlog': "{{ listen_backlog }}"
 
-# Setting Worker MPM
+        # Setting Worker MPM
 'worker_start_servers': 4
 'worker_max_clients': 1024
 'worker_min_spare_threads': 64
 'worker_max_spare_threads': 192
 'worker_threads_per_child': 64
 'worker_max_requests_per_child': 0
-
-'modules': {
-    'v2_2': [
-        "cgi",
-        "dir",
-        "env",
-        "ssl",
-        "mime",
-        "alias",
-        "status",
-        "deflate",
-        "rewrite",
-        "setenvif",
-        "autoindex",
-        "reqtimeout",
-        "auth_basic",
-        "authn_file",
-        "authz_host",
-        "authz_user",
-        "negotiation",
-        "authz_default",
-        "authz_groupfile" ],
-    'v2_4_7': [
-        "access_compat",
-        "alias",
-        "auth_basic",
-        "authn_core",
-        "authn_file",
-        "authz_core",
-        "authz_groupfile",
-        "authz_host",
-        "authz_user",
-        "autoindex",
-        "deflate",
-        "dir",
-        "env",
-        "filter",
-        "mime",
-        "mpm_prefork",
-        "negotiation",
-        "rewrite",
-        "setenvif",
-        "socache_shmcb",
-        "ssl",
-        "status", ],
-    "module_configs": {
-                "v2_4_7": [
-                    "alias",
-                    "autoindex",
-                    "deflate",
-                    "dir",
-                    "mime",
-                    "mpm_prefork",
-                    "negotiation",
-                    "php5",
-                    "setenvif",
-                    "ssl",
-                    "status"
-                    ] }
-    }
 
 
 # PHP5 VARS

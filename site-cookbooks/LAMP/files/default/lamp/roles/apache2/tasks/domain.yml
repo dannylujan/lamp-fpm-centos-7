@@ -4,32 +4,20 @@
 - name: Create vhosts directory
   file: path=/var/www/vhosts/ mode=0775 state=directory 
 
-- name: Add default.template file - Debian
+- name: Add default.template file 
   template: src=template.j2 dest={{ vhost_directory }}/default.template
-  when: ansible_os_family == 'Debian'
-
-- name: Add default.template file - RedHat
-  template: src=template.j2 dest={{ vhost_directory }}/default.template
-  when: ansible_os_family == 'RedHat'
 
 - name: Create domains document root - Debian
   file: path=/var/www/vhosts/{{ domain }} owner={{ owner }} group={{ group }} mode=0775 state=directory
-  when: ansible_os_family == 'Debian' and domain != 'example.com'
+  when: domain != 'example.com'
 
-- name: Add domains vhost file - Debian
+- name: Add domains vhost file 
   template: src=vhost.j2 dest={{ vhost_directory }}/{{ domain }}.conf
-  when: ansible_os_family == 'Debian' and domain != 'example.com'
+  when: domain != 'example.com'
+  notify: Restart apache
 
 - name: Enable domain - Debian
   command: /usr/sbin/a2ensite {{ domain }}.conf
   when: ansible_os_family == 'Debian' and domain != 'example.com'
   notify: Restart apache
 
-- name: Create domains document root - RedHat
-  file: path=/var/www/vhosts/{{ domain }} owner={{ owner }} group={{ group }} mode=0775 state=directory
-  when: ansible_os_family == 'RedHat' and domain != 'example.com'
-
-- name: Add domains vhost file - RedHat
-  template: src=vhost.j2 dest={{ vhost_directory }}/{{ domain }}.conf
-  when: ansible_os_family == 'RedHat' and domain != 'example.com'
-  notify: Restart apache

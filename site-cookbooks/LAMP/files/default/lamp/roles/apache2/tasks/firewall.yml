@@ -1,6 +1,6 @@
 ---
 - name: Setup default apache firewall rules - RedHat
-  command: "/sbin/iptables -I INPUT 1 -p tcp --dport {{ item }} -j ACCEPT"
+  command: "/sbin/iptables -I INPUT 2 -p tcp --dport {{ item }} -j ACCEPT"
   with_items: open_firewall_ports
   when: ansible_os_family == 'RedHat'
 
