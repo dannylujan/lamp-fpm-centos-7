@@ -1,27 +1,5 @@
 ---
 
-- name: Determine if general mysql packages exist on Redhat system base
-  command: /bin/rpm -q mysql-libs
-  when: ansible_os_family == 'RedHat'
-  register: if_found
-  ignore_errors: yes
-
-- name: Erase mysql-libs with no deps
-  command: rpm -e --nodeps mysql-libs
-  when: if_found.rc|default(1) == 0 and ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 6
-
-- name: Remove mysql from Redhat base 5
-  yum: name=mysql state=absent
-  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int < 6
-
-- name: Install MySQL packages on Redhat base
-  yum: name={{item}} state=latest
-  with_items: 
-  - "{{mysqlpkg}}"
-  - "{{mysqlpkg_devel}}"
-  ignore_errors: yes
-  when: ansible_os_family == 'RedHat'
-
 - name: Install MySQL packages on Ubuntu base
   apt: name={{item}} state=present
   with_items: 
@@ -36,4 +14,27 @@
   - mysql-client
   when: ansible_distribution == "Debian"
 
+
+
+- name: Determine if general mysql packages exist on Redhat system base
+  command: /bin/rpm -q mysql-libs
+  register: if_found
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release == '6'
+  ignore_errors: yes
+
+- name: Erase mysql-libs with no deps
+  command: rpm -e --nodeps mysql-libs
+  when: if_found is defined and if_found.rc == 0 
+
+#- name: Remove mysql from Redhat base 5
+#  yum: name=mysql state=absent
+#  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int < 6
+
+- name: Install MySQL packages on Redhat base
+  yum: name={{item}} state=latest
+  with_items:
+  - "{{mysqlpkg}}"
+  - "{{mysqlpkg_devel}}"
+  when: ansible_os_family == 'RedHat'
+  ignore_errors: yes
 

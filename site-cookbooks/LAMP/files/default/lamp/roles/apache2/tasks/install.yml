@@ -17,39 +17,45 @@
   template: src=RedHat/{{apache_ver}}/ssl.conf.j2 dest=/etc/httpd/conf.d/ssl.conf
   when: ansible_os_family == 'RedHat'
 
-
-
 - name: create vhost.d directory
   file: path=/etc/httpd/vhost.d owner=root group=root mode=0755 state=directory
   when: ansible_os_family == 'RedHat'
 
-- name: copy ports.conf template
-  template: src=ports.conf.j2 dest=/etc/httpd/ports.conf
-  when: ansible_os_family == 'RedHat'
 
 - name: Install apache2 for Debian based
-  apt: pkg=apache2 state=installed update_cache=true
+  apt: pkg=apache2 state=installed
   when: ansible_os_family == 'Debian'
 
 - name: Install UFW for Debian based
-  apt: pkg=ufw state=installed update_cache=true
+  apt: pkg=ufw state=installed
   when: ansible_os_family == 'Debian'
 
-- name: copy apache2.conf template - 12.04
-  template: src=Debian/v22/apache2.conf.j2 dest=/etc/apache2/apache2.conf
-  when: ansible_os_family == 'Debian' and ansible_lsb.release == '12.04' or ansible_os_family == 'Debian' and ansible_lsb.major_release == '7'
-
-- name: copy apache2.conf template - 14.04
-  template: src=Debian/v24/apache2.conf.j2 dest=/etc/apache2/apache2.conf
-  when: ansible_os_family == 'Debian' and ansible_lsb.release == '14.04'
 
 - name: copy ports.conf template
-  template: src=ports.conf.j2 dest=/etc/apache2/ports.conf
+  template: src=ports.conf.j2 dest=/etc/{{apache}}/ports.conf
+
+
+- name: copy apache2.conf template - 12.04
+  template: src=Debian/{{apache_ver}}/apache2.conf.j2 dest=/etc/apache2/apache2.conf
   when: ansible_os_family == 'Debian'
 
-- name: create vhost.d directory
-  file: path=/etc/apache2/conf.d owner=root group=root mode=0755 state=directory
-  when: ansible_os_family == 'Debian'
+- name: unlink modules
+  command:  /usr/sbin/a2dismod {{ item }}
+  with_items:
+    - "mpm_*"
+  when: ansible_os_family == 'Debian' and ansible_lsb.release == '14.04'
+
+- name: copy module configuration templates
+  template: src=Debian/{{apache_ver}}/mods/{{ item }}.conf.j2 dest=/etc/apache2/mods-available/{{ item }}.conf owner=root group=root
+  with_items: module_configs
+  when: module_configs is defined and ansible_os_family == 'Debian'
+  ignore_errors: yes
+
+- name: Enable apache modules for Debian based
+  command: /usr/sbin/a2enmod {{ item }}
+  with_items: modules
+  when: modules is defined and ansible_os_family == 'Debian'
+  notify: restart apache
 
 - name: Enable service to start at boot
-  service: name={{playbook.apache[ansible_os_family].apache}} enabled=yes
+  service: name={{apache}} enabled=yes

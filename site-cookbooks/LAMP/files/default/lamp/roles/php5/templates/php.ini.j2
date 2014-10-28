@@ -226,7 +226,7 @@ engine = On
 ; Development Value: Off
 ; Production Value: Off
 ; http://www.php.net/manual/en/ini.core.php#ini.short-open-tag
-short_open_tag = "{{ playbook.php5.common.short_open_tag }}"
+short_open_tag = "{{ short_open_tag }}"
 
 ; Allow ASP-style <% %> tags.
 ; http://www.php.net/manual/en/ini.core.php#ini.asp-tags
@@ -429,7 +429,7 @@ disable_classes =
 ; threat in any way, but it makes it possible to determine whether you use PHP
 ; on your server or not.
 ; http://www.php.net/manual/en/ini.core.php#ini.expose-php
-expose_php = {{ playbook.php5.common.expose_php }}
+expose_php = {{ expose_php }}
 
 ;;;;;;;;;;;;;;;;;;;
 ; Resource Limits ;
@@ -437,7 +437,7 @@ expose_php = {{ playbook.php5.common.expose_php }}
 
 ; Maximum execution time of each script, in seconds
 ; http://www.php.net/manual/en/info.configuration.php#ini.max-execution-time
-max_execution_time = {{ playbook.php5.common.max_execution_time }}
+max_execution_time = {{ max_execution_time }}
 
 ; Maximum amount of time each script may spend parsing request data. It's a good
 ; idea to limit this time on productions servers in order to eliminate unexpectedly
@@ -454,7 +454,7 @@ max_input_time = 60
 
 ; Maximum amount of memory a script may consume (128MB)
 ; http://www.php.net/manual/en/ini.core.php#ini.memory-limit
-{% if playbook.php5.common.memory_limit < 500 %}
+{% if memory_limit < 500 %}
 memory_limit = 32M
 {% else %}
 memory_limit = 64M
@@ -519,7 +519,7 @@ memory_limit = 64M
 ;    See the following URLs for more information:
 ;    http://www.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting
 ;    http://www.php.net/manual/en/errorfunc.constants.php
-error_reporting = {{ playbook.php5.common.error_reporting }}
+error_reporting = {{ error_reporting }}
 
 ; This directive controls whether or not and where PHP will output errors,
 ; notices and warnings too. Error output is very useful during development, but
@@ -699,7 +699,7 @@ request_order = "GP"
 ; register_globals to be on;  Using form variables as globals can easily lead
 ; to possible security problems, if the code is not very well thought of.
 ; http://www.php.net/manual/en/ini.core.php#ini.register-globals
-register_globals = {{ playbook.php5.common.register_globals }}
+register_globals = {{ register_globals }}
 
 ; Determines whether the deprecated long $HTTP_*_VARS type predefined variables
 ; are registered by PHP or not. As they are deprecated, we obviously don't
@@ -735,7 +735,7 @@ auto_globals_jit = On
 
 ; Maximum size of POST data that PHP will accept.
 ; http://www.php.net/manual/en/ini.core.php#ini.post-max-size
-post_max_size = {{ playbook.php5.common.post_max_size }}
+post_max_size = {{ post_max_size }}
 
 ; Magic quotes are a preprocessing feature of PHP where PHP will attempt to
 ; escape any character sequences in GET, POST, COOKIE and ENV data which might
@@ -798,7 +798,7 @@ default_mimetype = "text/html"
 ;
 ; PHP's default setting for include_path is ".;/path/to/php/pear"
 ; http://www.php.net/manual/en/ini.core.php#ini.include-path
-; include_path = "{{ playbook.php5.common.include_path }}"
+; include_path = "{{ include_path }}"
 
 ; The root of the PHP pages, used only if nonempty.
 ; if PHP was not compiled with FORCE_REDIRECT, you SHOULD set doc_root
@@ -885,7 +885,7 @@ file_uploads = On
 
 ; Maximum allowed size for uploaded files.
 ; http://www.php.net/manual/en/ini.core.php#ini.upload-max-filesize
-upload_max_filesize = {{ playbook.php5.common.upload_max_filesize }}
+upload_max_filesize = {{ upload_max_filesize }}
 
 ;;;;;;;;;;;;;;;;;;
 ; Fopen wrappers ;
@@ -1253,7 +1253,7 @@ session.save_handler = files
 ;
 ; As of PHP 4.0.1, you can define the path as:
 ;
-;     session.save_path = "N;/path"
+;     session_save_path = "N;/path"
 ;
 ; where N is an integer.  Instead of storing all the session files in
 ; /path, what this will do is use subdirectories N-levels deep, and
@@ -1269,12 +1269,12 @@ session.save_handler = files
 ; The file storage module creates files using mode 600 by default.
 ; You can change that by using
 ;
-;     session.save_path = "N;MODE;/path"
+;     session_save_path = "N;MODE;/path"
 ;
 ; where MODE is the octal representation of the mode. Note that this
 ; does not overwrite the process's umask.
 ; http://www.php.net/manual/en/session.configuration.php#ini.session.save-path
-session.save_path = "{{ playbook.php5[ansible_os_family].session.save_path }}"
+session_save_path = "{{ session_save_path }}"
 
 ; Whether to use cookies.
 ; http://www.php.net/manual/en/session.configuration.php#ini.session.use-cookies
@@ -1350,7 +1350,7 @@ session.gc_divisor = 1000
 session.gc_maxlifetime = 1440
 
 ; NOTE: If you are using the subdirectory option for storing session files
-;       (see session.save_path above), then garbage collection does *not*
+;       (see session_save_path above), then garbage collection does *not*
 ;       happen automatically.  You will need to do your own garbage
 ;       collection through a shell script, cron entry, or some other method.
 ;       For example, the following script would is the equivalent of
