@@ -41,3 +41,8 @@
                     "ssl",
                     "status"
                     ]
+
+
+# PHPMYADMIN VARS
+'apache_conf_path': '/etc/apache2/conf-enabled'
+

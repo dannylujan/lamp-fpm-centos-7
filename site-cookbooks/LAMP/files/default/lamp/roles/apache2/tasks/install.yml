@@ -44,12 +44,12 @@
   with_items:
     - "mpm_*"
   when: ansible_os_family == 'Debian' and ansible_lsb.release == '14.04'
+  ignore_errors: yes
 
 - name: copy module configuration templates
   template: src=Debian/{{apache_ver}}/mods/{{ item }}.conf.j2 dest=/etc/apache2/mods-available/{{ item }}.conf owner=root group=root
   with_items: module_configs
   when: module_configs is defined and ansible_os_family == 'Debian'
-  ignore_errors: yes
 
 - name: Enable apache modules for Debian based
   command: /usr/sbin/a2enmod {{ item }}

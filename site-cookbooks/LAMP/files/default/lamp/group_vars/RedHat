@@ -58,4 +58,4 @@
 
 # PHPMYADMIN VARS
 'phpmyadmin_name': 'phpMyAdmin'
-'apache_path': '/etc/httpd/conf.d'
+'apache_conf_path': '/etc/httpd/conf.d'
