@@ -1,5 +1,9 @@
 ---
 
+# APACHE2 VARS
+'apache_ver': 'v24'
+
+
 # PHP5 VARS
 'php_ini': "/etc/php.ini"
 'apache': "httpd"
@@ -13,8 +17,6 @@
                 ]
 'session_save_path': "/var/lib/php/session"
 
-# APACHE2 VARS
-'apache_ver': 'v24'
 
 # MYSQL VARS
 'mysql': 'mariadb'

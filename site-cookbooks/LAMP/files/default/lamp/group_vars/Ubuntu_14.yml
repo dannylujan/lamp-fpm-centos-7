@@ -3,7 +3,7 @@
 # APACHE2 VARS
 'apache_ver': 'v24'
 
-'Modules': [ 
+'modules': [ 
         "access_compat",
         "alias",
         "auth_basic",

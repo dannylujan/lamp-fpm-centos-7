@@ -21,7 +21,7 @@
                 80,
                 443 ]
 
-        # Setting Prefork MPM
+            # Setting Prefork MPM
 'prefork_start_servers': "{{ start_servers }}"
 'prefork_min_spare_servers': "{{ min_spare_servers }}"
 'prefork_max_spare_servers': "{{ max_spare_servers }}"
@@ -30,7 +30,7 @@
 'prefork_max_requests_per_child': "{{ max_requests_per_child }}"
 'prefork_listen_backlog': "{{ listen_backlog }}"
 
-        # Setting Worker MPM
+            # Setting Worker MPM
 'worker_start_servers': 4
 'worker_max_clients': 1024
 'worker_min_spare_threads': 64
