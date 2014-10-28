@@ -8,15 +8,15 @@
 
 - name: Download rpm if not installed
   copy: src=ius-release-1.0-8.ius.el6.noarch.rpm dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm
-  when: ansible_os_family == 'RedHat' and rpm_found.rc != 0
+  when: rpm_found is defined and rpm_found.rc != 0
 
-- name: Install RPM if not installed
+- name: Install rpm if not installed
   yum: name=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm state=present
-  when: ansible_os_family == 'RedHat' and rpm_found.rc != 0
+  when: rpm_found is defined and rpm_found.rc != 0
 
-- name: Clean up RPM fil
+- name: Clean up rpm files
   file: dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm state=absent
-  when: ansible_os_family == 'RedHat' and rpm_found.rc != 0
+  when: rpm_found is defined and rpm_found.rc != 0
 
 - name: Add ius-dev.repo
   template: src={{ansible_distribution}}_ius-dev.repo.j2 dest=/etc/yum.repos.d/ius.repo

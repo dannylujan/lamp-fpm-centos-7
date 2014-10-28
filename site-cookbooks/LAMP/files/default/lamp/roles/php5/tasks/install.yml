@@ -6,26 +6,16 @@
   with_items: packages
   when: ansible_os_family == 'Debian'
 
-- name: create session path - Debian
-  file: path={{ session_save_path }} owner=root group=www-data mode=0770 state=directory
-  when: ansible_os_family == 'Debian'
-
-- name: copy php.ini template - Debian
-  template: src=php.ini.j2 dest={{ php_ini }}
-  when: ansible_os_family == 'Debian'
-  notify: restart Debian apache
-
 - name: Install PHP and packages - RHEL
   yum: pkg={{ item }} state=installed
   with_items: packages
-  when: ansible_os_family == 'RedHat' 
-
-- name: create session path - RHEL
-  file: path={{ session_save_path }} owner=root group=apache mode=0770 state=directory
   when: ansible_os_family == 'RedHat'
 
-- name: copy php.ini template - RHEL
+- name: create session path
+  file: path={{ session_save_path }} owner=root group=www-data mode=0770 state=directory
+
+- name: copy php.ini template - Debian
   template: src=php.ini.j2 dest={{ php_ini }}
-  when: ansible_os_family == 'RedHat'
-  notify: restart RedHat apache
+  notify: restart apache
+
 

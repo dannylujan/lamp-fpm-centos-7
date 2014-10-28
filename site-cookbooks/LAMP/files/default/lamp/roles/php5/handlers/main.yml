@@ -1,8 +1,4 @@
 ---
-- name: restart Debian apache
+- name: restart apache
   service: name={{ apache }} state=restarted
-  when: ansible_os_family == 'Debian'
 
-- name: restart RedHat apache
-  service: name={{ apache }} state=restarted
-  when: ansible_os_family == 'RedHat'
