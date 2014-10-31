@@ -1,6 +1,6 @@
 ## DESCRIPTION:
 
-Complete LAMP configuration.
+Complete LAMP configuration. This playbook will install a full Managed Operations based LAMP stack.
 
 ## REQUIREMENTS:
 
@@ -8,44 +8,22 @@ Ansible 1.6
 
 ## USAGE:
 
-This is used to deploy a LAMP stack
+This playbook can be called with defaults or by role using "tags".
 
-## Things to Do:
+| Name | Examples
+| ---------- | -------- |
+| Full LAMP stack | ansible-playbook -i hosts site.yml
+| MySQL server and Holland | ansible-playbook -i hosts site.yml -t mysql,holland
+| Apache2 and PHP5 | ansible-playbook -i hosts site.yml -t apache2,php5
 
-* - [ ] Ubuntu 12.04 Support
-  * - [x] Apache 2.2
-  * - [x] MySQL 5.x
-  * - [x] PHP 5.4
-  * - [x] Holland
-  * - [x] phpMyAdmin
-  * - [ ] Quality Assurance
-* - [ ] Ubuntu 14.04 Support
-  * - [x] Apache 2.4
-  * - [x] MySQL 5.x
-  * - [x] PHP 5.4
-  * - [x] Holland
-  * - [x] phpMyAdmin
-  * - [ ] Quality Assurance
-* - [ ] CentOS 6.5 Support
-  * - [x] Apache 2.2
-  * - [x] MySQL 5.x
-  * - [x] PHP 5.4
-  * - [ ] Holland
-  * - [ ] phpMyAdmin
-  * - [ ] Quality Assurance
-* - [ ] Debian 7 Support
-  * - [ ] Apache 2.2
-  * - [ ] MySQL 5.x
-  * - [ ] PHP 5.4
-  * - [ ] Holland
-  * - [ ] phpMyAdmin
-  * - [ ] Quality Assurance
+A full tag list can be found in the site.yml file
+
 
 ## LICENSE & AUTHOR:
 
 Original Author: **Phil Eatherington**
 Ansible Author: **Rocco Muscaritolo**
-Ansible Autho: **Johnny Martin**
+Ansible Author: **Johnny Martin**
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
