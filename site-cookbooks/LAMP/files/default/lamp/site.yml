@@ -29,7 +29,7 @@
       tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
 
   roles:
-    - { role: IUS-repos, tags: ius-repos }
+    - { role: IUS-repos, tags: [ ius-repos, apache2, php5, mysql ] }
     - { role: apache2, tags: apache2 }
     - { role: php5, tags: php5 }
     - { role: mysql, tags: mysql }
