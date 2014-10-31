@@ -2,6 +2,3 @@
 - name: restart apache
   service: name={{ apache }} state=restarted
 
-- name: Testing .htaccess page
-  command: curl -IL http://localhost/phpmyadmin -u '{{htuser}}:{{htpass}}'
-
