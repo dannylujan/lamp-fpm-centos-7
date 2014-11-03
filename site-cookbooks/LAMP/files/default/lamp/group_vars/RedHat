@@ -1,0 +1,61 @@
+---
+
+'task_list': 'RedHat'
+
+# APACHE2 VARS
+'apache': "httpd"
+'vhost_directory': "/etc/httpd/vhost.d"
+'owner': "apache"
+'group': "apache"
+
+        # Setting apache server settings
+    #'max_clients': "{{ max_clients }}"
+'max_spare_servers': "{{ (max_clients|int ** 0.5)|int + 2}}"
+'min_spare_servers': "{{ (max_spare_servers|int / 2)|int }}"
+
+    # Setting Prefork MPM
+'prefork_start_servers': 4
+'prefork_min_spare_servers': "{{min_spare_servers}}"
+'prefork_max_spare_servers': "{{max_spare_servers}}"
+'prefork_server_limit': "{{max_clients}}"
+'prefork_max_clients': "{{max_clients}}"
+'prefork_max_requests_per_child': 1000
+'prefork_listen_backlog': "{{max_clients|int * 2}}"
+
+    # Setting Worker MPM
+'worker_start_servers': 4
+'worker_max_clients': 1024
+'worker_min_spare_threads': 64
+'worker_max_spare_threads': 192
+'worker_threads_per_child': 64
+'worker_max_requests_per_child': 0
+
+
+# PHP5 VARS
+'php_ini': "/etc/php.ini"
+'apache': "httpd"
+'packages': [
+                "php54",
+                "php54-gd",
+                "php54-mysql",
+                "php54-pecl-apc",
+                "php54-xml",
+                "php54-devel"
+                ]
+'session_save_path': "/var/lib/php/session"
+
+
+# MYSQL VARS
+'mysql': 'mysqld'
+'mysqlpath': '/etc'
+'socket': '/var/lib/mysql/mysql.sock'
+'includedir': '/etc/sysconfig/mysqld-config'
+'log_error': '/var/log/mysqld.log'
+
+'mysqlpkg': 'mysql55'
+'mysqlpkg_devel': 'mysql55-devel'
+
+
+# PHPMYADMIN VARS
+'phpmyadmin_name': 'phpMyAdmin'
+'apache_conf_path': '/etc/httpd/conf.d'

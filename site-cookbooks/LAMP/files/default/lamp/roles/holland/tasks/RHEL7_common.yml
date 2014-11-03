@@ -1,0 +1,15 @@
+---
+
+- name: Download holland-common .rpm file for local install
+  copy: src=holland-common-1.0.10-2.1.noarch.rpm dest=/tmp/holland-common-1.0.10-2.1.noarch.rpm
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 7
+  register: rpm_common_dl
+
+- name: Install holland-common .rpm file
+  yum: name=/tmp/holland-common-1.0.10-2.1.noarch.rpm
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 7 and rpm_common_dl|changed
+  register: rpm_common_installed
+
+- name: Cleanup holland-common .rpm file
+  file: dest=holland-common-1.0.10-2.1.noarch.rpm state=absent
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 7 and rpm_common_installed|changed

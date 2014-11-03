@@ -1,5 +1,0 @@
----
-
-htuser: serverinfo
-htpass: "{{ lookup('password', '/tmp/htpass_' + ansible_hostname + '-' + ansible_date_time.time) }}"
-

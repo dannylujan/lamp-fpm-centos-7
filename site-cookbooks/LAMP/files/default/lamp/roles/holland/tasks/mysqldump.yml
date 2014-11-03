@@ -3,23 +3,27 @@
 - name: Include common.yml
   include: common.yml
 
-- name: Install holland-mysqldump packages for Redhat
+- name: Install holland-mysqldump packages for Redhat 6
   yum: name=holland-mysqldump state=present
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int < 7
+
+- name: Install holland-mysqldump on Redhat 7 base
+  include: RHEL7_mysqldump.yml
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 7
 
 
 - name: Download holland-mysqldump .deb file
-  copy: src=holland-mysqldump_{{playbook.holland.holland_version}}_all.deb dest=/tmp/holland-mysqldump_{{playbook.holland.holland_version}}_all.deb
+  copy: src=holland-mysqldump_{{holland_version}}_all.deb dest=/tmp/holland-mysqldump_{{holland_version}}_all.deb
   when: ansible_os_family == 'Debian'
   register: deb_mysqldump_dl
 
 - name: Install holland-mysqldump .deb file
-  apt: deb=/tmp/holland-mysqldump_{{playbook.holland.holland_version}}_all.deb state=installed
+  apt: deb=/tmp/holland-mysqldump_{{holland_version}}_all.deb state=installed
   when: ansible_os_family == 'Debian' and deb_mysqldump_dl|changed
   register: deb_mysqldump_installed
 
 - name: Cleanup holland-mysqldump .deb file
-  file: dest=/tmp/holland-mysqldump_{{playbook.holland.holland_version}}_all.deb state=absent
+  file: dest=/tmp/holland-mysqldump_{{holland_version}}_all.deb state=absent
   when: ansible_os_family == 'Debian' and deb_mysqldump_installed|changed
 
 - name: Add holland.conf template
@@ -29,7 +33,7 @@
   template: src=backupsets/default.conf.j2 dest=/etc/holland/backupsets/default.conf
 
 - name: Add holland MySQL user
-  mysql_user: name=holland host=localhost password={{playbook.holland.holland_password}} priv=*.*:ALL
+  mysql_user: name=holland host=localhost password={{holland_password}} priv=*.*:ALL
 
 - name: Flush privileges
   shell: mysqladmin -u root flush-privileges

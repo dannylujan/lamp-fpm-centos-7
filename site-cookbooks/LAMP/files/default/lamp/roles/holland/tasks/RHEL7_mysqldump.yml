@@ -1,0 +1,17 @@
+---
+
+- name: Download holland-mysqldump .rpm file for local install
+  copy: src=holland-mysqldump-1.0.10-2.1.noarch.rpm dest=/tmp/holland-mysqldump-1.0.10-2.1.noarch.rpm
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 7
+  register: rpm_mysqldump_dl
+
+- name: Install holland-mysqldump .rpm file
+  yum: name=/tmp/holland-mysqldump-1.0.10-2.1.noarch.rpm
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 7 and rpm_mysqldump_dl|changed
+  register: rpm_mysqldump_installed
+
+- name: Cleanup holland-mysqldump .rpm file
+  file: dest=holland-mysqldump-1.0.10-2.1.noarch.rpm state=absent
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 7 and rpm_mysqldump_installed|changed
+
+

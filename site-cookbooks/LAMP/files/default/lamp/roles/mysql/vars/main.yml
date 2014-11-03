@@ -1,4 +1,0 @@
----
-
-mysql_password: "{{ lookup('password', '/tmp/mysql_' + ansible_hostname + '-' + ansible_date_time.time) }}"
-

@@ -19,26 +19,26 @@ PidFile /var/run/apache2.pid
 #
 # Timeout: The number of seconds before receives and sends time out.
 #
-Timeout {{ playbook.apache.common.timeout }}
+Timeout {{ timeout }}
 
 #
 # KeepAlive: Whether or not to allow persistent connections (more than
 # one request per connection). Set to "Off" to deactivate.
 #
-KeepAlive {{ playbook.apache.common.keep_alive }}
+KeepAlive {{ keep_alive }}
 
 #
 # MaxKeepAliveRequests: The maximum number of requests to allow
 # during a persistent connection. Set to 0 to allow an unlimited amount.
 # We recommend you leave this number high, for maximum performance.
 #
-MaxKeepAliveRequests {{ playbook.apache.common.keep_alive_requests }}
+MaxKeepAliveRequests {{ keep_alive_requests }}
 
 #
 # KeepAliveTimeout: Number of seconds to wait for the next request from the
 # same client on the same connection.
 #
-KeepAliveTimeout {{ playbook.apache.common.keep_alive_timeout }}
+KeepAliveTimeout {{ keep_alive_timeout }}
 
 ##
 ## Server-Pool Size Regulation (MPM specific)

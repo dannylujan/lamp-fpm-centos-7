@@ -1,0 +1,15 @@
+---
+
+- name: Download holland .rpm file for local install
+  copy: src=holland-1.0.10-2.1.noarch.rpm dest=/tmp/holland-1.0.10-2.1.noarch.rpm
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 7
+  register: rpm_dl
+
+- name: Install holland .rpm file
+  yum: name=/tmp/holland-1.0.10-2.1.noarch.rpm
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 7 and rpm_dl|changed
+  register: rpm_installed
+
+- name: Cleanup holland .rpm file
+  file: dest=holland-1.0.10-2.1.noarch.rpm state=absent
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 7 and rpm_installed|changed

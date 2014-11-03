@@ -1,3 +1,4 @@
 ---
 - name: restart apache
-  service: name={{ playbook.apache[ansible_os_family].apache }} state=restarted
+  service: name={{ apache }} state=restarted
+

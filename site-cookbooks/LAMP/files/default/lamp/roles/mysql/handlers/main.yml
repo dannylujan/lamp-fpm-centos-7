@@ -1,6 +1,6 @@
 ---
 
 - name: restart mysql
-  service: name={{ playbook.mysql[ansible_os_family].mysql }} state=restarted
+  service: name={{ mysql }} state=restarted
 
   

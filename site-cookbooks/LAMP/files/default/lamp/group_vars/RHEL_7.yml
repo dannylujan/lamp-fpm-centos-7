@@ -1,0 +1,35 @@
+---
+
+# APACHE2 VARS
+'apache_ver': 'v24'
+
+
+# PHP5 VARS
+'php_ini': "/etc/php.ini"
+'apache': "httpd"
+'packages': [
+                "php56u",
+                "php56u-opcache",
+                "php56u-gd",
+                "php56u-mysql",
+                "php56u-xml",
+                "php56u-devel"
+                ]
+'session_save_path': "/var/lib/php/session"
+
+
+# MYSQL VARS
+'mysql': 'mariadb'
+'mysqlpath': '/etc'
+'socket': '/var/lib/mysql/mysql.sock'
+'includedir': '/etc/sysconfig/mysqld-config'
+'log_error': '/var/log/mariadb/mariadb.log'
+
+'mysqlpkg': 'mariadb'
+'mysqlpkg_devel': 'mariadb-devel'
+
+
+# PHPMYADMIN VARS
+'phpmyadmin_name': 'phpMyAdmin'
+'apache_conf_path': '/etc/httpd/conf.d'
+
