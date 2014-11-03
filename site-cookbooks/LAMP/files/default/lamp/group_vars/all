@@ -76,13 +76,6 @@
 'htuser': 'serverinfo'
 'htpass': "{{ lookup('password', '/tmp/htpass_' + ansible_hostname + '-' + ansible_date_time.time) }}"
 'blowfish_pass': "{{ lookup('password', '/tmp/blowfish_' + ansible_hostname + '-' + ansible_date_time.time) }}"
-'whitelistips_support': [
-            "72.3.128.84/32", #DFW Bastion
-            "69.20.0.1/32", #IAD Bastion
-            "120.136.34.22/32", #HKG Bastion
-            "212.100.225.49/32", #LON1 Bastion
-            "212.100.225.42/32" #LON3 Bastion
-        ]
 
 
 # HOLLAND VARS
