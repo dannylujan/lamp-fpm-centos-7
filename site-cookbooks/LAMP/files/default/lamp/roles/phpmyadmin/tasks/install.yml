@@ -36,5 +36,5 @@
 - name: Ensure apache is started
   service: name={{ apache }} state=started
 
-- name: Testing .htaccess access
-  command: curl -IL http://localhost/phpmyadmin -u '{{htuser}}:{{htpass}}' 
+- name: Testing .htaccess authentication
+  command: curl -IL http://{{ ansible_eth1['ipv4']['address'] }}/phpmyadmin -u '{{htuser}}:{{htpass}}' 
