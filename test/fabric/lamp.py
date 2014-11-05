@@ -1,6 +1,28 @@
-import re
 from fabric.api import env, hide, run, task
 from envassert import detect, file, package, port, process, service
+
+
+def phpmyadmin_is_responding():
+    passfile = ''
+    try:
+        assert file('/root/.phpmyadminpass')
+        passfile = open('/root/.phpmyadminpass').readline()
+        userpass = passfile.readline()
+        htuser = userpass.split(':')[0]
+        htpass = userpass.split(':')[1]
+        with hide('running', 'stdout'):
+            phpmyadmin = run("curl -IL http://localhost/phpmyadmin -u '" +
+                             htuser + ":" + htpass + "'")
+    finally:
+        if passfile != '':
+            passfile.close()
+        return True
+
+
+def holland_is_running():
+    with hide('running', 'stdout'):
+        holland = run("holland bk")
+        return True
 
 
 def apache_is_responding():
@@ -33,9 +55,12 @@ def check():
         assert package.installed("apache2")
         assert package.installed("mysql-server-5.5")
         assert package.installed("apache2")
-        assert port.is_listening(80)
-        assert port.is_listening(443)
-        assert port.is_listening(3306)
         assert process.is_up("apache2")
         assert service.is_enabled("apache2")
         assert apache_is_responding()
+
+    assert port.is_listening(80)
+    assert port.is_listening(443)
+    assert port.is_listening(3306)
+    assert phpmyadmin_is_responding()
+    assert holland_is_running()
