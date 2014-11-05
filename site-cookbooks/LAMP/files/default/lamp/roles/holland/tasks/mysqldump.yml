@@ -41,7 +41,3 @@
 - name: Add cron job
   template: src=holland.cron.j2 dest=/etc/cron.d/holland
 
-- name: Run one time holland backup
-  shell: holland bk
-
-
