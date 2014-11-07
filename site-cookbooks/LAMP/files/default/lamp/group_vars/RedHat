@@ -48,6 +48,7 @@
 
 
 # PHP-FPM VARS
+'php-fpm': 'php-fpm'
 'php_fpm_path': '/etc/php-fpm.d'
 
 

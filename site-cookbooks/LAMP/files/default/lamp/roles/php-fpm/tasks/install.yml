@@ -20,7 +20,7 @@
   notify: restart php-fpm
 
 
-
-
+- name: Start php-fpm and enable
+  service: name={{ php-fpm }} state=started enabled=yes
 
 

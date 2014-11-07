@@ -75,6 +75,7 @@
 
 
 # PHP-FPM VARS
+'php-fpm': 'php5-fpm'
 'php_fpm_path': '/etc/php5/fpm/pool.d'
 
 
