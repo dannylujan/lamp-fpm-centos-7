@@ -48,8 +48,9 @@
 
 
 # PHP-FPM VARS
-'php-fpm': 'php-fpm'
+'php_fpm': 'php-fpm'
 'php_fpm_path': '/etc/php-fpm.d'
+'php_fpm_pkgs': 'php54-fpm'
 
 
 # MYSQL VARS

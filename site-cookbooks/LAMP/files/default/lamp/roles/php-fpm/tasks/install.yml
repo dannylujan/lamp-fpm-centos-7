@@ -21,6 +21,6 @@
 
 
 - name: Start php-fpm and enable
-  service: name={{ php-fpm }} state=started enabled=yes
+  service: name="{{ php_fpm }}" state=started enabled=yes
 
 

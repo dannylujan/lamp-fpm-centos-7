@@ -1,4 +1,4 @@
 ---
 
 - name: restart php-fpm
-  service: name={{ php-fpm }} state=restarted
+  service: name={{ php_fpm }} state=restarted
