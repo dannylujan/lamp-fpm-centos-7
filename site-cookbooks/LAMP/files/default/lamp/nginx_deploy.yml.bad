@@ -4,7 +4,6 @@
 
   tasks:
     - group_by: key={{ ansible_os_family }}
-      tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
 
 
 ### Applies only to RedHat systems
@@ -17,21 +16,19 @@
     - name: install LSB_release req for RHEL systems
       yum: pkg=redhat-lsb state=installed
       register: installed
-      tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
     
     - name: regather facts
       setup: 
       when: installed|changed
-      tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
 
     - include_vars: group_vars/RHEL_7.yml
       when: ansible_os_family == 'RedHat' and ansible_lsb.major_release == '7'
-      tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
+      tags: [ 'ius-repos', 'nginx', 'php-fpm','php5-fpm', 'mysql', 'phpmyadmin', 'holland' ]
 
   roles:
-    - { role: IUS-repos, tags: [ ius-repos, apache2, php5, mysql ] }
-    - { role: apache2, tags: apache2 }
-    - { role: php5, tags: php5 }
+    - { role: IUS-repos, tags: ius-repos,php-fpm,php5-fpm,mysql }
+    - { role: nginx, tags: nginx }
+    - { role: php-fpm, tags: php-fpm }
     - { role: mysql, tags: mysql }
     - { role: phpmyadmin, tags: phpmyadmin }
     - { role: holland, tags: holland }
@@ -47,12 +44,13 @@
   pre_tasks:
     - include_vars: group_vars/Ubuntu_14.yml
       when: ansible_os_family == 'Debian' and ansible_lsb.release == '14.04'
-      tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
+      tags: [ 'nginx', 'php-fpm','php5-fpm', 'mysql', 'phpmyadmin', 'holland' ]
 
   roles:
-    - { role: apache2, tags: apache2 }
-    - { role: php5, tags: php5 }
+    - { role: nginx, tags: nginx }
+    - { role: php-fpm, tags: php-fpm,php5-fpm }
     - { role: mysql, tags: mysql }
     - { role: phpmyadmin, tags: phpmyadmin }
     - { role: holland, tags: holland }
+
 

@@ -1,0 +1,23 @@
+---
+
+- name: Add offical Nginx repos
+  template: src={{ repo_file }} dest={{ repo_dest }}
+  register: repo_added
+
+- name: Import GPG signing key for Debian
+  shell: 'curl http://nginx.org/packages/keys/nginx_signing.key | sudo apt-key add -'
+  when: repo_added|changed and ansible_os_family == "Debian"
+
+
+- name: Installing nginx packages - RedHat
+  yum: name="nginx" state=present
+  when: ansible_os_family == 'RedHat'
+
+- name: Installing nginx packages - Debian
+  apt: name="nginx" state=present update_cache=yes
+  when: ansible_os_family == "Debian"
+
+
+
+
+

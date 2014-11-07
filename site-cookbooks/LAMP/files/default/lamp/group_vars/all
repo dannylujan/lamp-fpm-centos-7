@@ -51,6 +51,10 @@
 'expose_php': "Off"
 
 
+# NGINX VARS
+'nginx_vhost_path': '/etc/nginx/conf.d'
+
+
 # MYSQL VARS
 'mysql_password': "{{ lookup('password', '/tmp/mysql_' + ansible_hostname + '-' + ansible_date_time.time) }}"
 
