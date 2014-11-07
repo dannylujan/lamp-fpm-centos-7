@@ -50,7 +50,7 @@
 # PHP-FPM VARS
 'php_fpm': 'php-fpm'
 'php_fpm_path': '/etc/php-fpm.d'
-'php_fpm_pkgs': 'php54-fpm'
+'php_fpm_pkgs': [ 'php54-fpm', 'php54-pecl-apc' ]
 
 
 # MYSQL VARS
