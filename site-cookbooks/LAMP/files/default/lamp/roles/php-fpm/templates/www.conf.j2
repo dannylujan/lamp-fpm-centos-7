@@ -36,9 +36,9 @@ listen = /var/run/php5-fpm.sock
 ; Note: The user is mandatory. If the group is not set, the default user's group
 ;       will be used.
 ; RPM: apache Choosed to be able to access some dir as httpd
-user = {{ owner }}
+user = {{ apache_user }}
 ; RPM: Keep a group allowed to write in log dir.
-group = {{ owner }}
+group = {{ apache_user }}
 
 ; Choose how the process manager will control the number of child processes.
 ; Possible Values:

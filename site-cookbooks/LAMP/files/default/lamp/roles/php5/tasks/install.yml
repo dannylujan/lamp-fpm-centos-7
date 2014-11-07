@@ -12,7 +12,7 @@
   when: ansible_os_family == 'RedHat'
 
 - name: create session path
-  file: path={{ session_save_path }} owner=root group={{owner}} mode=0770 state=directory
+  file: path={{ session_save_path }} owner=root group={{ apache_user }} mode=0770 state=directory
 
 - name: copy php.ini template - Debian
   template: src=php.ini.j2 dest={{ php_ini }}

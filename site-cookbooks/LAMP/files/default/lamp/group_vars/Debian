@@ -3,8 +3,7 @@
 # APACHE2 VARS
 'apache': "apache2"
 'vhost_directory': "/etc/apache2/sites-available"
-'owner': "www-data"
-'group': "www-data"
+'apache_user': "www-data"
 
 'modules': [
         "cgi",
@@ -73,6 +72,10 @@
 'nginx_user': 'www-data'
 'repo_file': 'Debian.list.j2'
 'repo_dest': '/etc/apt/sources.list.d/nginx.list'
+
+
+# PHP-FPM VARS
+'php_fpm_path': '/etc/php5/fpm/pool.d'
 
 
 # MYSQL VARS

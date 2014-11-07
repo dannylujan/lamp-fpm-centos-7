@@ -8,7 +8,7 @@
   template: src=template.j2 dest={{ vhost_directory }}/default.template
 
 - name: Create domains document root
-  file: path=/var/www/vhosts/{{ domain }} owner={{ owner }} group={{ group }} mode=0775 state=directory
+  file: path=/var/www/vhosts/{{ domain }} owner={{ apache_user }} group={{ apache_user }} mode=0775 state=directory
   when: domain != 'example.com'
 
 - name: Add domains vhost file 
