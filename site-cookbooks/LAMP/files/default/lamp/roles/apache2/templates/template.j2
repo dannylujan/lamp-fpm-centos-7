@@ -13,13 +13,8 @@
                 AllowOverride All
         </Directory>
 
-{% if ansible_os_family == 'Debian' %}
         CustomLog /var/log/{{ apache }}/example.com-access.log combined
         ErrorLog /var/log/{{ apache }}/example.com-error.log
-{% else %}
-        CustomLog /var/log/{{ apache }}/example.com-access.log combined
-        ErrorLog /var/log/{{ apache }}/example.com-error.log
-{% endif %}
 
         # Possible values include: debug, info, notice, warn, error, crit,
         # alert, emerg.
@@ -35,13 +30,8 @@
 #                AllowOverride All
 #        </Directory>
 #
-{% if ansible_os_family == 'Debian' %}
 #        CustomLog /var/log/{{ apache }}/example.com-ssl-access.log combined
 #        ErrorLog /var/log/{{ apache }}/example.com-ssl-error.log
-{% else %}
-#        CustomLog /var/log/{{ apache }}/example.com-ssl-access.log combined
-#        ErrorLog /var/log/{{ apache }}/example.com-ssl-error.log
-{% endif %}
 #
 #        # Possible values include: debug, info, notice, warn, error, crit,
 #        # alert, emerg.
