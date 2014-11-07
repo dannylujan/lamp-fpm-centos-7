@@ -13,11 +13,7 @@ server {
 
     server_name  {{ domain }};
     server_name www.{{ domain }};
-{% if domain != 'example.com' %}
-        root /var/www/vhosts/{{ domain }};
-{% else %}
-        root /var/www;
-{% endif %}
+    root /var/www/vhosts/{{ domain }};
 
     access_log  /var/log/nginx/{{ domain }}_access.log;
     error_log   /var/log/nginx/{{ domain }}_error.log error;
