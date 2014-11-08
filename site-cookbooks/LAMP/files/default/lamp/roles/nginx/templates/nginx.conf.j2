@@ -44,7 +44,4 @@ http {
     }
 
     include /etc/nginx/conf.d/*.conf;
-{% if ansible_os_family == 'Debian' %}
-    include /etc/nginx/sites-enabled/*;
-{% endif %}
 }
