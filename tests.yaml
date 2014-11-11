@@ -22,10 +22,10 @@ test-cases:
             use_ssh_config: True
             fabfile: test/fabric/lamp.py # Path to envassert test
 
-- name: RHEL 6.5
+- name: RHEL 6.6
   create:
     parameters:
-      image: Red Hat Enterprise Linux 6.5 (PVHVM)
+      image: Red Hat Enterprise Linux 6.6 (PVHVM)
     timeout: 30
   resource_tests:
     ssh_private_key: { get_output: private_key }
