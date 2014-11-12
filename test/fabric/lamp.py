@@ -3,23 +3,17 @@ from envassert import detect, file, package, port, process, service
 
 
 def phpmyadmin_is_responding():
-    passfile = ''
-    try:
-        assert file.exists('/root/.phpmyadminpass'), ("/root/.phpmyadminpass" +
-                                                      " not found")
-        passfile = open('/root/.phpmyadminpass')
-        userpass = passfile.readline()
-        htuser = userpass.split(' ')[0]
-        htpass = userpass.split(' ')[1]
-        with hide('running', 'stdout'):
-            phpmyadmin = run("curl -IL http://localhost/phpmyadmin -u '" +
-                             htuser + ":" + htpass + "'")
-        passfile.close()
+    assert file.exists('/root/.phpmyadminpass'), ("/root/.phpmyadminpass" +
+                                                  " not found")
+    credentials = ''
+    with hide('running', 'stdout'):
+        credentials = run("cat /root/.phpmyadminpass")
+    htuser = credentials.split(' ')[0]
+    htpass = credentials.split(' ')[1]
+    with hide('running', 'stdout'):
+        phpmyadmin = run("curl -IL http://localhost/phpmyadmin -u '" +
+                         htuser + ":" + htpass + "'")
         return True
-    except:
-        if passfile != '':
-            passfile.close()
-        return False
 
 
 def holland_is_running():
