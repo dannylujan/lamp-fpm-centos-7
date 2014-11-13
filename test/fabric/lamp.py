@@ -48,7 +48,7 @@ def check():
         print "Ubuntu 12.04/14.04 or Debian 7.x"
         assert package.installed("apache2"), "apache2 is not installed"
         assert package.installed("mysql-server-5.5"), ("mysql-server-5.5 not" +
-                                                       " isntalled")
+                                                       " installed")
         assert process.is_up("apache2"), "apache2 is not running"
         assert service.is_enabled("apache2"), "apache2 is not enabled"
         assert apache_is_responding(), "apache2 is not responding"
