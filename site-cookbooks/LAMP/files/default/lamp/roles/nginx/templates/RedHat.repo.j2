@@ -1,0 +1,5 @@
+[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/{{ ansible_distribution|lower }}/{{ ansible_lsb.major_release }}/x86_64/
+gpgcheck=0
+enabled=1

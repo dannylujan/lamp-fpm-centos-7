@@ -1,6 +1,6 @@
 ---
 
-# APACHE2 VARS
+### APACHE2 VARS
 'apache_ver': 'v24'
 
 'modules': [ 
@@ -43,6 +43,6 @@
                     ]
 
 
-# PHPMYADMIN VARS
+### PHPMYADMIN VARS
 'apache_conf_path': '/etc/apache2/conf-enabled'
 

@@ -1,0 +1,53 @@
+server {
+
+    listen   80;
+
+    ### Enable SSL
+    #listen  443;
+    #ssl on;
+    #ssl_certificate cert.pem;
+    #ssl_certificate_key cert.key;
+    #ssl_protocols SSLv3 TLSv1;
+    #ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP;
+    #ssl_prefer_server_ciphers on;
+
+    server_name  default;
+    #server_name www.default;
+    root /var/www/html;
+
+    access_log  /var/log/nginx/access.log;
+    error_log   /var/log/nginx/error.log error;
+
+    location / {
+        index  index.php index.html index.htm;
+        try_files $uri $uri/ /index.php?q=$uri&args;
+
+    }
+
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_pass   php5-fpm-sock;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+
+    ### Set Headers on Images and other Static Assets
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+    expires 1y;
+    log_not_found off;
+    }
+
+}
+
+
+### For forced non-www redirects
+
+#server {
+#
+#    listen   80;
+#    server_name www.default;
+#    rewrite ^ http://default$request_uri? permanent;
+#
+#}

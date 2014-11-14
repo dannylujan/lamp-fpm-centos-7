@@ -1,10 +1,10 @@
 ---
 
-# APACHE2 VARS
+### APACHE2 VARS
 'apache_ver': 'v24'
 
 
-# PHP5 VARS
+### PHP5 VARS
 'php_ini': "/etc/php.ini"
 'apache': "httpd"
 'packages': [
@@ -18,7 +18,11 @@
 'session_save_path': "/var/lib/php/session"
 
 
-# MYSQL VARS
+### PHP-FPM VARS
+'php_fpm_pkgs': [ 'php56u-fpm', 'php56u-opcache' ]
+
+
+### MYSQL VARS
 'mysql': 'mariadb'
 'mysqlpath': '/etc'
 'socket': '/var/lib/mysql/mysql.sock'

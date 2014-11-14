@@ -1,12 +1,9 @@
 ---
 
-'task_list': 'Debian'
-
-# APACHE2 VARS
+### APACHE2 VARS
 'apache': "apache2"
 'vhost_directory': "/etc/apache2/sites-available"
-'owner': "www-data"
-'group': "www-data"
+'apache_user': "www-data"
 
 'modules': [
         "cgi",
@@ -33,7 +30,6 @@
                 'ssl' ]
 
         # Setting apache server settings
-#'max_clients': "{{ max_clients }}"
 'max_spare_servers': "{{ (max_clients|int ** 0.5)|int + 2}}"
 'min_spare_servers': "{{ (max_spare_servers|int / 2)|int }}"
 
@@ -55,7 +51,7 @@
 'worker_max_requests_per_child': 0
 
 
-# PHP5 VARS
+### PHP5 VARS
 'php_ini': "/etc/php5/apache2/php.ini"
 'apache': "apache2"
 'packages': [
@@ -70,7 +66,19 @@
                 ]
 'session_save_path': "/var/lib/php5/session"
 
-# MYSQL VARS
+
+### NGINX VARS
+'nginx_user': 'www-data'
+'repo_file': 'Debian.list.j2'
+'repo_dest': '/etc/apt/sources.list.d/nginx.list'
+
+
+### PHP-FPM VARS
+'php_fpm': 'php5-fpm'
+'php_fpm_path': '/etc/php5/fpm/pool.d'
+
+
+### MYSQL VARS
 'mysql': 'mysql'
 'mysqlpath': '/etc/mysql'
 'socket': '/var/run/mysqld/mysqld.sock'
@@ -78,6 +86,6 @@
 'log_error': '/var/log/mysql/error.log'
 
 
-# PHPMYADMIN VARS
+### PHPMYADMIN VARS
 'phpmyadmin_name': 'phpmyadmin'
 'apache_conf_path': '/etc/apache2/conf.d'

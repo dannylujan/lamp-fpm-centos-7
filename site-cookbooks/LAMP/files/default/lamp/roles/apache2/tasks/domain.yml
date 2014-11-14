@@ -7,8 +7,16 @@
 - name: Add default.template file 
   template: src=template.j2 dest={{ vhost_directory }}/default.template
 
+- name: Add default Docroot
+  file: dest='/var/www/html' state=directory owner={{ apache_user }} group={{ apache_user }}
+
+- name: Set default vhost - Debian
+  template: src="Debian/{{apache_ver}}/000-default.j2" dest="/etc/apache2/sites-available/000-default"
+  when: ansible_os_family == 'Debian'
+  notify: Restart apache
+
 - name: Create domains document root
-  file: path=/var/www/vhosts/{{ domain }} owner={{ owner }} group={{ group }} mode=0775 state=directory
+  file: path=/var/www/vhosts/{{ domain }} owner={{ apache_user }} group={{ apache_user }} mode=0775 state=directory
   when: domain != 'example.com'
 
 - name: Add domains vhost file 

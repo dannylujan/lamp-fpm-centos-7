@@ -1,6 +1,6 @@
 # LAMP Deployment Vars
 
-# APACHE2 VARS
+### APACHE2 VARS
 'apache_ver': 'v22'
 'domain': "example.com"
 'timeout': 30
@@ -39,7 +39,7 @@
 'worker_max_requests_per_child': 0
 
 
-# PHP5 VARS
+### PHP5 VARS
 'max_execution_time': 30
 'memory_limit': "{{ansible_memtotal_mb}}"
 'error_reporting': "E_ALL & ~E_NOTICE | E_DEPRECATED"
@@ -51,7 +51,11 @@
 'expose_php': "Off"
 
 
-# MYSQL VARS
+### NGINX VARS
+'nginx_vhost_path': '/etc/nginx/conf.d'
+
+
+### MYSQL VARS
 'mysql_password': "{{ lookup('password', '/tmp/mysql_' + ansible_hostname + '-' + ansible_date_time.time) }}"
 
 'datadir': '/var/lib/mysql'
@@ -72,13 +76,13 @@
 'innodb_buffer_pool_size': 64M
 
 
-# PHPMYADMIN VARS
+### PHPMYADMIN VARS
 'htuser': 'serverinfo'
 'htpass': "{{ lookup('password', '/tmp/htpass_' + ansible_hostname + '-' + ansible_date_time.time) }}"
 'blowfish_pass': "{{ lookup('password', '/tmp/blowfish_' + ansible_hostname + '-' + ansible_date_time.time) }}"
 
 
-# HOLLAND VARS
+### HOLLAND VARS
 'holland_version': '1.0.10-2'
 'holland_dir': '/var/lib/mysqlbackup'
 'holland_password': "{{ lookup('password', '/tmp/holland_' + ansible_hostname + '-' + ansible_date_time.time) }}"

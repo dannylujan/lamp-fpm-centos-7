@@ -1,0 +1,38 @@
+---
+
+- name: Copy over nginx.conf
+  template: src=nginx.conf.j2 dest='/etc/nginx/nginx.conf'
+  notify: restart nginx
+
+- name: Delete default domains
+  file: path={{ item.path }} state={{ item.state }}
+  with_items:
+    - { path: '{{ nginx_vhost_path }}/default.conf', state: absent } 
+    - { path: '{{ nginx_vhost_path }}/example_ssl.conf', state: absent }
+
+- name: Setup default vhost
+  template: src="000-default.conf.j2" dest={{ nginx_vhost_path }}/000-default.conf
+  notify: restart nginx
+
+- name: Add default Docroot
+  file: dest='/var/www/html' state=directory owner={{ nginx_user }} group={{ nginx_user }}
+
+- name: Add default index.php to www folder
+  template: src=default_index.php.j2 dest='/var/www/html/index.php' owner={{ nginx_user }} group={{ nginx_user }} 
+
+- name: Add document root for custom domain
+  file: dest='/var/www/vhosts/{{ domain }}' state=directory owner={{ nginx_user }} group={{ nginx_user }}
+  notify: restart nginx
+
+- name: Setup custom vhost
+  template: src=custom_vhost.conf.j2 dest={{ nginx_vhost_path }}/{{ domain }}.conf
+  notify: restart nginx
+
+- name: Add default index.php page for custom domain
+  template: src=custom_index.php.j2 dest='/var/www/vhosts/{{ domain }}/index.php' owner={{ nginx_user }} group={{ nginx_user }}
+
+
+- name: Enable and start service
+  service: name=nginx state=started enabled=yes
+
+

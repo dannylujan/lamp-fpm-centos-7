@@ -1,12 +1,9 @@
 ---
 
-'task_list': 'RedHat'
-
 # APACHE2 VARS
 'apache': "httpd"
 'vhost_directory': "/etc/httpd/vhost.d"
-'owner': "apache"
-'group': "apache"
+'apache_user': "apache"
 
         # Setting apache server settings
     #'max_clients': "{{ max_clients }}"
@@ -43,6 +40,17 @@
                 "php54-devel"
                 ]
 'session_save_path': "/var/lib/php/session"
+
+# NGINX VARS
+'nginx_user': 'nginx'
+'repo_file': 'RedHat.repo.j2'
+'repo_dest': '/etc/yum.repos.d/nginx.repo'
+
+
+# PHP-FPM VARS
+'php_fpm': 'php-fpm'
+'php_fpm_path': '/etc/php-fpm.d'
+'php_fpm_pkgs': [ 'php54-fpm', 'php54-pecl-apc' ]
 
 
 # MYSQL VARS
