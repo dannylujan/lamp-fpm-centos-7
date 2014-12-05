@@ -35,19 +35,22 @@ instructions: |
   PuTTY](http://www.rackspace.com/knowledge_center/article/logging-in-with-a-ssh-private-key-on-windows).
 
   #### Details of Your Setup
-  [Apache](http://www.apache.org/) v2.2 is installed on all Red Hat Enterprise
-  Linux and CentOS distributions. Ubuntu 14.04 comes with Apache 2.4. Other
-  Ubuntu versions come with 2.2.
+  [Apache](http://www.apache.org/) v2.2 is installed on Red Hat Enterprise
+  Linux 6, CentOS 6, Debian 7, Ubuntu 10.04 and 12.04. Ubuntu 14.04 and CentOS 7
+  come with Apache 2.4.
 
-  [MySQL](http://www.mysql.com/) v5.5 is installed on Ubuntu 12.04, 14.04, Red
-  Hat Enterprise Linux 6.5 and CentOS v6.5. MySQL v5.1 is installed on Ubuntu
-  10.04. The MySQL root password is recorded in root's home directory in the
+  [MySQL](http://www.mysql.com/) v5.1 is installed on Ubuntu 10.04. MySQL v5.5
+  is installed on Ubuntu 12.04, 14.04, Redhat Enterprise Linux 6 and CentOS 6. 
+  [MariaDB](https://mariadb.com/) is the default on CentOS 7.
+
+  The MySQL root password is recorded in root's home directory in the
   file .my.cnf and in the View Generated Passwords dialog. Daily database
   backups are taken using [Holland](http://hollandbackup.org/). A rotating
   seven days of database dumps are stored in /var/lib/mysqlbackup.
 
-  [PHP](http://www.php.net/) is installed at v5.3 on Ubuntu 12.04, v5.5 on
-  Ubuntu 14.04 and v5.4 on Red Hat Enterprise Linux and CentOS.
+  [PHP](http://www.php.net/) is installed at v5.3 on Ubuntu 12.04, v5.4 on 
+  Redhat Enterprise Linux 6, CentOS 6 and Debian 7, v5.5 on Ubuntu 14.04, 
+  and v5.6 on CentOS 7, 
 
   [phpMyAdmin](http://www.phpmyadmin.net/) is available via HTTP at
   /phpmyadmin. Apache is configured to require HTTP basic authentication. Log
@@ -55,3 +58,4 @@ instructions: |
   password displayed in the View Generated Passwords dialog. You may then login
   using MySQL login credentials which are also available in the View Generated
   Passwords dialog.
+
