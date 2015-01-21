@@ -22,28 +22,28 @@ test-cases:
             use_ssh_config: True
             fabfile: test/fabric/lamp.py # Path to envassert test
 
-#- name: RHEL 6
-#  create:
-#    parameters:
-#      image: Red Hat Enterprise Linux 6 (PVHVM)
-#    timeout: 30
-#  resource_tests:
-#    ssh_private_key: { get_output: private_key }
-#    ssh_key_file: tmp/private_key
-#    tests:
-#    - lamp:
-#        fabric:
-#          env:
-#            user: root
-#            key_filename: tmp/private_key
-#            hosts: { get_output: server_ip }
-#            tasks:
-#              - check
-#            abort_on_prompts: True
-#            connection_attempts: 3
-#            disable_known_hosts: True
-#            use_ssh_config: True
-#            fabfile: test/fabric/lamp.py
+- name: RHEL 6
+  create:
+    parameters:
+      image: Red Hat Enterprise Linux 6 (PVHVM)
+    timeout: 30
+  resource_tests:
+    ssh_private_key: { get_output: private_key }
+    ssh_key_file: tmp/private_key
+    tests:
+    - lamp:
+        fabric:
+          env:
+            user: root
+            key_filename: tmp/private_key
+            hosts: { get_output: server_ip }
+            tasks:
+              - check
+            abort_on_prompts: True
+            connection_attempts: 3
+            disable_known_hosts: True
+            use_ssh_config: True
+            fabfile: test/fabric/lamp.py
 
 - name: Ubuntu 14.04
   create:
