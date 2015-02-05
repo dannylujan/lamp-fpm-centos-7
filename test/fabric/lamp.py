@@ -1,5 +1,7 @@
 from fabric.api import env, hide, run, task
 from envassert import detect, file, package, port, process, service
+from hot.utils.test import get_artifacts, http_check
+
 
 
 def phpmyadmin_is_responding():
@@ -58,3 +60,9 @@ def check():
     assert port.is_listening(3306), "port 3306 not listening"
     assert phpmyadmin_is_responding(), "phpmyadmin is not responding"
     assert holland_is_running(), "holland cannot run"
+
+
+@task
+def artifacts():
+    env.platform_family = detect.detect()
+    get_artifacts()
