@@ -24,7 +24,7 @@ for case in test_cases:
     increment += 1
 
 
-if len(test_cases) > node_index:
+if tests_to_run:
     print "calling {}".format(['hot', 'test', '--test-cases']+tests_to_run)
     sys.exit(subprocess.call(['hot', 'test', '--test-cases']+tests_to_run))
 else:
