@@ -23,10 +23,10 @@ test-cases:
             use_ssh_config: True
             fabfile: test/fabric/lamp.py # Path to envassert test
 
-- name: RHEL 6
+- name: Ubuntu 14.04
   create:
     parameters:
-      image: Red Hat Enterprise Linux 6 (PVHVM)
+      image: Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)
     timeout: 30
   resource_tests:
     ssh_private_key: { get_output: private_key }
@@ -47,10 +47,10 @@ test-cases:
             use_ssh_config: True
             fabfile: test/fabric/lamp.py
 
-- name: Ubuntu 14.04
+- name: RHEL 6
   create:
     parameters:
-      image: Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)
+      image: Red Hat Enterprise Linux 6 (PVHVM)
     timeout: 30
   resource_tests:
     ssh_private_key: { get_output: private_key }
