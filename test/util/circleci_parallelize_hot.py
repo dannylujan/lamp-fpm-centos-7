@@ -23,6 +23,9 @@ for case in test_cases:
         tests_to_run.append(case.get('name'))
     increment += 1
 
-print "calling {}".format(['hot', 'test', '--test-cases']+tests_to_run)
 
-sys.exit(subprocess.call(['hot', 'test', '--test-cases']+tests_to_run))
+if len(test_cases) > node_index:
+    print "calling {}".format(['hot', 'test', '--test-cases']+tests_to_run)
+    sys.exit(subprocess.call(['hot', 'test', '--test-cases']+tests_to_run))
+else:
+    print("Out of tests to run.")
