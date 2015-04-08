@@ -1,0 +1,8 @@
+---
+- stat: path=/usr/bin/rackspace-monitoring-agent
+  register: p
+
+- name: restart rackspace-monitoring-agent
+  service: name='rackspace-monitoring-agent' state=restarted
+  when: p.stat.exists
+
