@@ -29,5 +29,13 @@
 - name: Create RS monitoring plugin folder
   file: dest=/usr/lib/rackspace-monitoring-agent/plugins state=directory
 
+- name: Check /etc/rackspace-monitoring-agent.conf.d/
+  file: dest=/etc/rackspace-monitoring-agent.conf.d/ state=directory owner=root group=root
 
+- stat: path=/usr/bin/rackspace-monitoring-agent
+  register: p
 
+- name: Copy holland_mysqldump.yaml
+  template: src=holland_mysqldump.yaml.j2 dest=/etc/rackspace-monitoring-agent.conf.d/holland_mysqldump.yaml
+  notify: restart rackspace-monitoring-agent
+  when: p.stat.exists
