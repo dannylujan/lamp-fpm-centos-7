@@ -41,3 +41,5 @@
 - name: Add cron job
   template: src=holland.cron.j2 dest=/etc/cron.d/holland
 
+- name: Run Holland
+  command: /usr/sbin/holland bk
