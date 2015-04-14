@@ -39,3 +39,13 @@
   template: src=holland_mysqldump.yaml.j2 dest=/etc/rackspace-monitoring-agent.conf.d/holland_mysqldump.yaml
   notify: restart rackspace-monitoring-agent
   when: p.stat.exists
+
+- name: Download holland_mysqldump.py 
+  get_url:
+    url: https://raw.githubusercontent.com/racker/rackspace-monitoring-agent-plugins-contrib/master/holland_mysqldump.py
+    dest: /usr/lib/rackspace-monitoring-agent/plugins/holland_mysqldump.py
+    mode: 0744
+    owner: root
+    group: root
+  notify: restart rackspace-monitoring-agent
+  when: p.stat.exists
