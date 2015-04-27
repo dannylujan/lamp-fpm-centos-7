@@ -46,7 +46,7 @@ def check():
             # with the stock build.
 
     if env.platform_family == "debian":
-        print "Ubuntu 12.04/14.04 or Debian 7.x"
+        print "Ubuntu 12.04/14.04 or Debian 7.x/8.x"
         assert package.installed("apache2"), "apache2 is not installed"
         assert package.installed("mysql-server-5.5"), ("mysql-server-5.5 not" +
                                                        " installed")

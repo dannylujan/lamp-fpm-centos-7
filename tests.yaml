@@ -118,3 +118,27 @@ test-cases:
             disable_known_hosts: True
             use_ssh_config: True
             fabfile: test/fabric/lamp.py
+
+- name: Debian 8
+  create:
+    parameters:
+      image: Debian 8 (Jessie) (PVHVM)
+    timeout: 30
+  resource_tests:
+    ssh_private_key: { get_output: private_key }
+    ssh_key_file: tmp/private_key
+    tests:
+    - lamp:
+        fabric:
+          env:
+            user: root
+            key_filename: tmp/private_key
+            hosts: { get_output: server_ip }
+            tasks:
+              - artifacts
+              - check
+            abort_on_prompts: True
+            connection_attempts: 3
+            disable_known_hosts: True
+            use_ssh_config: True
+            fabfile: test/fabric/lamp.py

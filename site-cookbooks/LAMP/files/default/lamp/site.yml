@@ -46,7 +46,7 @@
 
   pre_tasks:
     - include_vars: group_vars/Ubuntu_14.yml
-      when: ansible_os_family == 'Debian' and ansible_lsb.release == '14.04'
+      when: ansible_os_family == 'Debian' and (ansible_lsb.release == '14.04' or ansible_lsb.major_release == '8')
       tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
 
   roles:
