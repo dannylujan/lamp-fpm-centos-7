@@ -42,12 +42,13 @@ parameters:
     default: CentOS 6 (PVHVM)
     constraints:
     - allowed_values:
+      - CentOS 7 (PVHVM)
       - CentOS 6 (PVHVM)
+      - Debian 8 (Jessie) (PVHVM)
+      - Debian 7 (Wheezy) (PVHVM)
       - Red Hat Enterprise Linux 6 (PVHVM)
       - Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)
       - Ubuntu 12.04 LTS (Precise Pangolin) (PVHVM)
-      - Debian 7 (Wheezy) (PVHVM)
-      - CentOS 7 (PVHVM)
       description: Must be a supported operating system.
 
   flavor:
