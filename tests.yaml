@@ -51,7 +51,7 @@ test-cases:
   create:
     parameters:
       image: Red Hat Enterprise Linux 6 (PVHVM)
-    timeout: 45
+    timeout: 70
   resource_tests:
     ssh_private_key: { get_output: private_key }
     ssh_key_file: tmp/private_key
