@@ -19,7 +19,7 @@
   when: rpm_found is defined and rpm_found.rc != 0
 
 - name: Add ius-dev.repo
-  template: src={{ansible_distribution}}_ius-dev.repo.j2 dest=/etc/yum.repos.d/ius.repo
+  template: src={{ansible_distribution}}_ius-dev.repo.j2 dest=/etc/yum.repos.d/ius-dev.repo
   when: ansible_os_family == 'RedHat'
 
 - name: Add ius.repo
