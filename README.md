@@ -1,3 +1,4 @@
+[![Circle CI](https://circleci.com/gh/rackspace-orchestration-templates/lamp/tree/master.png?style=shield)](https://circleci.com/gh/rackspace-orchestration-templates/lamp)
 Description
 ===========
 
@@ -104,7 +105,7 @@ Linux 6, CentOS 6, Debian 7, Ubuntu 10.04 and 12.04. Ubuntu 14.04 and CentOS 7
 come with Apache 2.4.
 
 [MySQL](http://www.mysql.com/) v5.1 is installed on Ubuntu 10.04. MySQL v5.5
-is installed on Ubuntu 12.04, 14.04, Redhat Enterprise Linux 6 and CentOS 6. 
+is installed on Ubuntu 12.04, 14.04, Redhat Enterprise Linux 6 and CentOS 6.
 [MariaDB](https://mariadb.com/) is the default on CentOS 7.
 
 The MySQL root password is recorded in root's home directory in the
@@ -112,9 +113,9 @@ file .my.cnf and in the View Generated Passwords dialog. Daily database
 backups are taken using [Holland](http://hollandbackup.org/). A rotating
 seven days of database dumps are stored in /var/lib/mysqlbackup.
 
-[PHP](http://www.php.net/) is installed at v5.3 on Ubuntu 12.04, v5.4 on 
-Redhat Enterprise Linux 6, CentOS 6 and Debian 7, v5.5 on Ubuntu 14.04, 
-and v5.6 on CentOS 7, 
+[PHP](http://www.php.net/) is installed at v5.3 on Ubuntu 12.04, v5.4 on
+Redhat Enterprise Linux 6, CentOS 6 and Debian 7, v5.5 on Ubuntu 14.04,
+and v5.6 on CentOS 7,
 
 [phpMyAdmin](http://www.phpmyadmin.net/) is available via HTTP at
 /phpmyadmin. Apache is configured to require HTTP basic authentication. Log
