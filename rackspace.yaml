@@ -11,10 +11,8 @@ hidden_outputs:
   - phpmyadmin_password
   - mysql_root_password
 abstract: |
-  Single Linux server running a [LAMP
-  stack] for development
-  use.
-  [LAMP stack]: http://en.wikipedia.org/wiki/LAMP_(software_bundle)
+  LAMP is a software stack containing the following open-source components:
+  Linux, Apache, MySQL and PHP
 instructions: |
   #### Getting Started
   This deployment is intended for small workloads, such as a site in
