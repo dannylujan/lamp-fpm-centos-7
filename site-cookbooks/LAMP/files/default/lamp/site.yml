@@ -15,7 +15,7 @@
 
   pre_tasks:
     - include_vars: group_vars/RHEL_7.yml
-      when: ansible_os_family == 'RedHat' and ansible_distribution_version == '7'
+      when: ansible_os_family == 'RedHat' and ansible_distribution__major_version == '7'
       tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
 
   roles:

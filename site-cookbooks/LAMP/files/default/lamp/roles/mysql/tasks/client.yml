@@ -19,7 +19,7 @@
 - name: Determine if general mysql packages exist on Redhat system base
   command: /bin/rpm -q mysql-libs
   register: if_found
-  when: ansible_os_family == 'RedHat' and ansible_distribution_version == '6'
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6'
   ignore_errors: yes
 
 - name: Erase mysql-libs with no deps

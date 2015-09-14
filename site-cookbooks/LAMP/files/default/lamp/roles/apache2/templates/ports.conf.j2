@@ -8,7 +8,7 @@
 # README.Debian.gz
 
 {% for port in active_ports %}
-    {% if ansible_distribution_version == '12.04' or ansible_distribution=='Debian' or ansible_os_family == 'RedHat' and ansible_distribution_version == '6' %}
+    {% if ansible_distribution_version == '12.04' or ansible_distribution=='Debian' or ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6' %}
 NameVirtualHost *:{{ port }}
     {% endif %}
 Listen {{ port }}
