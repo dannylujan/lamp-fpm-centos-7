@@ -5,11 +5,11 @@
 
 - name: Install holland-mysqldump packages for Redhat 6
   yum: name=holland-mysqldump state=present
-  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int < 7
+  when: ansible_os_family == 'RedHat' and ansible_distribution_version|int < 7
 
 - name: Install holland-mysqldump on Redhat 7 base
   include: RHEL7_mysqldump.yml
-  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 7
+  when: ansible_os_family == 'RedHat' and ansible_distribution_version|int == 7
 
 
 - name: Download holland-mysqldump .deb file

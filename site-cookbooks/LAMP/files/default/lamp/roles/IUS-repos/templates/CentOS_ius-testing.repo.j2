@@ -1,25 +1,25 @@
 [ius-testing]
-name=IUS Community Packages for Enterprise Linux {{ansible_lsb.major_release|int}} - $basearch - Testing
-baseurl=http://mirror.rackspace.com/ius/testing/CentOS/{{ansible_lsb.major_release|int}}/$basearch
-        http://dl.iuscommunity.org/pub/ius/testing/CentOS/{{ansible_lsb.major_release|int}}/$basearch
+name=IUS Community Packages for Enterprise Linux {{ansible_distribution_version|int}} - $basearch - Testing
+baseurl=http://mirror.rackspace.com/ius/testing/CentOS/{{ansible_distribution_version|int}}/$basearch
+        http://dl.iuscommunity.org/pub/ius/testing/CentOS/{{ansible_distribution_version|int}}/$basearch
 failovermethod=priority
 enabled=0
 gpgcheck=0
 gpgkey=file:///etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY
 
 [ius-testing-debuginfo]
-name=IUS Community Packages for Enterprise Linux {{ansible_lsb.major_release|int}} - $basearch - Testing Debug
-baseurl=http://mirror.rackspace.com/ius/testing/CentOS/{{ansible_lsb.major_release|int}}/$basearch/debuginfo
-        http://dl.iuscommunity.org/pub/ius/testing/CentOS/{{ansible_lsb.major_release|int}}/$basearch/debuginfo
+name=IUS Community Packages for Enterprise Linux {{ansible_distribution_version|int}} - $basearch - Testing Debug
+baseurl=http://mirror.rackspace.com/ius/testing/CentOS/{{ansible_distribution_version|int}}/$basearch/debuginfo
+        http://dl.iuscommunity.org/pub/ius/testing/CentOS/{{ansible_distribution_version|int}}/$basearch/debuginfo
 failovermethod=priority
 enabled=0
 gpgcheck=0
 gpgkey=file:///etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY
 
 [ius-testing-source]
-name=IUS Community Packages for Enterprise Linux {{ansible_lsb.major_release|int}} - $basearch - Testing Source
-baseurl=http://mirror.rackspace.com/ius/testing/CentOS/{{ansible_lsb.major_release|int}}/SRPMS
-        http://dl.iuscommunity.org/pub/ius/testing/CentOS/{{ansible_lsb.major_release|int}}/SRPMS
+name=IUS Community Packages for Enterprise Linux {{ansible_distribution_version|int}} - $basearch - Testing Source
+baseurl=http://mirror.rackspace.com/ius/testing/CentOS/{{ansible_distribution_version|int}}/SRPMS
+        http://dl.iuscommunity.org/pub/ius/testing/CentOS/{{ansible_distribution_version|int}}/SRPMS
 failovermethod=priority
 enabled=0
 gpgcheck=0
