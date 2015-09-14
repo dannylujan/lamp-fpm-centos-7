@@ -52,7 +52,7 @@ SSLSessionCacheTimeout  300
 #   Semaphore:
 #   Configure the path to the mutual exclusion semaphore the
 #   SSL engine uses internally for inter-process synchronization. 
-{% if ansible_os_family == "RedHat" or ansible_os_family == 'Debian' and ansible_distribution_version|int > 13.04 %}
+{% if ansible_os_family == "RedHat" or ansible_os_family == 'Debian' and ansible_distribution_major_version|int > 13.04 %}
 Mutex  default
 {% else %}
 Mutex  file:/var/run/apache2/ssl_mutex
