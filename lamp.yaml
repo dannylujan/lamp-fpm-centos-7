@@ -41,11 +41,9 @@ parameters:
       Required: Server image used for all servers that are created as a part of
       this deployment.
     type: string
-    default: CentOS 6 (PVHVM)
+    default: Debian 8 (Jessie) (PVHVM)
     constraints:
     - allowed_values:
-      - CentOS 7 (PVHVM)
-      - CentOS 6 (PVHVM)
       - Debian 8 (Jessie) (PVHVM)
       - Debian 7 (Wheezy) (PVHVM)
       - Red Hat Enterprise Linux 6 (PVHVM)
