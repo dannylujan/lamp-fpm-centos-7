@@ -5,11 +5,11 @@
 
 - name: Install holland-common pkgs on Redhat base
   yum: name=holland-common state=present
-  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int < 7
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int < 7
 
 - name: Install holland-common on Redhat 7 base
   include: RHEL7_common.yml
-  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 7
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int == 7
 
 - name: Install holland-common reqs on Debian base
   apt: name=python-mysqldb state=present
