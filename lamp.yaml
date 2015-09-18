@@ -41,10 +41,9 @@ parameters:
       Required: Server image used for all servers that are created as a part of
       this deployment.
     type: string
-    default: Debian 8 (Jessie) (PVHVM)
+    default: Debian 7 (Wheezy) (PVHVM)
     constraints:
     - allowed_values:
-      - Debian 8 (Jessie) (PVHVM)
       - Debian 7 (Wheezy) (PVHVM)
       - Red Hat Enterprise Linux 6 (PVHVM)
       - Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)
