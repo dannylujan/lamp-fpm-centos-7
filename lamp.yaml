@@ -47,7 +47,6 @@ parameters:
       - Debian 7 (Wheezy) (PVHVM)
       - Red Hat Enterprise Linux 6 (PVHVM)
       - Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)
-      - Ubuntu 12.04 LTS (Precise Pangolin) (PVHVM)
       description: Must be a supported operating system.
 
   flavor:
