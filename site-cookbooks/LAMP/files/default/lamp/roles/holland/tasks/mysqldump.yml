@@ -33,7 +33,7 @@
   template: src=backupsets/default.conf.j2 dest=/etc/holland/backupsets/default.conf
 
 - name: Add holland MySQL user
-  mysql_user: name=holland host=localhost password={{holland_password}} priv=*.*:ALL
+  mysql_user: name=holland host=localhost password="{{holland_password}}" priv=*.*:ALL
 
 - name: Flush privileges
   shell: mysqladmin -u root flush-privileges
