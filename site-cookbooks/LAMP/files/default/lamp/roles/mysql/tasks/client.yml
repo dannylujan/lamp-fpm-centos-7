@@ -26,9 +26,9 @@
   command: rpm -e --nodeps mysql-libs
   when: if_found is defined and if_found.rc == 0 
 
-#- name: Remove mysql from Redhat base 5
-#  yum: name=mysql state=absent
-#  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int < 6
+- name: Remove mysql client from Redhat base 5
+  yum: name=mysql state=absent
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int < 6
 
 - name: Install MySQL packages on Redhat base
   yum: name={{item}} state=latest
