@@ -32,12 +32,12 @@
 'php_ini': "/etc/php.ini"
 'apache': "httpd"
 'packages': [
-                "php54",
-                "php54-gd",
-                "php54-mysql",
-                "php54-pecl-apc",
-                "php54-xml",
-                "php54-devel"
+                "php56u",
+                "php56u-gd",
+                "php56u-mysql",
+                "php56u-opcache",
+                "php56u-xml",
+                "php56u-devel"
                 ]
 'session_save_path': "/var/lib/php/session"
 
@@ -50,7 +50,7 @@
 # PHP-FPM VARS
 'php_fpm': 'php-fpm'
 'php_fpm_path': '/etc/php-fpm.d'
-'php_fpm_pkgs': [ 'php54-fpm', 'php54-pecl-apc' ]
+'php_fpm_pkgs': [ 'php56u-fpm', 'php56u-opcache' ]
 
 
 # MYSQL VARS
