@@ -11,7 +11,7 @@
                 "php56u",
                 "php56u-opcache",
                 "php56u-gd",
-                "php56u-mysql",
+                "php56u-mysqlnd",
                 "php56u-xml",
                 "php56u-devel"
                 ]

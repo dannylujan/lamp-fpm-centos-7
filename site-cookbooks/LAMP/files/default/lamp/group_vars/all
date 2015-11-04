@@ -56,7 +56,7 @@
 
 
 ### MYSQL VARS
-'mysql_password': "{{ lookup('password', '/tmp/mysql_' + ansible_hostname + '-' + ansible_date_time.time) }}"
+'mysql_password': "{{ lookup('password', '/tmp/' + ansible_hostname + '-' + ansible_date_time.time + '-mysql chars=ascii_letters,digits') }}"
 
 'datadir': '/var/lib/mysql'
 'log_slow': '/var/lib/mysql/slow-log'
@@ -78,8 +78,8 @@
 
 ### PHPMYADMIN VARS
 'htuser': 'serverinfo'
-'htpass': "{{ lookup('password', '/tmp/htpass_' + ansible_hostname + '-' + ansible_date_time.time) }}"
-'blowfish_pass': "{{ lookup('password', '/tmp/blowfish_' + ansible_hostname + '-' + ansible_date_time.time) }}"
+'htpass': "{{ lookup('password', '/tmp/' + ansible_hostname + '-' + ansible_date_time.time + '-htpass chars=ascii_letters,digits') }}"
+'blowfish_pass': "{{ lookup('password', '/tmp/' + ansible_hostname + '-' + ansible_date_time.time + '-blowfish chars=ascii_letters,digits') }}"
 
 
 ### HOLLAND VARS
