@@ -3,4 +3,5 @@
 - name: restart mysql
   service: name={{ mysql }} state=restarted
 
-  
+- name: reload systemd
+  command: systemctl daemon-reload
