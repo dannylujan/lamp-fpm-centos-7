@@ -59,3 +59,13 @@
 - name: Set mysqllogs logrotate
   template: src=mysql-logrotate.j2 dest=/etc/logrotate.d/mysqllogs
 
+- name: Add RHEL/Cent7 systemd override directory
+  file: path=/etc/systemd/system/mariadb.service.d/ state=directory mode=0755
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version > '6'
+
+- name: Add RHEL/Cent7 systemd override file
+  file: source=limits.conf.j2 dest=/etc/systemd/system/mariadb.service.d/limits.conf mode=0644
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version > '6'
+  notify:
+    - reload systemd
+    - restart mysql
