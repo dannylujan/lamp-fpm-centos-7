@@ -1,6 +1,7 @@
 heat_template_version: 2013-05-23
 
 description: |
+  #### Single Linux Server
   Single Linux server running a [LAMP stack] for development use.
   [LAMP stack]: http://en.wikipedia.org/wiki/LAMP_(software_bundle).
   The latest stable versions of PHP, Apache 2 and MySQL will be installed.
