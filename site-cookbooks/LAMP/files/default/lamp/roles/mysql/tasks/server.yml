@@ -69,6 +69,6 @@
   notify:
     - restart mysql
 
-- name: reload systemd now
+- name: RHEL/Cent7 reload systemd now
   command: systemctl daemon-reload
   when: ansible_os_family == 'RedHat' and ansible_distribution_major_version > '6'
