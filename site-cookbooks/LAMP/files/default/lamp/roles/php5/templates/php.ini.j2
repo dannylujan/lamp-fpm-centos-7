@@ -1253,7 +1253,7 @@ session.save_handler = files
 ;
 ; As of PHP 4.0.1, you can define the path as:
 ;
-;     session_save_path = "N;/path"
+;     session.save_path = "N;/path"
 ;
 ; where N is an integer.  Instead of storing all the session files in
 ; /path, what this will do is use subdirectories N-levels deep, and
@@ -1269,12 +1269,12 @@ session.save_handler = files
 ; The file storage module creates files using mode 600 by default.
 ; You can change that by using
 ;
-;     session_save_path = "N;MODE;/path"
+;     session.save_path = "N;MODE;/path"
 ;
 ; where MODE is the octal representation of the mode. Note that this
 ; does not overwrite the process's umask.
 ; http://www.php.net/manual/en/session.configuration.php#ini.session.save-path
-session_save_path = "{{ session_save_path }}"
+session.save_path = "{{ session_save_path }}"
 
 ; Whether to use cookies.
 ; http://www.php.net/manual/en/session.configuration.php#ini.session.use-cookies
@@ -1350,7 +1350,7 @@ session.gc_divisor = 1000
 session.gc_maxlifetime = 1440
 
 ; NOTE: If you are using the subdirectory option for storing session files
-;       (see session_save_path above), then garbage collection does *not*
+;       (see session.save_path above), then garbage collection does *not*
 ;       happen automatically.  You will need to do your own garbage
 ;       collection through a shell script, cron entry, or some other method.
 ;       For example, the following script would is the equivalent of
