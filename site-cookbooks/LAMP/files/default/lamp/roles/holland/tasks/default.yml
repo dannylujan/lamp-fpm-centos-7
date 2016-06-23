@@ -10,7 +10,7 @@
 
 - name: Install holland pkgs on Debian base
   apt: name=python-support state=present
-  when: ansible_os_family == 'Debian'
+  when: ansible_distribution == 'Debian' or (ansible_distribution == 'Ubuntu' and ansible_distribution_version < '16.04')
 
 - name: Download holland .deb files for local install
   copy: src=holland_{{holland_version}}_all.deb dest=/tmp/holland_{{holland_version}}_all.deb

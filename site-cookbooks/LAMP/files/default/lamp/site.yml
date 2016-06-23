@@ -4,7 +4,7 @@
 
   tasks:
     - group_by: key={{ ansible_os_family }}
-      tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
+      tags: [ 'ius-repos', 'apache2', 'php_prefork', 'mysql', 'phpmyadmin', 'holland' ]
 
 
 ### Applies only to RedHat systems
@@ -16,12 +16,12 @@
   pre_tasks:
     - include_vars: group_vars/RHEL_7.yml
       when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
-      tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
+      tags: [ 'ius-repos', 'apache2', 'php_prefork', 'mysql', 'phpmyadmin', 'holland' ]
 
   roles:
-    - { role: IUS-repos, tags: [ ius-repos, apache2, php5, mysql ] }
+    - { role: IUS-repos, tags: [ ius-repos, apache2, php_prefork, mysql ] }
     - { role: apache2, tags: apache2 }
-    - { role: php5, tags: php5 }
+    - { role: php_prefork, tags: php_prefork }
     - { role: mysql, tags: mysql }
     - { role: phpmyadmin, tags: phpmyadmin }
     - { role: holland, tags: holland }
@@ -35,14 +35,17 @@
 
 
   pre_tasks:
+    - include_vars: group_vars/Ubuntu_16.yml
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version >= '16.04'
+      tags: [ 'ius-repos', 'apache2', 'php_prefork', 'mysql', 'phpmyadmin' ]
     - include_vars: group_vars/Ubuntu_14.yml
-      when: ansible_os_family == 'Debian' and (ansible_distribution_version >= '14.04' or ansible_distribution_version >= '8')
-      tags: [ 'ius-repos', 'apache2', 'php5', 'mysql', 'phpmyadmin', 'holland' ]
+      when: ansible_distribution == 'Debian' and ansible_distribution_version >= '8' or (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04')
+      tags: [ 'ius-repos', 'apache2', 'php_prefork', 'mysql', 'phpmyadmin', 'holland' ]
 
   roles:
     - { role: apache2, tags: apache2 }
-    - { role: php5, tags: php5 }
+    - { role: php_prefork, tags: php_prefork }
     - { role: mysql, tags: mysql }
     - { role: phpmyadmin, tags: phpmyadmin }
-    - { role: holland, tags: holland }
+    - { role: holland,  when: "ansible_distribution == 'Ubuntu' and ansible_distribution_version < '16.04'",  tags: holland }
 
