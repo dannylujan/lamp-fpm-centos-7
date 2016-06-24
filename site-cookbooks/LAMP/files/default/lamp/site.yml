@@ -4,7 +4,7 @@
 
   tasks:
     - group_by: key={{ ansible_os_family }}
-      tags: [ 'ius-repos', 'apache2', 'php_prefork', 'mysql', 'phpmyadmin', 'holland' ]
+      tags: [ 'ius-repos', 'apache2', 'php_prefork', 'mysql', 'phpmyadmin', 'holland', 'lsyncd' ]
 
 
 ### Applies only to RedHat systems
@@ -25,6 +25,7 @@
     - { role: mysql, tags: mysql }
     - { role: phpmyadmin, tags: phpmyadmin }
     - { role: holland, tags: holland }
+    - { role: lsyncd, tags: lsyncd }
 
 
 ### Applies only to Debian systems
