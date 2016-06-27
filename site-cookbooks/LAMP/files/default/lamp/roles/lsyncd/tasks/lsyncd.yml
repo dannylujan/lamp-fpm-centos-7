@@ -10,6 +10,17 @@
     - asciidoc
   when: ansible_os_family == 'RedHat'
 
+- name: Install packages on Ubuntu base
+  apt: name={{item}} state=present
+  with_items:
+    - lua5.1
+    - liblua5.1-dev
+    - pkg-config
+    - rsync
+    - asciidoc
+    - make
+  when: ansible_os_family == 'Debian'
+
 - name: Copy lsyncd tar file
   copy: src=lsyncd-2.1.5.tar.gz dest=/root/lsyncd-2.1.5.tar.gz
 
@@ -29,6 +40,10 @@
 - name: Create the service file on Redhat 6 base
   template: src=lsyncd.init.j2 dest=/etc/init.d/lsyncd mode=755
   when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int < 7
+
+- name: Create the startup file on Debian base
+  template: src=lsyncd.ubuntu.j2 dest=/etc/init/lsyncd.conf
+  when: ansible_os_family == 'Debian' and ansible_distribution == 'Ubuntu'
 
 - name: Enable the service on Redhat base
   service: name=lsyncd state=stopped enabled=yes
