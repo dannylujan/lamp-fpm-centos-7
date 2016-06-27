@@ -1,5 +1,8 @@
 ---
 
+- name: Include monitor.yml
+  include: monitor.yml
+
 - name: Install packages on Redhat base
   yum: pkg={{item}} state=installed
   with_items:
