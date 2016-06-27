@@ -25,7 +25,6 @@
     - { role: mysql, tags: mysql }
     - { role: phpmyadmin, tags: phpmyadmin }
     - { role: holland, tags: holland }
-    - { role: lsyncd, tags: lsyncd }
 
 
 ### Applies only to Debian systems
@@ -49,5 +48,4 @@
     - { role: mysql, tags: mysql }
     - { role: phpmyadmin, tags: phpmyadmin }
     - { role: holland,  when: "ansible_distribution == 'Ubuntu' and ansible_distribution_version < '16.04'",  tags: holland }
-    - { role: lsyncd, tags: lsyncd }
 

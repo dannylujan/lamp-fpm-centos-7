@@ -1,0 +1,9 @@
+---
+- hosts: all
+  user: root
+
+  tasks:
+      tags: [ 'lsyncd' ]
+  
+  roles:
+    - { role: lsyncd, tags: lsyncd }
