@@ -45,8 +45,12 @@
   template: src=lsyncd.init.j2 dest=/etc/init.d/lsyncd mode=755
   when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int < 7
 
-- name: Create the startup file on Debian base
+- name: Create the startup file on Debian 7 and Ubuntu 12.04/14.04
   template: src=lsyncd.ubuntu.j2 dest=/etc/init/lsyncd.conf
+  when: ansible_distribution == 'Debian' and ansible_distribution_version >= '7' or (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04') or (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04')
+
+- name: Link startup file on Debian 7 and Ubuntu 12.04/14.04
+  shell: ln -s /lib/init/upstart-job /etc/init.d/lsyncd
   when: ansible_distribution == 'Debian' and ansible_distribution_version >= '7' or (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04') or (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04')
 
 - name: Enable the service on Redhat base
