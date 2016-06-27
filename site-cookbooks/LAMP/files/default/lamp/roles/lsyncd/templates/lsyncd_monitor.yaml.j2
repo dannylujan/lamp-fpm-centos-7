@@ -1,0 +1,22 @@
+type        : agent.plugin
+label       : '[AGENT] Lsyncd'
+disabled    : true
+period      : 60
+timeout     : 30
+details     :
+    file    : lsyncd-status.sh
+alarms      :
+    alarm1  :
+        label                 : '[AGENT] Lsyncd'
+        notification_plan_id  : {{notification_plan}} 
+        criteria              : |
+          if (metric['lsyncd_status'] != 'running') {
+            return new AlarmStatus(CRITICAL, 'Lsyncd Service is NOT running.');
+          }   
+          if (metric['lsyncd_status'] == 'running' && metric['percent_used_watches'] >= 80) {
+            return new AlarmStatus(WARNING, 'Lsyncd is running but the number of directories has reached 80% of notify watches.');
+          }
+          if (metric['lsyncd_status'] == 'running' && metric['percent_used_watches'] >= 95) {
+            return new AlarmStatus(CRITICAL, 'Lsyncd is running but the number of directories has reached 95% of notify watches.');
+          }
+            return new AlarmStatus(OK, 'Lsyncd Service is running.');
