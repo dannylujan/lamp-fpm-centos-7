@@ -1,0 +1,23 @@
+- name: Create RS monitoring plugin folder
+  file: dest=/usr/lib/rackspace-monitoring-agent/plugins state=directory
+
+- name: Check /etc/rackspace-monitoring-agent.conf.d/
+  file: dest=/etc/rackspace-monitoring-agent.conf.d/ state=directory owner=root group=root
+
+- stat: path=/usr/bin/rackspace-monitoring-agent
+  register: p
+
+- name: Copy lsyncd_monitor.yaml
+  template: src=lsyncd_monitor.yaml.j2 dest=/etc/rackspace-monitoring-agent.conf.d/lsyncd_monitor.yaml
+  notify: restart rackspace-monitoring-agent
+  when: p.stat.exists
+
+- name: Download lsyncd-status.sh
+  get_url:
+    url: https://raw.githubusercontent.com/racker/rackspace-monitoring-agent-plugins-contrib/master/lsyncd-status.sh
+    dest: /usr/lib/rackspace-monitoring-agent/plugins/lsyncd-status.sh
+    mode: 0755
+    owner: root
+    group: root
+  notify: restart rackspace-monitoring-agent
+  when: p.stat.exists

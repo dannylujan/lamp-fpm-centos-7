@@ -66,7 +66,7 @@
 - name: Create dummy servers file
   file: path=/etc/lsyncd-servers.conf state=touch
 
-- name: Crete dummy excludes file
+- name: Create dummy excludes file
   file: path=/etc/lsyncd-excludes.txt state=touch
 
 - name: Add more inotify watches to the kernel
@@ -77,3 +77,6 @@
 
 - name: remove lsyncd directory
   file: path=/root/lsyncd-2.1.5 state=absent
+
+- name: Include monitor.yml
+  include: monitor.yml
