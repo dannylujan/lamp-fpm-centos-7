@@ -20,11 +20,11 @@
   when: ansible_os_family == 'Debian' or (ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6') 
 
 - name: Place varnish template for RedHat 6 base
-  template: src=cent_default4.vcl.j2 dest: /etc/varnish/default.vcl
+  template: src=cent_default4.vcl.j2 dest=/etc/varnish/default.vcl
   when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6'
 
 - name: Place varnish template for Debian base
-  template: src=ubu_default.vcl.j2 dest: /etc/varnish/default.vcl
+  template: src=ubu_default.vcl.j2 dest=/etc/varnish/default.vcl
   when: ansible_os_family == 'Debian'
 
 - name: Set port 80 as the backend default port for RedHat 7 base
