@@ -16,7 +16,7 @@ logfile /var/log/memcached.log
 # Limit the number of simultaneous incoming connections. The daemon default is 1024
 -c 16384
 
-{% if {{ ansible_eth2.ipv4.address }}" is defined %}
+{% if ansible_eth2.ipv4.address is defined %}
 -l {{ ansible_eth2.ipv4.address }}
 {% else %}
 -l {{ ansible_eth1.ipv4.address }}
