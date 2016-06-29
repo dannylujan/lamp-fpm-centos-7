@@ -4,7 +4,7 @@
 
   tasks:
     - group_by: key={{ ansible_os_family }}
-      tags: [ 'lsyncd', 'varnish' ]
+      tags: [ 'lsyncd', 'varnish', 'memcached' ]
 
 
 ### Applies only to RedHat systems
@@ -16,11 +16,12 @@
   pre_tasks:
     - include_vars: group_vars/RHEL_7.yml
       when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
-      tags: [ 'ius-repos', 'lsyncd', 'varnish' ]
+      tags: [ 'ius-repos', 'lsyncd', 'varnish', 'memcached' ]
 
   roles:
     - { role: lsyncd, tags: lsyncd }
     - { role: varnish, tags: varnish }
+    - { role: memcached, tags: memcached }
 
 
 ### Applies only to Debian systems
@@ -33,12 +34,13 @@
   pre_tasks:
     - include_vars: group_vars/Ubuntu_16.yml
       when: ansible_distribution == 'Ubuntu' and ansible_distribution_version >= '16.04'
-      tags: [ 'ius-repos', 'lsyncd', 'varnish' ]
+      tags: [ 'ius-repos', 'lsyncd', 'varnish', 'memcached' ]
     - include_vars: group_vars/Ubuntu_14.yml
       when: ansible_distribution == 'Debian' and ansible_distribution_version >= '8' or (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04')
-      tags: [ 'ius-repos', 'lsyncd', 'varnish' ]
+      tags: [ 'ius-repos', 'lsyncd', 'varnish', 'memcached' ]
 
   roles:
     - { role: lsyncd, tags: lsyncd }
     - { role: varnish, tags: varnish }
+    - { role: memcached, tags: memcached }
 
