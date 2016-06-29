@@ -4,7 +4,7 @@
   yum: name=memcached state=present
   when: ansible_os_family == 'RedHat'
 
-- name: Install memcachedon Ubuntu base
+- name: Install memcached on Ubuntu base
   apt: name=memcached state=present
   when: ansible_os_family == 'Debian'
 
