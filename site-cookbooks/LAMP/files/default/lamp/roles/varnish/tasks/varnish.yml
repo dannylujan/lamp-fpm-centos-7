@@ -17,12 +17,13 @@
 
 - name: Move existing varnish config
   command: mv -f /etc/varnish/default.vcl /etc/varnish/default.vcl.orig
+  when: ansible_os_family == 'Debian' and ansible_distribution_major_version == '6' or (ansible_os_family == 'Debian')
 
 - name: Download new varnish config for RedHat base
   get_url:
     url: http://c460059.r59.cf2.rackcdn.com/cent_default4.vcl
     dest: /etc/varnish/default.vcl
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6'
 
 - name: Download new varnish config for Debian base
   get_url:
@@ -38,13 +39,13 @@
   when: ansible_os_family == 'Debian'
 
 - name: Set port 80 as the backend default port
-  command: sed -i 's/"8080";/":80";/' /etc/varnish/default.vcl
+  command: sed -i 's/"8080";/"80";/' /etc/varnish/default.vcl
 
 - name: Enable and restart the varnish service
-  service: name=lsyncd state=restarted enabled=yes
+  service: name=varnish state=restarted enabled=yes
 
 - name: Copy wordpress vcl to varnish directory for varnish 3
   template: src=wordpress_varn3.vcl.j2 dest=/etc/varnish/wordpress_varn3.vcl
 
 - name: Copy wordpress vcl to varnish directory for varnish 4
-  template: src=wordpress_varn4.vcl.j2 dest=/etc/varnish.wordpress_varn4.vcl
+  template: src=wordpress_varn4.vcl.j2 dest=/etc/varnish/wordpress_varn4.vcl
