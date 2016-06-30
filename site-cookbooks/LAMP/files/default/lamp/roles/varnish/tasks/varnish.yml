@@ -1,0 +1,43 @@
+---
+
+- name: Install varnish repo for RedHat/CentOS 6
+  yum: name=http://repo.varnish-cache.org/redhat/varnish-3.0/el6/noarch/varnish-release/varnish-release-3.0-1.el6.noarch.rpm state=present
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6'
+
+- name: Install varnish on RedHat base
+  yum: name=varnish state=present
+  when: ansible_os_family == 'RedHat'
+
+- name: Install varnish packages on Ubuntu base
+  apt: name={{item}} state=present
+  with_items:
+    - varnish
+    - libvarnishapi1
+  when: ansible_os_family == 'Debian'
+
+- name: Move existing varnish config
+  command: mv -f /etc/varnish/default.vcl /etc/varnish/default.vcl.orig
+  when: ansible_os_family == 'Debian' or (ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6') 
+
+- name: Place varnish template for RedHat 6 base
+  template: src=cent_default4.vcl.j2 dest=/etc/varnish/default.vcl
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6'
+
+- name: Place varnish template for Debian base
+  template: src=ubu_default.vcl.j2 dest=/etc/varnish/default.vcl
+  when: ansible_os_family == 'Debian'
+
+- name: Set port 80 as the backend default port for RedHat 7 base
+  command: sed -i 's/"8080";/"80";/' /etc/varnish/default.vcl
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+
+- name: Enable and restart the varnish service
+  service: name=varnish state=restarted enabled=yes
+
+- name: Copy wordpress vcl to varnish directory for varnish 3
+  template: src=wordpress_varn3.vcl.j2 dest=/etc/varnish/wordpress_varn3.vcl
+  when: ansible_os_family == 'Debian' or (ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6') 
+
+- name: Copy wordpress vcl to varnish directory for varnish 4
+  template: src=wordpress_varn4.vcl.j2 dest=/etc/varnish/wordpress_varn4.vcl
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'

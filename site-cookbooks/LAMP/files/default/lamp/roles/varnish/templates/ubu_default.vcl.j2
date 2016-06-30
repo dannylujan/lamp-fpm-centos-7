@@ -1,0 +1,176 @@
+#This is a basic VCL configuration file for varnish.  See the vcl(7)
+#man page for details on VCL syntax and semantics.
+#
+#Default backend definition.  Set this to point to your content
+#server.
+#
+backend default {
+.host = "127.0.0.1";
+.port = "80";
+}
+
+# If you have virtual hosts on multiple IP addresses, multiple
+# backends can be defined like so:
+#
+# backend primary {
+# .host = "192.168.100.100";
+# .port = "80";
+# }
+# backend secondary {
+# .host = "192.168.100.101";
+# .port = "80";
+# }
+#
+# You can then use the requested host name to direct users to
+# the appropriate backend in the vcl_recv function below
+
+#
+#Below is a commented-out copy of the default VCL logic.  If you
+#redefine any of these subroutines, the built-in logic will be
+#appended to your code.
+#
+sub vcl_recv {
+#    if (req.request != "GET" &&
+#      req.request != "HEAD" &&
+#      req.request != "PUT" &&
+#      req.request != "POST" &&
+#      req.request != "TRACE" &&
+#      req.request != "OPTIONS" &&
+#      req.request != "DELETE") {
+#        /* Non-RFC2616 or CONNECT which is weird. */
+#        return (pipe);
+#    }
+#    if (req.request != "GET" && req.request != "HEAD") {
+#        /* We only deal with GET and HEAD by default */
+#        return (pass);
+#    }
+#    if (req.http.Authorization || req.http.Cookie) {
+#        /* Not cacheable by default */
+#        return (pass);
+#    }
+#    return (lookup);
+
+     # If there are multiple backends defined, you can set the 
+     # appropriate destination server based on the host header
+     # 
+     # if (req.http.host ~ "^(www.)?primary.com$") {
+     #      req.backend = primary;
+     # }
+     # if (req.http.host ~ "^(www.)?secondary.com$") {
+     #      req.backend = secondary;
+     # }
+
+
+     # define a list of file extensions for static HTTP objects	
+     # if the extension is not in this list, the contents of the
+     # request will not be cached
+     if (req.url ~ "\.(html|gif|jpg|jpeg|png|js|css)$") {
+         unset req.http.cookie;
+         return(lookup);
+     }
+
+     if (req.http.x-forwarded-for) {
+       set req.http.X-Forwarded-For =
+       req.http.X-Forwarded-For + ", " + client.ip;
+       } 
+     else {
+       set req.http.X-Forwarded-For = client.ip;
+     }
+     if (req.http.x-forwarded-host) {
+       set req.http.X-Forwarded-Host =
+       req.http.X-Forwarded-Host + ", " + server.ip;
+       }
+     else {
+       set req.http.X-Forwarded-Host = server.ip;
+     }
+     return(pass);
+}
+
+#
+#sub vcl_pipe {
+#    return (pipe);
+#}
+#
+#sub vcl_pass {
+#    return (pass);
+#}
+#
+#sub vcl_hash {
+#    set req.hash += req.url;
+#    if (req.http.host) {
+#        set req.hash += req.http.host;
+#    } else {
+#        set req.hash += server.ip;
+#    }
+#    return (hash);
+#}
+#
+#sub vcl_hit {
+#    if (!obj.cacheable) {
+#        return (pass);
+#    }
+#    return (deliver);
+#}
+#
+#sub vcl_miss {
+#    return (fetch);
+#}
+#
+sub vcl_fetch {
+
+#    if (!obj.cacheable) {
+#        return (pass);
+#    }
+#    if (obj.http.Set-Cookie) {
+#        return (pass);
+#    }
+#    set obj.prefetch =  -30s;
+
+     # set the TTL for objects that have been cached
+     set beresp.ttl =30m;
+
+#    return (deliver);
+}
+#
+#sub vcl_deliver {
+#    return (deliver);
+#}
+#
+#sub vcl_discard {
+#    /* XXX: Do not redefine vcl_discard{}, it is not yet supported */
+#    return (discard);
+#}
+#
+#sub vcl_prefetch {
+#    /* XXX: Do not redefine vcl_prefetch{}, it is not yet supported */
+#    return (fetch);
+#}
+#
+#sub vcl_timeout {
+#    /* XXX: Do not redefine vcl_timeout{}, it is not yet supported */
+#    return (discard);
+#}
+#
+#sub vcl_error {
+#    set obj.http.Content-Type = "text/html; charset=utf-8";
+#    synthetic {"
+#<?xml version="1.0" encoding="utf-8"?>
+#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+# "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+#<html>
+#  <head>
+#    <title>"} obj.status " " obj.response {"</title>
+#  </head>
+#  <body>
+#    <h1>Error "} obj.status " " obj.response {"</h1>
+#    <p>"} obj.response {"</p>
+#    <h3>Guru Meditation:</h3>
+#    <p>XID: "} req.xid {"</p>
+#    <address>
+#       <a href="http://www.varnish-cache.org/">Varnish</a>
+#    </address>
+#  </body>
+#</html>
+#"};
+#    return (deliver);
+#}

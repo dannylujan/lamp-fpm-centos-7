@@ -77,6 +77,3 @@
 
 - name: remove lsyncd directory
   file: path=/root/lsyncd-2.1.5 state=absent
-
-- name: Include monitor.yml
-  include: monitor.yml

@@ -1,0 +1,28 @@
+---
+
+- name: Install memcached on RedHat base
+  yum: name=memcached state=present
+  when: ansible_os_family == 'RedHat'
+
+- name: Install memcached on Ubuntu base
+  apt: name=memcached state=present
+  when: ansible_os_family == 'Debian'
+
+- name: Remove initial config file on RedHat base
+  file: path=/etc/sysconfig/memcached state=absent
+  when: ansible_os_family == 'RedHat'
+
+- name: Remove initial config file on Debian base
+  file: path=/etc/memcached.conf state=absent
+  when: ansible_os_family == 'Debian'
+
+- name: Place memcached template for RedHat base
+  template: src=memcached_cent.j2 dest=/etc/sysconfig/memcached
+  when: ansible_os_family == 'RedHat'
+
+- name: Place memcached template for Debian base
+  template: src=memcached_ubu.j2 dest=/etc/memcached.conf
+  when: ansible_os_family == 'Debian'
+
+- name: Enable and restart the memcached service
+  service: name=memcached state=restarted enabled=yes

@@ -1,0 +1,20 @@
+---
+- name: Setup default varnish firewall rules - RedHat 6
+  command: "/sbin/iptables -I INPUT 2 -p tcp --dport 6081 -j ACCEPT"
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6'
+
+- name: Save default varnish firewall rules - RedHat 6
+  command: '/sbin/service iptables save'
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6'
+
+- name: Setup default varnish firewall rules - RedHat 7
+  firewalld: port=6081/tcp permanent=yes state=enabled
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+
+- name: Save default varnish firewall rules - RedHat 7
+  command: '/usr/bin/firewall-cmd --reload'
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+
+- name: Setup default varnish firewall rules - Debian
+  command: ufw allow 6081
+  when: ansible_os_family == 'Debian'

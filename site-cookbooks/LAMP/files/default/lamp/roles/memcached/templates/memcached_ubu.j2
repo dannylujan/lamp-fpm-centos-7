@@ -1,0 +1,23 @@
+# Run memcached as a daemon. This command is implied, and is not needed for the
+# daemon to run. See the README.Debian that comes with this package for more
+# information.
+-d
+ 
+# Log memcached's output to /var/log/memcached
+logfile /var/log/memcached.log
+ 
+# Start with a cap of 1536 megabytes of memory.
+-m 1536
+ 
+# Run the daemon as root. The start-memcached will default to running as root if no
+# -u command is present in this config file
+-u memcache
+ 
+# Limit the number of simultaneous incoming connections. The daemon default is 1024
+-c 16384
+
+{% if ansible_eth2 is defined %}
+-l {{ ansible_eth2.ipv4.address }}
+{% else %}
+-l {{ ansible_eth1.ipv4.address }}
+{% endif %}
