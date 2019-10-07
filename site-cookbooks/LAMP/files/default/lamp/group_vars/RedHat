@@ -32,7 +32,7 @@
 'php_ini': "/etc/php.ini"
 'apache': "httpd"
 'packages': [
-                "php73u",
+                "php73u-common",
                 "php73u-gd",
                 "php73u-opcache",
                 "php73u-xml",
