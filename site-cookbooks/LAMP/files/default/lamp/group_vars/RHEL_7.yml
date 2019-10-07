@@ -8,17 +8,17 @@
 'php_ini': "/etc/php.ini"
 'apache': "httpd"
 'packages': [
-                "php73u-common",
-                "php73u-opcache",
-                "php73u-gd",
-                "php73u-xml",
-                "php73u-devel"
+                "php73-common",
+                "php73-opcache",
+                "php73-gd",
+                "php73-xml",
+                "php73-devel"
                 ]
 'session_save_path': "/var/lib/php/session"
 
 
 ### PHP-FPM VARS
-'php_fpm_pkgs': [ 'php73u-fpm', 'php73u-opcache' ]
+'php_fpm_pkgs': [ 'php73-fpm', 'php73-opcache' ]
 
 
 ### MYSQL VARS
