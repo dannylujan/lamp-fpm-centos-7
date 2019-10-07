@@ -9,8 +9,10 @@
 
 - name: Download rpm if not installed
 #  copy: src=ius-release-1.0-8.ius.el6.noarch.rpm dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm
-  get_url: url=https://repo.ius.io/ius-release-el7.rpm dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm
-  get_url: url=https://repo.ius.io/RPM-GPG-KEY-IUS-7 dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
+#  get_url: url=https://repo.ius.io/ius-release-el7.rpm dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm
+#  get_url: url=https://repo.ius.io/RPM-GPG-KEY-IUS-7 dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
+  command: wget -O /tmp/ius-release-1.0-8.ius.el6.noarch.rpm https://repo.ius.io/ius-release-el7.rpm
+  command: wget -O /etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7 https://repo.ius.io/RPM-GPG-KEY-IUS-7
 #  when: rpm_found is defined and rpm_found.rc != 0
 
 - name: Install rpm if not installed
