@@ -10,7 +10,7 @@
 - name: Install PMA for Redhat systems
   yum: name={{item}} state=latest
   with_items:
-  - "{{phpmyadmin_name}}"
+  - "{{phpmyadmin_pkg}}"
   - httpd-tools
   when: ansible_os_family == 'RedHat'
 

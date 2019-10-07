@@ -33,6 +33,7 @@
 
 
 # PHPMYADMIN VARS
-'phpmyadmin_name': 'phpMyAdmin49-httpd'
+'phpmyadmin_pkg': 'phpMyAdmin49-httpd'
+'phpmyadmin_name': 'phpMyAdmin'
 'apache_conf_path': '/etc/httpd/conf.d'
 
