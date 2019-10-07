@@ -8,18 +8,17 @@
 'php_ini': "/etc/php.ini"
 'apache': "httpd"
 'packages': [
-                "php56u",
-                "php56u-opcache",
-                "php56u-gd",
-                "php56u-mysqlnd",
-                "php56u-xml",
-                "php56u-devel"
+                "php72u",
+                "php72u-opcache",
+                "php72u-gd",
+                "php72u-xml",
+                "php72u-devel"
                 ]
 'session_save_path': "/var/lib/php/session"
 
 
 ### PHP-FPM VARS
-'php_fpm_pkgs': [ 'php56u-fpm', 'php56u-opcache' ]
+'php_fpm_pkgs': [ 'php72u-fpm', 'php72u-opcache' ]
 
 
 ### MYSQL VARS
