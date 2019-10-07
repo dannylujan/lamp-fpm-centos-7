@@ -4,11 +4,12 @@
   command: rpm -q ius-release
   ignore_errors: yes
   register: rpm_found
+  command: yum remove ius_release -y
   when: ansible_os_family == 'RedHat'
 
 - name: Download rpm if not installed
 #  copy: src=ius-release-1.0-8.ius.el6.noarch.rpm dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm
-  copy: url=https://repo.ius.io/ius-release-el7.rpm dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm
+  get_url: url=https://repo.ius.io/ius-release-el7.rpm dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm
   when: rpm_found is defined and rpm_found.rc != 0
 
 - name: Install rpm if not installed
