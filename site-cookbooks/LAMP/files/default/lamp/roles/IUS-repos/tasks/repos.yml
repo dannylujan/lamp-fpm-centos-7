@@ -1,21 +1,19 @@
 ---
 
 - name: Checking for existing IUS package
-  command: rpm -q ius-release
+#  command: rpm -q ius-release
   ignore_errors: yes
 #  register: rpm_found
   command: yum remove ius_release -y
   when: ansible_os_family == 'RedHat'
 
 - name: Download rpm if not installed
-  geturl:
-    url: https://repo.ius.io/ius-release-el7.rpm
+  get_url: 
+    url: https://repo.ius.io/ius-release-el7.rpm 
     dest: /tmp/ius-release-1.0-8.ius.el6.noarch.rpm
 
 - name: Download GPG key
-  get_url: 
-    url: /etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
-    dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
+  get_url: url=/etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7 dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
 #  copy: src=ius-release-1.0-8.ius.el6.noarch.rpm dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm
 #  get_url: url=https://repo.ius.io/ius-release-el7.rpm dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm
 #  get_url: url=https://repo.ius.io/RPM-GPG-KEY-IUS-7 dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
@@ -42,4 +40,3 @@
 - name: Add ius-testing.repo
   template: src={{ansible_distribution}}_ius-testing.repo.j2 dest=/etc/yum.repos.d/ius-testing.repo
   when: ansible_os_family == 'RedHat' 
-
