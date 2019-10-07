@@ -3,7 +3,7 @@
 - name: Checking for existing IUS package
   command: rpm -q ius-release
   ignore_errors: yes
-  register: rpm_found
+#  register: rpm_found
   command: yum remove ius_release -y
   when: ansible_os_family == 'RedHat'
 
