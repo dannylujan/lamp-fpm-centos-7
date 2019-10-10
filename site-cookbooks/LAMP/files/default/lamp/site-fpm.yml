@@ -2,6 +2,15 @@
 - hosts: all
   user: root
 
+  vars_prompt:
+    - name: domain
+      prompt: "Whats the name of the default domain (without www) ?"
+      private: no
+
+    - name: user
+      prompt: "What is the admin username?"
+      private: no
+
   tasks:
     - group_by: key={{ ansible_os_family }}
       tags: [ 'ius-repos', 'apache2', 'php_event', 'mysql', 'phpmyadmin', 'holland' ]
