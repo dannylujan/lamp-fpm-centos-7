@@ -6,7 +6,7 @@
 
 ### PHP5 VARS
 'php_ini': "/etc/php.ini"
-'00-mpm_conf': "/etc/httpd/conf.modules.d/00-mpm.conf"
+'mpm_conf': "/etc/httpd/conf.modules.d/00-mpm.conf"
 'apache': "httpd"
 'packages': [
                 "php73-common",
