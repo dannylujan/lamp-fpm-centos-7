@@ -18,7 +18,7 @@
 
 
 ### PHP-FPM VARS
-'php_fpm_pkgs': [ 'php73-fpm-httpd', 'php73-opcache' ]
+'php_fpm_pkgs': [ 'php73-fpm', 'php73-opcache' ]
 
 
 ### MYSQL VARS

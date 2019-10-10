@@ -13,9 +13,9 @@
   when: ansible_os_family == 'Debian'
 
 
-#- name: Setup www.conf pool
-#  template: src=www.conf.j2 dest="{{ php_fpm_path }}/www.conf" 
-#  notify: restart php-fpm
+- name: Setup www.conf pool
+  template: src=www.conf.j2 dest="{{ php_fpm_path }}/www.conf" 
+  notify: restart php-fpm
 
 #- name: create session path
 #  file: path={{ session_save_path }} owner={{ nginx_user }} group={{ nginx_user }} mode=0770 state=directory
