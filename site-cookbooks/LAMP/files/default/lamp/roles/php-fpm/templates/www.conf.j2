@@ -28,17 +28,17 @@ listen = /var/run/php5-fpm.sock
 ; BSD-derived systems allow connections regardless of permissions.
 ; Default Values: user and group are set as the running user
 ;                 mode is set to 0660
-listen.owner = {{ nginx_user }}
-listen.group = {{ nginx_user }}
+listen.owner = {{ apache_user }}
+listen.group = {{ apache_user }}
 listen.mode = 0660
 
 ; Unix user/group of processes
 ; Note: The user is mandatory. If the group is not set, the default user's group
 ;       will be used.
 ; RPM: apache Choosed to be able to access some dir as httpd
-user = {{ nginx_user }}
+user = {{ apache_user }}
 ; RPM: Keep a group allowed to write in log dir.
-group = {{ nginx_user }}
+group = {{ apache_user }}
 
 ; Choose how the process manager will control the number of child processes.
 ; Possible Values:
