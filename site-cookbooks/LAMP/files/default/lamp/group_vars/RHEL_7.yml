@@ -6,6 +6,7 @@
 
 ### PHP5 VARS
 'php_ini': "/etc/php.ini"
+'00-mpm_conf': "/etc/httpd/conf.modules.d/00-mpm.conf"
 'apache': "httpd"
 'packages': [
                 "php73-common",
@@ -18,7 +19,7 @@
 
 
 ### PHP-FPM VARS
-'php_fpm_pkgs': [ 'php73-fpm', 'php73-opcache' ]
+'php_fpm_pkgs': [ 'php73-fpm-httpd', 'php73-opcache' ]
 
 
 ### MYSQL VARS
