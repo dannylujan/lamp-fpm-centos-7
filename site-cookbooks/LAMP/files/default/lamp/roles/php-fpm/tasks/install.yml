@@ -17,8 +17,8 @@
   template: src=www.conf.j2 dest="{{ php_fpm_path }}/www.conf" 
   notify: restart php-fpm
 
-- name: create session path
-  file: path={{ session_save_path }} owner={{ nginx_user }} group={{ nginx_user }} mode=0770 state=directory
+#- name: create session path
+#  file: path={{ session_save_path }} owner={{ nginx_user }} group={{ nginx_user }} mode=0770 state=directory
 
 
 - name: Start php-fpm and enable
