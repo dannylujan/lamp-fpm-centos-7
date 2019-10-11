@@ -2,7 +2,7 @@
 
 ### APACHE2 VARS
 'apache_ver': 'v22'
-'domain': "example.com"
+#'domain': "example.com"
 'timeout': 30
 'keep_alive': "On"
 'keep_alive_timeout': 5
