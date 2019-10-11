@@ -62,5 +62,15 @@
   when: modules is defined and ansible_os_family == 'Debian'
   notify: restart apache
 
+- name: Create domains document root
+  file: path=/var/www/vhosts/{{ domain }} owner={{ apache_user }} group={{ apache_user }} mode=0775 state=directory
+  when: domain != 'example.com'
+
+- name: Add domains vhost file
+  template: src=vhost.j2 dest={{ vhost_directory }}/{{ domain }}.conf
+  when: domain != 'example.com'
+  notify: Restart apache
+
+
 - name: Enable service to start at boot
   service: name={{apache}} enabled=yes
