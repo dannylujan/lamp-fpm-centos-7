@@ -18,7 +18,7 @@
 # notify: restart php-fpm
 
 - name: Setup default domain pool
-  template: src=example.com.conf.j2 dest="{{ php_fpm_path }}/{{ domain }}.conf
+  template: src=example.com.conf.j2 dest="{{ php_fpm_path }}/{{ domain }}.conf"
   notify: restart php-fpm
 
 #- name: create session path

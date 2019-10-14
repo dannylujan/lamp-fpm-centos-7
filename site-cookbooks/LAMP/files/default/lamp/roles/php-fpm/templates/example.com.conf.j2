@@ -5,11 +5,11 @@ listen.allowed_clients = 127.0.0.1
 listen.owner = {{ domain_user }} 
 listen.group = {{ domain_user }}
 listen.mode = 0660
-user = apache
-group = apache
+user = {{ domain_user }}
+group = {{ domain_user }}
 
 pm = dynamic
-pm.max_children = 25
+pm.max_children = {{ max_clients }}
 pm.start_servers = 2
 pm.min_spare_servers = 2
 pm.max_spare_servers = 25

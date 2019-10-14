@@ -20,13 +20,13 @@
 
   vars_prompt:
   - name: domain
-    prompt: "domain"
+    prompt: "What is the default domain for this server?"
     private: no
   - name: domain_user
-    prompt: "Whats the domain's username?"
+    prompt: "What is the SFTP username for this domain?"
     private: no
   - name: domain_password
-    prompt: "Domain user's password"
+    prompt: "What is the SFTP user's password?"
     private: yes
 
   roles:
