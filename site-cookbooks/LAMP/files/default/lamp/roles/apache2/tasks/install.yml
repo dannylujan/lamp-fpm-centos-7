@@ -66,7 +66,7 @@
   user:
     name: "{{ domain_user }}"
     home: "/var/www/vhosts/{{ domain }}"
-    password: "{{ domian_password }}"
+    password: "{{ domain_password }}"
 
 - name: Create domains document root
   file: path=/var/www/vhosts/{{ domain }} owner={{ domain_user }} group={{ domain_user }} mode=0775 state=directory
