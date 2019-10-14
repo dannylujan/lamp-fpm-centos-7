@@ -9,7 +9,7 @@
         #RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
         # Proxy declaration
-        <Proxy "unix:/var/run/php-fpm/example.sock|fcgi://php-fpm">
+        <Proxy "unix:/var/run/php-fpm/{{ domain }}.sock|fcgi://php-fpm">
         # we must declare a parameter in here (doesn't matter which) or it'll not register the proxy ahead of time
            ProxySet disablereuse=off
         # Note: If you configure php-fpm to use the "ondemand" process manager, then use "ProxySet disablereuse=on"
@@ -39,7 +39,7 @@
 #        DocumentRoot /var/www/vhosts/{{ domain }}
 #
 #        # Proxy declaration
-#        <Proxy "unix:/var/run/php-fpm/example.sock|fcgi://php-fpm">
+#        <Proxy "unix:/var/run/php-fpm/{{ domain }}.sock|fcgi://php-fpm">
 #        # we must declare a parameter in here (doesn't matter which) or it'll not register the proxy ahead of time
 #           ProxySet disablereuse=off
 #        # Note: If you configure php-fpm to use the "ondemand" process manager, then use "ProxySet disablereuse=on"
