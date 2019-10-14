@@ -8,13 +8,25 @@
         #RewriteCond %{HTTPS} off
         #RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
+        # Proxy declaration
+        <Proxy "unix:/var/run/php-fpm/example.sock|fcgi://php-fpm">
+        # we must declare a parameter in here (doesn't matter which) or it'll not register the proxy ahead of time
+           ProxySet disablereuse=off
+        # Note: If you configure php-fpm to use the "ondemand" process manager, then use "ProxySet disablereuse=on"
+        </Proxy>
+
+        # Redirect to the proxy
+        <FilesMatch \.php$>
+           SetHandler proxy:fcgi://php-fpm
+        </FilesMatch>
+
         <Directory /var/www/vhosts/{{ domain }}>
                 Options -Indexes +FollowSymLinks -MultiViews
                 AllowOverride All
         </Directory>
 
-        CustomLog /var/log/{{ apache }}/{{ domain }}-access.log combined
-        ErrorLog /var/log/{{ apache }}/{{ domain }}-error.log
+        CustomLog /var/log/httpd/{{ domain }}-access.log combined
+        ErrorLog /var/log/httpd/{{ domain }}-error.log
 
         # Possible values include: debug, info, notice, warn, error, crit,
         # alert, emerg.
@@ -25,13 +37,26 @@
 #        ServerName {{ domain }}
 #        ServerAlias www.{{ domain }}
 #        DocumentRoot /var/www/vhosts/{{ domain }}
+#
+#        # Proxy declaration
+#        <Proxy "unix:/var/run/php-fpm/example.sock|fcgi://php-fpm">
+#        # we must declare a parameter in here (doesn't matter which) or it'll not register the proxy ahead of time
+#           ProxySet disablereuse=off
+#        # Note: If you configure php-fpm to use the "ondemand" process manager, then use "ProxySet disablereuse=on"
+#        </Proxy>
+#
+#        # Redirect to the proxy
+#        <FilesMatch \.php$>
+#           SetHandler proxy:fcgi://php-fpm
+#        </FilesMatch>
+#
 #        <Directory /var/www/vhosts/{{ domain }}>
 #                Options -Indexes +FollowSymLinks -MultiViews
 #                AllowOverride All
 #        </Directory>
 #
-#        CustomLog /var/log/{{ apache }}/{{ domain }}-ssl-access.log combined
-#        ErrorLog /var/log/{{ apache }}/{{ domain }}-ssl-error.log
+#        CustomLog /var/log/httpd/{{ domain }}-ssl-access.log combined
+#        ErrorLog /var/log/httpd/{{ domain }}-ssl-error.log
 #
 #        # Possible values include: debug, info, notice, warn, error, crit,
 #        # alert, emerg.

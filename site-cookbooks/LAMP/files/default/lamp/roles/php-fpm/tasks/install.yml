@@ -15,6 +15,10 @@
 
 - name: Setup www.conf pool
   template: src=www.conf.j2 dest="{{ php_fpm_path }}/www.conf" 
+# notify: restart php-fpm
+
+- name: Setup default domain pool
+  template: src=example.com.conf.j2 dest="{{ php_fpm_path }}/{{ domain }}.conf
   notify: restart php-fpm
 
 #- name: create session path

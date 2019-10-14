@@ -62,13 +62,19 @@
   when: modules is defined and ansible_os_family == 'Debian'
   notify: restart apache
 
+- name: Create vhost user
+  user:
+    name: {{ domain_user }}
+    home: /var/www/vhosts/{{ domain }}
+    password: {{ domian_password }}
+
 - name: Create domains document root
-  file: path=/var/www/vhosts/{{ domain }} owner={{ apache_user }} group={{ apache_user }} mode=0775 state=directory
-  when: domain != 'example.com'
+  file: path=/var/www/vhosts/{{ domain }} owner={{ domain_user }} group={{ domain_user }} mode=0775 state=directory
+#  when: domain != 'example.com'
 
 - name: Add domains vhost file
   template: src=vhost.j2 dest={{ vhost_directory }}/{{ domain }}.conf
-  when: domain != 'example.com'
+#  when: domain != 'example.com'
   notify: Restart apache
 
 
