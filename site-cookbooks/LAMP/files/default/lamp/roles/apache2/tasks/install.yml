@@ -62,6 +62,10 @@
   when: modules is defined and ansible_os_family == 'Debian'
   notify: restart apache
 
+- name: Create user's home directory
+  file: 
+    path: "/var/www/vhosts/{{ domain }}"
+
 - name: Create vhost user
   user:
     name: "{{ domain_user }}"
