@@ -65,6 +65,7 @@
 - name: Create user's home directory
   file: 
     path: "/var/www/vhosts/{{ domain }}"
+    state: directory
 
 - name: Create vhost user
   user:
