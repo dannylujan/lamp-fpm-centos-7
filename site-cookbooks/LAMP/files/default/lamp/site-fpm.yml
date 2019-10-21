@@ -48,13 +48,13 @@
 
   pre_tasks:
     - include_vars: group_vars/Ubuntu_18.yml
-      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version >= '18.04'
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04'
       tags: [ 'ius-repos', 'apache2', 'php_event', 'mysql', 'phpmyadmin' ]
-#    - include_vars: group_vars/Ubuntu_16.yml
-#      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version >= '16.04'
-#      tags: [ 'ius-repos', 'apache2', 'php_event', 'mysql', 'phpmyadmin' ]
+    - include_vars: group_vars/Ubuntu_16.yml
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '16.04'
+      tags: [ 'ius-repos', 'apache2', 'php_event', 'mysql', 'phpmyadmin' ]
     - include_vars: group_vars/Ubuntu_14.yml
-      when: ansible_distribution == 'Debian' and ansible_distribution_version >= '8' or (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04')
+      when: ansible_distribution == 'Debian' and ansible_distribution_version == '8' or (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04')
       tags: [ 'ius-repos', 'apache2', 'php_event', 'mysql', 'phpmyadmin', 'holland' ]
 
   vars_prompt:
