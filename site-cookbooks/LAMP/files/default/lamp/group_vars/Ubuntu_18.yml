@@ -37,8 +37,8 @@
         "filter",
         "mime",
 #        "mpm_prefork",
-        "mpm_event"
-        "proxy_fcgi"
+        "mpm_event",
+        "proxy_fcgi",
         "negotiation",
         "rewrite",
         "setenvif",
