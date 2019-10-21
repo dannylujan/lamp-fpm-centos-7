@@ -7,9 +7,7 @@
 
 - name: Installing php-fpm pkgs - Debian
   apt: name={{ item }} state=present
-  with_items:
-    - php5-fpm
-    - php-apc
+  with_items: php_fpm_pkgs
   when: ansible_os_family == 'Debian'
 
 

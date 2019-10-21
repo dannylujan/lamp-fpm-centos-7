@@ -15,6 +15,7 @@
 ### PHP-FPM VARS
 'php_fpm': 'php7-fpm'
 'php_fpm_path': '/etc/php7/fpm/pool.d'
+'php_fpm_pkgs': [ 'php7.0-fpm', 'php7.0-opcache' ]
 
 
 ### APACHE2 VARS
