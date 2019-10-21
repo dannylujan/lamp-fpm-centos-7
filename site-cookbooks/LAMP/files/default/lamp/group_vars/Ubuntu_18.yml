@@ -10,7 +10,7 @@
                 "php7.2-curl"
                 ]
 'session_save_path': "/var/lib/php7/session"
-'php_ini': "/etc/php/7.0/apache2/php.ini"
+'php_ini': "/etc/php/7.2/apache2/php.ini"
 
 ### PHP-FPM VARS
 'php_fpm': 'php7.2-fpm'
