@@ -20,3 +20,5 @@
 
 - name: copy 00-mpm.conf from template - RHEL
   template: src=00-mpm.conf.j2 dest={{ mpm_conf }}
+  when: ansible_os_family == 'RedHat'
+
