@@ -214,7 +214,15 @@ LogFormat "%{User-agent}i" agent
 #    ErrorDocument 503 /error/HTTP_SERVICE_UNAVAILABLE.html.var
 #    ErrorDocument 506 /error/HTTP_VARIANT_ALSO_VARIES.html.var
 
-
+LoadModule status_module modules/mod_status.so
+ExtendedStatus On
+<Location /server-status>
+    SetHandler server-status
+    Order deny,allow
+    Deny from all
+    Allow from 127.0.0.1 localhost
+    RewriteEngine Off
+</Location>
 
 # Include generic snippets of statements
 Include /etc/apache2/conf.d/

@@ -917,6 +917,17 @@ BrowserMatch "^Dreamweaver-WebDAV-SCM1" redirect-carefully
 #
 
 #</IfModule>
+
+LoadModule status_module modules/mod_status.so
+ExtendedStatus On
+<Location /server-status>
+    SetHandler server-status
+    Order deny,allow
+    Deny from all
+    Allow from 127.0.0.1 localhost
+    RewriteEngine Off
+</Location>
+
 # End of proxy directives.
 
 ### Section 3: Virtual Hosts

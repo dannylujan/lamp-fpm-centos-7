@@ -17,10 +17,13 @@
   template: src=RedHat/{{apache_ver}}/ssl.conf.j2 dest=/etc/httpd/conf.d/ssl.conf
   when: ansible_os_family == 'RedHat'
 
+- name: copy status.conf for RedHat (2.4)
+  template: src=00-status.conf.j2 dest=/etc/httpd/conf.modules.d/00-status.conf
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+
 - name: create vhost.d directory
   file: path=/etc/httpd/vhost.d owner=root group=root mode=0755 state=directory
   when: ansible_os_family == 'RedHat'
-
 
 - name: Install apache2 for Debian based
   apt: pkg=apache2 state=installed
@@ -30,6 +33,13 @@
   apt: pkg=ufw state=installed
   when: ansible_os_family == 'Debian'
 
+- name: Install Links (RHEL)
+  yum: pkg=links state=installed
+  when: ansible_os_family == 'RedHat'
+
+- name: Install Links (Debian)
+  apt: pkg=links state=installed
+  when: ansible_os_family == 'Debian'
 
 - name: copy ports.conf template
   template: src=ports.conf.j2 dest=/etc/{{apache}}/ports.conf
