@@ -32,7 +32,3 @@
   command: '/sbin/service iptables save'
   when: result is failed and ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
 
-- name: Setup default apache firewall rules - Debian
-  command: ufw allow {{ item }}
-  with_items: open_firewall_ports
-  when: ansible_os_family == 'Debian'

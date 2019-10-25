@@ -11,21 +11,6 @@
   include: RHEL7_mysqldump.yml
   when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int == 7
 
-
-- name: Download holland-mysqldump .deb file
-  copy: src=holland-mysqldump_{{holland_version}}_all.deb dest=/tmp/holland-mysqldump_{{holland_version}}_all.deb
-  when: ansible_os_family == 'Debian'
-  register: deb_mysqldump_dl
-
-- name: Install holland-mysqldump .deb file
-  apt: deb=/tmp/holland-mysqldump_{{holland_version}}_all.deb state=installed
-  when: ansible_os_family == 'Debian' and deb_mysqldump_dl|changed
-  register: deb_mysqldump_installed
-
-- name: Cleanup holland-mysqldump .deb file
-  file: dest=/tmp/holland-mysqldump_{{holland_version}}_all.deb state=absent
-  when: ansible_os_family == 'Debian' and deb_mysqldump_installed|changed
-
 - name: Add holland.conf template
   template: src=holland.conf.j2 dest=/etc/holland/holland.conf
 

@@ -8,24 +8,6 @@
   include: RHEL7_default.yml
   when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int == 7
 
-- name: Install holland pkgs on Debian base
-  apt: name=python-support state=present
-  when: ansible_distribution == 'Debian' or (ansible_distribution == 'Ubuntu' and ansible_distribution_version < '16.04')
-
-- name: Download holland .deb files for local install
-  copy: src=holland_{{holland_version}}_all.deb dest=/tmp/holland_{{holland_version}}_all.deb
-  when: ansible_os_family == 'Debian'
-  register: deb_dl
-
-- name: Install holland .deb file
-  apt: deb=/tmp/holland_{{holland_version}}_all.deb state=installed
-  when: ansible_os_family == 'Debian' and deb_dl|changed
-  register: deb_installed
-
-- name: Cleanup holland .deb file
-  file: dest=/tmp/holland_{{holland_version}}_all.deb state=absent
-  when: ansible_os_family == 'Debian' and deb_installed|changed
-
 - name: Create RS monitoring plugin folder
   file: dest=/usr/lib/rackspace-monitoring-agent/plugins state=directory
 

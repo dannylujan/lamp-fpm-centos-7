@@ -20,11 +20,6 @@
 
 # setup stock firewall rules
 case node[:platform]
-  when "debian", "ubuntu"
-    package "python-apt"
-    package "python-pip"
-    package "build-essential"
-    package "python-dev"
   when "redhat", "centos"
     package "python-pip"
 end

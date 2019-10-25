@@ -5,12 +5,6 @@
   with_items: php_fpm_pkgs
   when: ansible_os_family == 'RedHat'
 
-- name: Installing php-fpm pkgs - Debian
-  apt: name={{ item }} state=present
-  with_items: php_fpm_pkgs
-  when: ansible_os_family == 'Debian'
-
-
 - name: Setup www.conf pool
   template: src=www.conf.j2 dest="{{ php_fpm_path }}/www.conf" 
 # notify: restart php-fpm

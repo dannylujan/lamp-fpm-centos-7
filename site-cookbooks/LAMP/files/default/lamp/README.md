@@ -1,26 +1,18 @@
 ## DESCRIPTION:
 
-Complete LAMP configuration. This playbook will install a full Managed Operations based LAMP stack.
+Complete LAMP with PHP-FPM configuration. This playbook will install a full Managed Operations based LAMP stack.
 
 ## REQUIREMENTS:
 
-Ansible 1.6
+Ansible 2.0
 
 ## USAGE:
 
-This playbook can be called with defaults or by role using "tags".
-
-| Name | Examples
-| ---------- | -------- |
-| Full LAMP stack | ansible-playbook -i hosts site.yml
-| MySQL server and Holland | ansible-playbook -i hosts site.yml -t mysql,holland
-| Apache2 and PHP5 | ansible-playbook -i hosts site.yml -t apache2,php5
-
-A full tag list can be found in the site.yml file
-
+This playbook can be called with defaults. No options at the moment. User will be prompted to enter domain, sftp username and password.
 
 ## LICENSE & AUTHOR:
 
+Author: **Danny Lujan**
 Original Author: **Phil Eatherington**
 Ansible Author: **Rocco Muscaritolo**
 Ansible Author: **Johnny Martin**

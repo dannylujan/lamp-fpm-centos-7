@@ -1,11 +1,6 @@
 ---
 # Generic Playbook to install and configure apache as an example
 
-- name: Install PHP and packages - Debian
-  apt: pkg={{ item }} state=installed update_cache=true
-  with_items: packages
-  when: ansible_os_family == 'Debian'
-
 - name: Install PHP and packages - RHEL
   yum: pkg={{ item }} state=installed
   with_items: packages
@@ -13,10 +8,6 @@
 
 - name: create session path
   file: path={{ session_save_path }} owner={{ apache_user }} group={{ apache_user }} mode=0770 state=directory
-
-- name: copy php.ini template - Debian
-  template: src=php.ini.j2 dest={{ php_ini }}
-  notify: restart apache
 
 - name: copy 00-mpm.conf from template - RHEL
   template: src=00-mpm.conf.j2 dest={{ mpm_conf }}

@@ -1,12 +1,5 @@
 ---
 
-- name: Install PMA for Debian systems
-  apt: name={{item}} state=latest update_cache=true
-  with_items:
-  - "{{phpmyadmin_name}}"
-  - apache2-utils
-  when: ansible_os_family == 'Debian'
-
 - name: Install PMA for Redhat systems
   yum: name={{item}} state=latest
   with_items:
