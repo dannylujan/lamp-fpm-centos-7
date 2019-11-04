@@ -1,13 +1,13 @@
 ---
 
 - name: Determine if general mysql packages exist on Redhat system base
-  command: /bin/rpm -q mysql-libs
+  command: /bin/rpm -q mariadb-libs
   register: if_found
   when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6'
   ignore_errors: yes
 
 - name: Erase mysql-libs with no deps
-  command: rpm -e --nodeps mysql-libs
+  command: rpm -e --nodeps mariadb-libs
   when: if_found is defined and if_found.rc == 0 
 
 #- name: Remove mysql from Redhat base 5
