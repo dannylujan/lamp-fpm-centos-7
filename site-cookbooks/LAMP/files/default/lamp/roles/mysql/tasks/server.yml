@@ -1,5 +1,8 @@
 ---
 
+- name: Remove mariadb-libs
+  yum: name=mariadb-libs state=removed
+
 - name: Add include directory 
   file: path={{ includedir }} owner=root group=root state=directory
 
