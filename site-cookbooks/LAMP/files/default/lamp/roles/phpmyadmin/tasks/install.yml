@@ -10,6 +10,9 @@
 - name: Run htpasswd command
   shell: htpasswd -b -c /etc/{{phpmyadmin_name}}/phpmyadmin-htpasswd {{htuser}} {{htpass}}
 
+- name: Add plain text password for customer 
+  shell: echo "{{htuser}} {{htpass}}" > /etc/{{phpmyadmin_name}}/phpMyAdmin-login.txt
+
 - name: Adding ~/.phpmyadmin
   template: src=dotphpmyadminpass.j2 dest=/root/.phpmyadminpass
 
