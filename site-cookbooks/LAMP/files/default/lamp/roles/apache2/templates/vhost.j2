@@ -1,7 +1,7 @@
 <VirtualHost *:80>
         ServerName {{ domain }}
         ServerAlias www.{{ domain }}
-        DocumentRoot /var/www/vhosts/{{ domain }}
+        DocumentRoot /var/www/vhosts/{{ domain }}/httpdocs
 
         # Force HTTPS when loading the page
         #RewriteEngine On
@@ -20,7 +20,7 @@
            SetHandler proxy:fcgi://php-fpm
         </FilesMatch>
 
-        <Directory /var/www/vhosts/{{ domain }}>
+        <Directory /var/www/vhosts/{{ domain }}/httpdocs>
                 Options -Indexes +FollowSymLinks -MultiViews
                 AllowOverride All
         </Directory>
@@ -36,7 +36,7 @@
 #<VirtualHost *:443>
 #        ServerName {{ domain }}
 #        ServerAlias www.{{ domain }}
-#        DocumentRoot /var/www/vhosts/{{ domain }}
+#        DocumentRoot /var/www/vhosts/{{ domain }}/httpdocs
 #
 #        # Proxy declaration
 #        <Proxy "unix:/var/run/php-fpm/{{ domain }}.sock|fcgi://php-fpm">
@@ -50,7 +50,7 @@
 #           SetHandler proxy:fcgi://php-fpm
 #        </FilesMatch>
 #
-#        <Directory /var/www/vhosts/{{ domain }}>
+#        <Directory /var/www/vhosts/{{ domain }}/httpdocs>
 #                Options -Indexes +FollowSymLinks -MultiViews
 #                AllowOverride All
 #        </Directory>

@@ -23,6 +23,9 @@
   file:
     path: /var/log/php-fpm/php-fpm-pools/{{ domain }}
     state: directory
+    owner: {{ domain_user }}
+    group: {{ domain_user }}
+    mode: '0711'
 
 - name: Start php-fpm and enable
   service: name="{{ php_fpm }}" state=started enabled=yes

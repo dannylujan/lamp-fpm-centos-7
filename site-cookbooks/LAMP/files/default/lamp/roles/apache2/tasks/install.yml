@@ -45,7 +45,7 @@
     password: "{{ domain_password | password_hash('sha512') }}"
 
 - name: Create domains document root
-  file: path=/var/www/vhosts/{{ domain }} owner={{ domain_user }} group={{ domain_user }} mode=0775 state=directory
+  file: path=/var/www/vhosts/{{ domain }}/httpdocs owner={{ domain_user }} group={{ domain_user }} mode=0775 state=directory
 #  when: domain != 'example.com'
 
 - name: Add domains vhost file
