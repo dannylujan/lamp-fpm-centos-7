@@ -11,11 +11,18 @@
 
 - name: Setup default domain pool
   template: src=example.com.conf.j2 dest="{{ php_fpm_path }}/{{ domain }}.conf"
+
+- name: Setup phpMyAdmin pool
+  template: src=phpmyadmin.conf.j2 dest="{{ php_fpm_path }}/phpmyadmin.conf"
   notify: restart php-fpm
 
 #- name: create session path
 #  file: path={{ session_save_path }} owner={{ nginx_user }} group={{ nginx_user }} mode=0770 state=directory
 
+- name: Setup log path
+  file:
+    path: /var/log/php-fpm/php-fpm-pools/{{ domain }}
+    state: directory
 
 - name: Start php-fpm and enable
   service: name="{{ php_fpm }}" state=started enabled=yes

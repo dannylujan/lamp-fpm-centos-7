@@ -8,7 +8,18 @@
 Alias /phpMyAdmin /usr/share/phpMyAdmin
 Alias /phpmyadmin /usr/share/phpMyAdmin
 
+  # Proxy declaration
+<Proxy "unix:/var/run/php-fpm/phpmyadmin.sock|fcgi://phpmyadmin">
+  # we must declare a parameter in here (doesn't matter which) or it'll not register the proxy ahead of time
+  ProxySet disablereuse=off
+</Proxy>
+
 <Directory /usr/share/phpMyAdmin/>
+
+   <FilesMatch \.php$>
+      SetHandler proxy:fcgi://phpmyadmin
+   </FilesMatch>
+
    Order Deny,Allow
    Deny from All
    Allow from localhost 127.0.0.0/8 ::1
@@ -23,6 +34,11 @@ Alias /phpmyadmin /usr/share/phpMyAdmin
 </Directory>
 
 <Directory /usr/share/phpMyAdmin/scripts/>
+
+   <FilesMatch \.php$>
+      SetHandler proxy:fcgi://phpmyadmin
+   </FilesMatch>
+
    Order Deny,Allow
    Deny from All
    Allow from localhost 127.0.0.0/8 ::1
@@ -40,6 +56,11 @@ Alias /phpmyadmin /usr/share/phpMyAdmin
 # phpMyAdmin upstream tarball
 #
 <Directory /usr/share/phpMyAdmin/libraries/>
+
+   <FilesMatch \.php$>
+      SetHandler proxy:fcgi://phpmyadmin
+   </FilesMatch>
+
     Order Deny,Allow
     Deny from All
     Allow from None

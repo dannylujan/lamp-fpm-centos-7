@@ -1,19 +1,2 @@
-[www]
-
-listen = /var/run/php5-fpm.sock
-
-listen.owner = {{ apache_user }}
-listen.group = {{ apache_user }}
-listen.mode = 0660
-
-user = {{ apache_user }}
-group = {{ apache_user }}
-
-pm = dynamic
-
-pm.max_children = {{ max_clients }}
-pm.start_servers = 5
-pm.min_spare_servers = 5
-pm.max_spare_servers = 10
-pm.max_requests = 1000
+; Please leave this file here but empty so package updates don't reinstate this pool.
 
