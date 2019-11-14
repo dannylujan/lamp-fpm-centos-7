@@ -2,8 +2,11 @@
 # Generic Playbook to install and configure apache as an example
 
 - name: Install PHP and packages - RHEL
-  yum: pkg={{ item }} state=installed
-  with_items: packages
+  yum:
+    name: "{{ packages }}"
+    state: installed
+#  yum: pkg={{ item }} state=installed
+#  with_items: "{{ packages }}" 
   when: ansible_os_family == 'RedHat'
 
 - name: create session path

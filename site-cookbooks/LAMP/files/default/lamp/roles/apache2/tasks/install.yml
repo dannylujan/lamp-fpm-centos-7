@@ -3,10 +3,13 @@
 #
 
 - name: install httpd for RHEL based
-  yum: pkg={{ item }} state=installed
-  with_items:
-  - httpd
-  - mod_ssl
+  yum:
+    name: ['httpd', 'mod_ssl']
+    state: installed 
+#  yum: pkg={{ item }} state=installed
+#  with_items:
+#  - httpd
+#  - mod_ssl
   when: ansible_os_family == 'RedHat'
 
 - name: copy httpd template for RedHat

@@ -7,9 +7,9 @@
 
 - name: Install holland .rpm file
   yum: name=/tmp/holland-1.0.10-2.1.noarch.rpm
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int == 7 and rpm_dl|changed
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int == 7 and rpm_dl is changed
   register: rpm_installed
 
 - name: Cleanup holland .rpm file
   file: dest=holland-1.0.10-2.1.noarch.rpm state=absent
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int == 7 and rpm_installed|changed
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int == 7 and rpm_installed is changed

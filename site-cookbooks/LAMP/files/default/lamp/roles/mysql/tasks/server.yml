@@ -4,10 +4,13 @@
   file: path={{ includedir }} owner=root group=root state=directory
 
 - name: Install MySQL packages on Redhat base
-  yum: name={{item}} state=latest
-  with_items:
-    - "{{mysqlpkg}}-server"
-    - MySQL-python
+  yum:
+    name: ["{{mysqlpkg}}-server", 'MySQL-python']
+    state: latest
+#  yum: name={{item}} state=latest
+#  with_items:
+#    - "{{mysqlpkg}}-server"
+#    - MySQL-python
   ignore_errors: yes
   when: ansible_os_family == 'RedHat'
 
@@ -16,6 +19,9 @@
 
 - name: Add my.cnf template
   template: src=my.cnf.j2 dest={{mysqlpath}}/my.cnf
+#  template: 
+#    src: my.cnf.j2 
+#    dest: "{{mysqlpath}}"/my.cnf
   notify: restart mysql
 
 - name: Remove existing InnoDB log files

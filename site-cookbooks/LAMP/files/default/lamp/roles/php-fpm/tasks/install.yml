@@ -1,8 +1,11 @@
 ---
 
 - name: Installing php-fpm pkgs - RedHat
-  yum: name={{ item }} state=present
-  with_items: php_fpm_pkgs
+  yum:
+    name: "{{ php_fpm_pkgs }}"
+    state: present
+#  yum: name={{ item }} state=present
+#  with_items: "{{ php_fpm_pkgs }}"
   when: ansible_os_family == 'RedHat'
 
 - name: Setup www.conf pool

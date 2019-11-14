@@ -1,6 +1,7 @@
 ---
 - hosts: all
   user: root
+  become: yes
 
   tasks:
     - group_by: key={{ ansible_os_family }}
@@ -11,6 +12,7 @@
 
 - hosts: RedHat
   user: root
+  become: yes
   gather_facts: false
 
   pre_tasks:

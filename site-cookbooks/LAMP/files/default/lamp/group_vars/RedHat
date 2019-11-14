@@ -30,7 +30,7 @@
 
 # PHP5 VARS
 'php_ini': "/etc/php.ini"
-'apache': "httpd"
+#'apache': "httpd"
 'packages': [
                 "php73-common",
                 "php73-gd",

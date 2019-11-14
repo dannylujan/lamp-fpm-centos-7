@@ -1,10 +1,13 @@
 ---
 
 - name: Install PMA for Redhat systems
-  yum: name={{item}} state=latest
-  with_items:
-  - "{{phpmyadmin_pkg}}"
-  - httpd-tools
+  yum: 
+    name: ["{{phpmyadmin_pkg}}", 'httpd-tools'] 
+    state: latest
+#  yum: name={{item}} state=latest
+#  with_items:
+#  - "{{phpmyadmin_pkg}}"
+#  - httpd-tools
   when: ansible_os_family == 'RedHat'
 
 - name: Run htpasswd command
