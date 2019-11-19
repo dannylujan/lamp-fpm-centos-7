@@ -27,8 +27,8 @@
 - name: Change permissions back to that set in the apache setup
   file:
     path: /var/www/vhosts/{{ domain }}/httpdocs/
-    owner: {{ domain_user }}
-    group: {{ domain_user }}
+    owner: "{{ domain_user }}"
+    group: "{{ domain_user }}"
     mode: '0755'
 
 - name: Copy sample config file
