@@ -31,6 +31,6 @@
     mode: '0711'
 
 - name: Start php-fpm and enable
-  service: name="{{ php_fpm }}" state=started enabled=yes
+  service: name="{{ php_fpm }}" state=restarted enabled=yes
 
 
