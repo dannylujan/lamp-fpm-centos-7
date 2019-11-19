@@ -24,6 +24,13 @@
 - name: Move Wordpress folder to httpdocs folder
   command: mv /var/www/vhosts/{{ domain }}/wordpress /var/www/vhosts/{{ domain }}/httpdocs/
 
+- name: Change permissions back to that set in the apache setup
+  file:
+    path: /var/www/vhosts/{{ domain }}/httpdocs/
+    owner: {{ domain_user }}
+    group: {{ domain_user }}
+    mode: '0755'
+
 - name: Copy sample config file
   command: mv /var/www/vhosts/{{ domain }}/httpdocs/wp-config-sample.php /var/www/vhosts/{{ domain }}/httpdocs/wp-config.php creates=/var/www/vhosts/{{ domain }}/httpdocs/wp-config.php
   become: yes
