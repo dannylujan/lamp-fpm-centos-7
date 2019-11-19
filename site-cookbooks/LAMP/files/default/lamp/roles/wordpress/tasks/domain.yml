@@ -29,7 +29,8 @@
     path: /var/www/vhosts/{{ domain }}/httpdocs/
     owner: "{{ domain_user }}"
     group: "{{ domain_user }}"
-    mode: '0755'
+    recurse: yes
+#    mode: '0755'
 
 - name: Copy sample config file
   command: mv /var/www/vhosts/{{ domain }}/httpdocs/wp-config-sample.php /var/www/vhosts/{{ domain }}/httpdocs/wp-config.php creates=/var/www/vhosts/{{ domain }}/httpdocs/wp-config.php
@@ -56,5 +57,6 @@
   mysql_user: 
     name: "{{ wp_mysql_user }}"
     password: "{{ wp_mysql_password }}"
+    encrypted: no
     priv: "{{ wp_mysql_db }}.*:ALL"
-
+    state: present 
