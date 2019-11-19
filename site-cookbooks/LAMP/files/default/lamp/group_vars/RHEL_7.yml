@@ -37,3 +37,8 @@
 'phpmyadmin_name': 'phpMyAdmin'
 'apache_conf_path': '/etc/httpd/conf.d'
 
+# WORDPRESS VARS
+#'wp_mysql_db': "{{ domain }}_db"
+'wp_mysql_db':  "{{ domain | regex_replace('\\.', '_') }}_db"
+'wp_mysql_user': "{{ domain | regex_replace('\\.', '_') }}_user"
+'wp_mysql_password': "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
