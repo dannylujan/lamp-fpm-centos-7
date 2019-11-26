@@ -36,7 +36,7 @@
     - { role: apache2, tags: apache2 }
     - { role: php_event, tags: php_event }
     - { role: php-fpm, tags: php-fpm }
-#    - { role: mysql, tags: mysql }
+    - { role: mysql, tags: mysql }
     - { role: phpmyadmin, tags: phpmyadmin }
     - { role: holland, tags: holland }
     - { role: wordpress, tags: [ never, wordpress ] }
