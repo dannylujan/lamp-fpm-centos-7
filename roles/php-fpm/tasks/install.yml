@@ -30,7 +30,5 @@
     group: '{{ domain_user }}'
     mode: '0711'
 
-#- name: Start php-fpm and enable
-#  service: name="{{ php_fpm }}" state=restarted enabled=yes
-
-
+- name: Enable php_fpm to start at boot
+  service: name={{ php_fpm }} enabled=yes
