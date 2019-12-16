@@ -1,4 +1,0 @@
----
-# Generic Playbook to install and configure phpmyadmin
-
-- include: install.yml

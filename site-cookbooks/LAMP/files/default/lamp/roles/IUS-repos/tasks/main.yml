@@ -1,5 +1,0 @@
----
-
-- name: Include repos.yml
-  include: repos.yml
-  when: ansible_os_family == 'RedHat'

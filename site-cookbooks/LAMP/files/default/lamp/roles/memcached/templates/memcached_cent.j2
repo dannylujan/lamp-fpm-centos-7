@@ -1,9 +1,0 @@
-PORT="11211"
-USER="memcached"
-MAXCONN="16384"
-CACHESIZE="1536"
-{% if ansible_eth2 is defined %}
-OPTIONS="-l {{ ansible_eth2.ipv4.address }}"
-{% else %}
-OPTIONS="-l {{ ansible_eth1.ipv4.address }}"
-{% endif %}

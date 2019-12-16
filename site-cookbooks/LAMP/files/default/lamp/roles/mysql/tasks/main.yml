@@ -1,9 +1,0 @@
----
-- name: Remove mariadb-libs
-  yum: name=mariadb-libs state=removed
-
-- name: Install mariadb101u-libs
-  yum: name=mariadb101u-libs state=latest
-
-- include: client.yml
-- include: server.yml

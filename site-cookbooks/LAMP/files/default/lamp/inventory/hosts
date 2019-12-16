@@ -1,2 +1,0 @@
-[localhost]
-localhost ansible_connection=local ansible_user=rack ansible_become=yes
