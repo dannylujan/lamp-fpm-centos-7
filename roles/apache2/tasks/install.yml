@@ -1,0 +1,61 @@
+---
+# Generic Playbook to install and configure apache as an example
+#
+
+- name: install httpd for RHEL based
+  yum:
+    name: ['httpd', 'mod_ssl']
+    state: installed 
+#  yum: pkg={{ item }} state=installed
+#  with_items:
+#  - httpd
+#  - mod_ssl
+  when: ansible_os_family == 'RedHat'
+
+- name: copy httpd template for RedHat
+  template: src=RedHat/{{apache_ver}}/httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
+  when: ansible_os_family == 'RedHat'
+
+- name: copy ssl template for RedHat
+  template: src=RedHat/{{apache_ver}}/ssl.conf.j2 dest=/etc/httpd/conf.d/ssl.conf
+  when: ansible_os_family == 'RedHat'
+
+- name: copy status.conf for RedHat (2.4)
+  template: src=00-status.conf.j2 dest=/etc/httpd/conf.modules.d/00-status.conf
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+
+- name: create vhost.d directory
+  file: path=/etc/httpd/vhost.d owner=root group=root mode=0755 state=directory
+  when: ansible_os_family == 'RedHat'
+
+- name: Install Links (RHEL)
+  yum: pkg=links state=installed
+  when: ansible_os_family == 'RedHat'
+
+
+- name: copy ports.conf template
+  template: src=ports.conf.j2 dest=/etc/{{apache}}/ports.conf
+
+- name: Create user's home directory
+  file: 
+    path: "/var/www/vhosts/{{ domain }}"
+    state: directory
+
+- name: Create vhost user
+  user:
+    name: "{{ domain_user }}"
+    home: "/var/www/vhosts/{{ domain }}"
+    password: "{{ domain_password | password_hash('sha512') }}"
+
+- name: Create domains document root
+  file: path=/var/www/vhosts/{{ domain }}/httpdocs owner={{ domain_user }} group={{ domain_user }} mode=0775 state=directory
+#  when: domain != 'example.com'
+
+- name: Add domains vhost file
+  template: src=vhost.j2 dest={{ vhost_directory }}/{{ domain }}.conf
+#  when: domain != 'example.com'
+  notify: Restart apache
+
+
+- name: Enable service to start at boot
+  service: name={{apache}} enabled=yes

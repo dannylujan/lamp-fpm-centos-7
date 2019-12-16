@@ -1,0 +1,76 @@
+<VirtualHost *:80>
+        ServerName {{ domain }}
+        ServerAlias www.{{ domain }}
+        DocumentRoot /var/www/vhosts/{{ domain }}/httpdocs
+
+        # Force HTTPS when loading the page
+        #RewriteEngine On
+        #RewriteCond %{HTTPS} off
+        #RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+        # Proxy declaration
+        <Proxy "unix:/var/run/php-fpm/{{ domain }}.sock|fcgi://php-fpm">
+        # we must declare a parameter in here (doesn't matter which) or it'll not register the proxy ahead of time
+           ProxySet disablereuse=off
+        # Note: If you configure php-fpm to use the "ondemand" process manager, then use "ProxySet disablereuse=on"
+        </Proxy>
+
+        # Redirect to the proxy
+        <FilesMatch \.php$>
+           SetHandler proxy:fcgi://php-fpm
+        </FilesMatch>
+
+        <Directory /var/www/vhosts/{{ domain }}/httpdocs>
+                Options -Indexes +FollowSymLinks -MultiViews
+                AllowOverride All
+        </Directory>
+
+        CustomLog /var/log/httpd/{{ domain }}-access.log combined
+        ErrorLog /var/log/httpd/{{ domain }}-error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+</VirtualHost>
+
+#<VirtualHost *:443>
+#        ServerName {{ domain }}
+#        ServerAlias www.{{ domain }}
+#        DocumentRoot /var/www/vhosts/{{ domain }}/httpdocs
+#
+#        # Proxy declaration
+#        <Proxy "unix:/var/run/php-fpm/{{ domain }}.sock|fcgi://php-fpm">
+#        # we must declare a parameter in here (doesn't matter which) or it'll not register the proxy ahead of time
+#           ProxySet disablereuse=off
+#        # Note: If you configure php-fpm to use the "ondemand" process manager, then use "ProxySet disablereuse=on"
+#        </Proxy>
+#
+#        # Redirect to the proxy
+#        <FilesMatch \.php$>
+#           SetHandler proxy:fcgi://php-fpm
+#        </FilesMatch>
+#
+#        <Directory /var/www/vhosts/{{ domain }}/httpdocs>
+#                Options -Indexes +FollowSymLinks -MultiViews
+#                AllowOverride All
+#        </Directory>
+#
+#        CustomLog /var/log/httpd/{{ domain }}-ssl-access.log combined
+#        ErrorLog /var/log/httpd/{{ domain }}-ssl-error.log
+#
+#        # Possible values include: debug, info, notice, warn, error, crit,
+#        # alert, emerg.
+#        LogLevel warn
+#
+#        SSLEngine on
+#        SSLCertificateFile    /etc/pki/tls/certs/2014-{{ domain }}.crt
+#        SSLCertificateKeyFile /etc/pki/tls/private/2014-{{ domain }}.key
+#        SSLCertificateChainFile /etc/pki/tls/private/2014-{{ domain }}.ca.crt
+#
+#        <FilesMatch "\.(cgi|shtml|phtml|php)$">
+#                SSLOptions +StdEnvVars
+#        </FilesMatch>
+#
+#        BrowserMatch "MSIE [2-6]"                 nokeepalive ssl-unclean-shutdown                 downgrade-1.0 force-response-1.0
+#        BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+#</VirtualHost>

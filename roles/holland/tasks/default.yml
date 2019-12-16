@@ -1,0 +1,33 @@
+---
+
+- name: Install holland pkgs on Redhat base
+  yum: name=holland state=present
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int < 7
+
+- name: Install holland on Redhat 7 base
+  include: RHEL7_default.yml
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int == 7
+
+- name: Create RS monitoring plugin folder
+  file: dest=/usr/lib/rackspace-monitoring-agent/plugins state=directory
+
+- name: Check /etc/rackspace-monitoring-agent.conf.d/
+  file: dest=/etc/rackspace-monitoring-agent.conf.d/ state=directory owner=root group=root
+
+- stat: path=/usr/bin/rackspace-monitoring-agent
+  register: p
+
+- name: Copy holland_mysqldump.yaml
+  template: src=holland_mysqldump.yaml.j2 dest=/etc/rackspace-monitoring-agent.conf.d/holland_mysqldump.yaml
+  notify: restart rackspace-monitoring-agent
+  when: p.stat.exists
+
+- name: Download holland_mysqldump.py 
+  get_url:
+    url: https://raw.githubusercontent.com/racker/rackspace-monitoring-agent-plugins-contrib/master/holland_mysqldump.py
+    dest: /usr/lib/rackspace-monitoring-agent/plugins/holland_mysqldump.py
+    mode: 0744
+    owner: root
+    group: root
+  notify: restart rackspace-monitoring-agent
+  when: p.stat.exists

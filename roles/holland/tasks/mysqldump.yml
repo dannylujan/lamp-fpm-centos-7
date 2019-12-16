@@ -1,0 +1,30 @@
+---
+
+- name: Include common.yml
+  include: common.yml
+
+- name: Install holland-mysqldump packages for Redhat 6
+  yum: name=holland-mysqldump state=present
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int < 7
+
+- name: Install holland-mysqldump on Redhat 7 base
+  include: RHEL7_mysqldump.yml
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int == 7
+
+- name: Add holland.conf template
+  template: src=holland.conf.j2 dest=/etc/holland/holland.conf
+
+- name: Add backupset template
+  template: src=backupsets/default.conf.j2 dest=/etc/holland/backupsets/default.conf
+
+- name: Add holland MySQL user
+  mysql_user: name=holland host=localhost password="{{mysql_password}}" priv=*.*:ALL
+
+- name: Flush privileges
+  shell: mysqladmin -u root flush-privileges
+
+- name: Add cron job
+  template: src=holland.cron.j2 dest=/etc/cron.d/holland
+
+- name: Run Holland
+  command: /usr/sbin/holland bk

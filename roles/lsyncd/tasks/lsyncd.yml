@@ -1,0 +1,56 @@
+---
+
+- name: Install packages on Redhat base
+  yum: pkg={{item}} state=installed
+  with_items:
+    - lua 
+    - lua-devel
+    - pkgconfig
+    - gcc 
+    - asciidoc
+  when: ansible_os_family == 'RedHat'
+
+- name: Copy lsyncd tar file
+  copy: src=lsyncd-2.1.5.tar.gz dest=/root/lsyncd-2.1.5.tar.gz
+
+- name: Untar the file
+  unarchive: src=/root/lsyncd-2.1.5.tar.gz dest=/root copy=no
+
+- name: Make and install lsyncd
+  shell: cd /root/lsyncd-2.1.5; ./configure && make && make install
+
+- name: Make the log directory
+  file: path=/var/log/lsyncd state=directory mode=0755
+
+- name: Create the systemd file on Redhat 7 base
+  template: src=lsyncd.service.j2 dest=/etc/systemd/system/lsyncd.service
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int == 7
+
+- name: Create the service file on Redhat 6 base
+  template: src=lsyncd.init.j2 dest=/etc/init.d/lsyncd mode=755
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int < 7
+
+- name: Enable the service on Redhat base
+  service: name=lsyncd state=stopped enabled=yes
+  when: ansible_os_family == 'RedHat'
+
+- name: Copy the logrotate template
+  template: src=lsyncd.logrotate.j2 dest=/etc/logrotate.d/lsyncd
+
+- name: Copy the configuration file template
+  template: src=lsyncd.lua.j2 dest=/etc/lsyncd.lua
+
+- name: Create dummy servers file
+  file: path=/etc/lsyncd-servers.conf state=touch
+
+- name: Create dummy excludes file
+  file: path=/etc/lsyncd-excludes.txt state=touch
+
+- name: Add more inotify watches to the kernel
+  shell: sysctl -w fs.inotify.max_user_watches=16384 >> /etc/sysctl.conf && sysctl -p
+
+- name: Remove lsyncd tar file
+  file: path=/root/lsyncd-2.1.5.tar.gz state=absent
+
+- name: remove lsyncd directory
+  file: path=/root/lsyncd-2.1.5 state=absent

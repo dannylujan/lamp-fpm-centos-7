@@ -1,0 +1,6 @@
+#
+# Cron job to backup MySQL
+# The time was randomized at kick time for any time between 0000 to 0359
+#
+{{ 60|random }} {{ 4|random }} * * * root /usr/sbin/holland -q bk
+

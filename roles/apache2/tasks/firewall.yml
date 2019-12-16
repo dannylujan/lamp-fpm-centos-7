@@ -1,0 +1,36 @@
+---
+- name: Setup default apache firewall rules - RedHat 6
+  command: "/sbin/iptables -I INPUT 2 -p tcp --dport {{ item }} -j ACCEPT"
+  with_items: "{{ open_firewall_ports }}"
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6'
+
+- name: Save default apache firewall rules - RedHat 6
+  command: '/sbin/service iptables save'
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '6'
+
+- name: Check if firewalld is running
+  command: systemctl status firewalld 
+  register: result
+  ignore_errors: yes
+#  changed_when: false
+
+- name: Setup default apache firewall rules (firewalld) - RedHat 7
+  firewalld: port={{ item }}/tcp permanent=yes state=enabled
+  with_items: "{{ open_firewall_ports }}"
+#     - 80
+#     - 443 
+  when: result is success and ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+
+- name: Save default apache firewall rules (firewalld) - RedHat 7
+  command: '/usr/bin/firewall-cmd --reload'
+  when: result is success and ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+
+- name: Setup default apache firewall rules (iptables) - RedHat 7
+  command: "/sbin/iptables -I INPUT 2 -p tcp --dport {{ item }} -j ACCEPT"
+  with_items: "{{ open_firewall_ports }}"
+  when: result is failed and ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+
+- name: Save default apache firewall rules (iptables) - RedHat 7
+  command: '/sbin/service iptables save'
+  when: result is failed and ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+

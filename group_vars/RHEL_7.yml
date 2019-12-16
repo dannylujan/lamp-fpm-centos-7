@@ -1,0 +1,44 @@
+---
+### APACHE2 VARS
+'apache_ver': 'v24'
+
+
+### PHP5 VARS
+'php_ini': "/etc/php.ini"
+'mpm_conf': "/etc/httpd/conf.modules.d/00-mpm.conf"
+'apache': "httpd"
+'packages': [
+                "php73-common",
+                "php73-opcache",
+                "php73-gd",
+                "php73-xml",
+                "php73-devel"
+                ]
+'session_save_path': "/var/lib/php/session"
+
+
+### PHP-FPM VARS
+'php_fpm_pkgs': [ 'php73-fpm', 'php73-opcache' ]
+
+
+### MYSQL VARS
+'mysql': 'mariadb'
+'mysqlpath': '/etc'
+'socket': '/var/lib/mysql/mysql.sock'
+'includedir': '/etc/sysconfig/mysqld-config'
+'log_error': '/var/log/mariadb/mariadb.log'
+
+'mysqlpkg': 'mariadb101u'
+'mysqlpkg_devel': 'mariadb101u-devel'
+
+
+# PHPMYADMIN VARS
+'phpmyadmin_pkg': 'phpMyAdmin49-httpd'
+'phpmyadmin_name': 'phpMyAdmin'
+'apache_conf_path': '/etc/httpd/conf.d'
+
+# WORDPRESS VARS
+#'wp_mysql_db': "{{ domain }}_db"
+'wp_mysql_db':  "{{ domain | regex_replace('\\.', '_') }}_db"
+'wp_mysql_user': "{{ domain | regex_replace('\\.', '_') }}_user"
+'wp_mysql_password': "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"

@@ -1,0 +1,49 @@
+---
+
+- name: Remove the IUS repo and replace with new public facing IUS
+  yum:
+    name: ius-release
+    state: absent
+  ignore_errors: yes
+  when: ansible_os_family == 'RedHat'
+
+#- name: Checking for existing IUS package
+#  command: rpm -q ius-release
+#  ignore_errors: yes
+#  register: rpm_found
+#  command: yum remove ius_release -y
+#  when: ansible_os_family == 'RedHat'
+
+- name: Download rpm if not installed
+  get_url: 
+    url: https://repo.ius.io/ius-release-el7.rpm 
+    dest: /tmp/ius-release-1.0-8.ius.el6.noarch.rpm
+
+- name: Download GPG key
+  get_url: url=https://repo.ius.io/ius-release-el7.rpm dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
+#  copy: src=ius-release-1.0-8.ius.el6.noarch.rpm dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm
+#  get_url: url=https://repo.ius.io/ius-release-el7.rpm dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm
+#  get_url: url=https://repo.ius.io/RPM-GPG-KEY-IUS-7 dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
+#  command: wget -O /tmp/ius-release-1.0-8.ius.el6.noarch.rpm https://repo.ius.io/ius-release-el7.rpm
+#  command: wget -O /etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7 https://repo.ius.io/RPM-GPG-KEY-IUS-7
+#  when: rpm_found is defined and rpm_found.rc != 0
+
+- name: Install rpm if not installed
+  yum: name=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm state=present
+#  when: rpm_found is defined and rpm_found.rc != 0
+
+- name: Clean up rpm files
+  file: dest=/tmp/ius-release-1.0-8.ius.el6.noarch.rpm state=absent
+#  when: rpm_found is defined and rpm_found.rc != 0
+
+- name: Add ius-dev.repo
+  template: src={{ansible_distribution}}_ius-dev.repo.j2 dest=/etc/yum.repos.d/ius-dev.repo
+  when: ansible_os_family == 'RedHat'
+
+- name: Add ius.repo
+  template: src={{ansible_distribution}}_ius.repo.j2 dest=/etc/yum.repos.d/ius.repo
+  when: ansible_os_family == 'RedHat'
+
+- name: Add ius-testing.repo
+  template: src={{ansible_distribution}}_ius-testing.repo.j2 dest=/etc/yum.repos.d/ius-testing.repo
+  when: ansible_os_family == 'RedHat' 

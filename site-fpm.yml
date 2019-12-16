@@ -1,0 +1,44 @@
+---
+- hosts: all
+  user: root
+  become: yes
+
+  tasks:
+    - group_by: key={{ ansible_os_family }}
+      tags: [ 'ius-repos', 'apache2', 'php_event', 'mysql', 'phpmyadmin', 'holland', 'wordpress' ]
+
+
+### Applies only to RedHat systems
+
+- hosts: RedHat
+  user: root
+  become: yes
+  gather_facts: false
+
+  pre_tasks:
+    - include_vars: group_vars/RHEL_7.yml
+      when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+      tags: [ 'ius-repos', 'apache2', 'php_event', 'mysql', 'phpmyadmin', 'holland', 'wordpress' ]
+
+  vars_prompt:
+  - name: domain
+    prompt: "What is the default domain for this server?"
+    private: no
+  - name: domain_user
+    prompt: "What is the SFTP username for this domain?"
+    private: no
+  - name: domain_password
+    prompt: "What is the SFTP user's password?"
+    private: yes
+
+  roles:
+    - { role: IUS-repos, tags: [ ius-repos, apache2, php_event, mysql ] }
+    - { role: apache2, tags: apache2 }
+    - { role: php_event, tags: php_event }
+    - { role: php-fpm, tags: php-fpm }
+    - { role: mysql, tags: mysql }
+    - { role: phpmyadmin, tags: phpmyadmin }
+    - { role: holland, tags: holland }
+    - { role: wordpress, tags: [ never, wordpress ] }
+
+

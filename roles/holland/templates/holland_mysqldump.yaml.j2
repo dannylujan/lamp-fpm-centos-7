@@ -1,0 +1,27 @@
+type        : agent.plugin
+label       : '[AGENT] Holland mysqldump'
+disabled    : false
+period      : 60
+timeout     : 30
+details     :
+    file    : holland_mysqldump.py
+alarms      :
+    alarm1  :
+        label                 : '[AGENT] Holland mysqldump'
+        notification_plan_id  : {{notification_plan}} 
+        criteria              : |
+          if (metric['sql_creds_exist'] == 'false') {
+            return new AlarmStatus(CRITICAL, 'holland-plugin: MySQL credentials file \
+                    does not exist.');
+          }
+          if (metric['sql_status_succeeds'] == 'false') {
+            return new AlarmStatus(CRITICAL, 'holland-plugin: MySQL credentials do \
+                    not authenticate.');
+          }
+          if (metric['dump_age'] > 172800) { 
+            return new AlarmStatus(CRITICAL, 'holland-plugin: mysqldump file is older than 2d.'); 
+          } 
+          if (metric['error_count'] > 0) { 
+            return new AlarmStatus(CRITICAL, 'holland-plugin: #{last_error}.'); 
+          } 
+          return new AlarmStatus(OK, 'holland-plugin: MySQL and Holland OK'); 

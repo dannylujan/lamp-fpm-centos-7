@@ -1,0 +1,35 @@
+---
+
+- name: Install PMA for Redhat systems
+  yum: 
+    name: ["{{phpmyadmin_pkg}}", 'httpd-tools'] 
+    state: latest
+#  yum: name={{item}} state=latest
+#  with_items:
+#  - "{{phpmyadmin_pkg}}"
+#  - httpd-tools
+  when: ansible_os_family == 'RedHat'
+
+- name: Run htpasswd command
+  shell: htpasswd -b -c /etc/{{phpmyadmin_name}}/phpmyadmin-htpasswd {{htuser}} {{htpass}}
+
+- name: Add plain text password for customer 
+  shell: echo "{{htuser}} {{htpass}}" > /etc/{{phpmyadmin_name}}/phpMyAdmin-login.txt
+
+- name: Adding ~/.phpmyadmin
+  template: src=dotphpmyadminpass.j2 dest=/root/.phpmyadminpass
+
+- name: Adding PMAs apache.conf and config.inc.php files
+  template: src={{item.src}} dest={{item.dest}}
+  with_items:
+    - { src: '{{ansible_os_family}}_apache.conf.j2', dest: '/etc/{{phpmyadmin_name}}/apache.conf' }
+    - { src: '{{ansible_os_family}}_config.inc.php.j2', dest: '/etc/{{phpmyadmin_name}}/config.inc.php' }
+  notify: restart apache
+
+- name: Remove static apache.conf file.
+  file: dest={{apache_conf_path}}/{{phpmyadmin_name}}.conf state=absent
+
+- name: Symlink for apache.conf
+  file: src=/etc/{{phpmyadmin_name}}/apache.conf dest={{apache_conf_path}}/{{phpmyadmin_name}}.conf state=link
+  notify: restart apache
+
