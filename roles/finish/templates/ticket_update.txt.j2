@@ -1,0 +1,16 @@
+Hello,
+
+We are pleased to inform you that the server is on line and ready for use. 
+
+Default vHost: {{ domain }}
+SFTP username: {{ domain_user }}
+SFTP password: {{ domain_password }}
+
+phpMyAdmin panel: http://{{ ansible_default_ipv4.address }}/phpMyAdmin
+username: {{htuser}} 
+password: {{htpass}}
+
+MySQL root password:
+{{ mycnf.stdout_lines }}
+
+Feel free to change these passwords as you see fit. 
