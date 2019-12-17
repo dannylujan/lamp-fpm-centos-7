@@ -3,10 +3,10 @@
 #  service: name={{ apache }} state=restarted
 #  when: ansible_os_family == 'RedHat'
 
-- name: get vars for final
-  command: cat /root/.my.cnf
-  register: mycnf
+#- name: get vars for final
+#  command: cat /root/.my.cnf
+#  register: mycnf
 
-- name: Build Ticket Update
-  template: src=ticket_update.txt.j2 dest=/home/rack/TICKET_UPDATE.txt
+#- name: Build Ticket Update
+#  template: src=ticket_update.txt.j2 dest=/home/rack/TICKET_UPDATE.txt
 

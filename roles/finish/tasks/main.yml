@@ -8,3 +8,14 @@
 #  wp_mysql_password: "{{ lookup('password', 'credentials/' + client + '/' + tier + '/' + role + '/mysqlpassword length=15') }}"
 
 #- include: domain.yml
+
+- name: get vars for final
+  command: cat /root/.my.cnf
+  register: mycnf
+
+- name: Build Ticket Update
+  template: src=ticket_update.txt.j2 dest=/home/rack/TICKET_UPDATE.txt
+
+- name: Ticket notice
+  debug:
+    msg: "ATTN RACKER: Please check /home/rack/TICKET_UPDATE.txt for a ticket update prefab."
